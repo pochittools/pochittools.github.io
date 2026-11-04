@@ -4,8 +4,16 @@
 <meta charset="utf-8">
 <meta name="google-site-verification" content="v3eP7UqN9ufmvrcOgsimSzkWakxA752DeSWcVb41O2I" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>録画ファイルサイズ計算機｜ビットレートから容量・録画時間をかんたん計算</title>
-<meta name="description" content="ビットレートと録画時間から動画のファイルサイズを、SDカードやSSDの容量から録画できる時間をかんたん計算。ProRes・XAVC・配信・ゲーム録画・スマホのプリセット付き。形式の比較やSNS共有もできる無料ツールです。">
+<title>ぽちっと｜押すだけで答えが出る、ちいさな便利ツール集</title>
+<meta name="description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機など、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
+<link rel="canonical" href="https://pochittools.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ぽちっと">
+<meta property="og:title" content="ぽちっと｜押すだけで答えが出る、ちいさな便利ツール集">
+<meta property="og:description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機など、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
+<meta property="og:url" content="https://pochittools.github.io/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
@@ -202,509 +210,119 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .toast { position: fixed; left: 50%; top: calc(18px + env(safe-area-inset-top, 0px)); transform: translate(-50%, calc(-100% - 60px)); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 800; z-index: 30; transition: transform .25s ease; }
 .toast.show { transform: translate(-50%, 0); }
 @media (max-width: 480px) { .wrap { padding: 32px 18px 72px; } .card { padding: 20px; } .hero-body { padding: 18px 20px 22px; } .top { gap: 16px; margin-bottom: 28px; } .logo { width: 54px; height: 54px; border-radius: 16px; } }
+
+/* ブランドバーとほかのツール */
+.brandbar { margin-bottom: 28px; }
+.brandbar a { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 5px; border: 3px solid var(--edge); border-radius: 999px; background: var(--panel); box-shadow: 3px 3px 0 var(--shadow); color: var(--ink); text-decoration: none; font-weight: 800; font-size: 0.9rem; transition: transform .1s ease, box-shadow .1s ease; }
+.brandbar a:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); }
+.brandbar .mark { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); border: 2.5px solid var(--edge); display: grid; place-items: center; }
+.brandbar .mark svg { width: 15px; height: 15px; }
+.more { max-width: 680px; margin: 72px auto 0; }
+.more h2 { font-size: 1.1rem; font-weight: 800; margin: 0 0 14px; }
+.more-list { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.more-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--panel); border: 3px solid var(--edge); border-radius: 18px; box-shadow: 5px 5px 0 var(--shadow); color: var(--ink); text-decoration: none; transition: transform .1s ease, box-shadow .1s ease; }
+.more-item:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--shadow); }
+.more-item .ic { flex: none; width: 46px; height: 46px; border-radius: 14px; border: 2.5px solid var(--edge); display: grid; place-items: center; }
+.more-item .ic svg { width: 24px; height: 24px; }
+.more-item b { display: block; font-weight: 800; line-height: 1.35; }
+.more-item small { display: block; color: var(--sub); font-size: 0.78rem; line-height: 1.5; }
+
+/* トップページ */
+.brand-hero { display: flex; align-items: center; gap: 28px; margin: 12px 0 18px; flex-wrap: wrap; }
+.big-logo { flex: none; width: 104px; height: 104px; border-radius: 30px; background: var(--accent); border: 3px solid var(--edge); box-shadow: 6px 6px 0 var(--shadow); display: grid; place-items: center; transform: rotate(-6deg); }
+.big-logo svg { width: 58px; height: 58px; }
+.brand-title { position: relative; }
+.brand-title h1 { margin: 0; font-size: clamp(3.2rem, 14vw, 6rem); font-weight: 800; line-height: 1; letter-spacing: 0.02em; }
+.brand-title .sticker { top: -14px; right: -70px; }
+.tagline { margin: 0; font-size: clamp(1.05rem, 2.8vw, 1.3rem); font-weight: 800; line-height: 1.6; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 56px; padding: 0; list-style: none; }
+.pills li { border: 2.5px solid var(--edge); border-radius: 999px; background: var(--panel); padding: 4px 14px; font-size: 0.82rem; font-weight: 800; }
+.pills li:nth-child(1) { background: var(--hero); color: #1A1A2E; } .pills li:nth-child(2) { background: var(--tab-on); color: #1A1A2E; } .pills li:nth-child(3) { background: var(--accent); color: #1A1A2E; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.sec-head h2 { margin: 0; font-size: 1.35rem; font-weight: 800; }
+.sec-head span { color: var(--sub); font-size: 0.85rem; font-weight: 700; }
+.tools { display: grid; gap: 28px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.tool { display: flex; flex-direction: column; padding: 26px; background: var(--panel); border: 3px solid var(--edge); border-radius: 24px; box-shadow: 7px 7px 0 var(--shadow); color: var(--ink); text-decoration: none; transition: transform .12s ease, box-shadow .12s ease; }
+.tool:hover { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--shadow); }
+.tool:active { transform: translate(5px, 5px); box-shadow: 2px 2px 0 var(--shadow); }
+.tool .ic { width: 64px; height: 64px; border-radius: 18px; border: 3px solid var(--edge); box-shadow: 3px 3px 0 var(--shadow); display: grid; place-items: center; transform: rotate(-4deg); }
+.tool .ic svg { width: 34px; height: 34px; }
+.tool h3 { margin: 18px 0 6px; font-size: 1.25rem; font-weight: 800; line-height: 1.4; }
+.tool p { margin: 0 0 18px; color: var(--sub); font-size: 0.9rem; line-height: 1.75; }
+.tool .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.tool .tags span { background: var(--soft); border-radius: 999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 800; }
+.tool .go { margin-top: 18px; align-self: flex-start; background: var(--accent); color: #1A1A2E; border: 2.5px solid var(--edge); border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 0.85rem; box-shadow: 3px 3px 0 var(--shadow); }
+.tool.soon { border-style: dashed; box-shadow: none; background: transparent; pointer-events: none; }
+.tool.soon .ic { background: var(--soft); box-shadow: none; }
+.tool.soon .go { background: var(--soft); box-shadow: none; color: var(--sub); }
+.about { max-width: 680px; margin: 72px auto 0; }
+.about h2 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 800; }
+.about p { margin: 0 0 12px; line-height: 1.9; }
+.about p:last-child { margin: 0; }
+@media (max-width: 560px) { .brand-title .sticker { display: none; } .big-logo { width: 84px; height: 84px; border-radius: 24px; } .big-logo svg { width: 46px; height: 46px; } .brand-hero { gap: 20px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <div class="logo" aria-hidden="true">
-      <svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#22254A" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#22254A" stroke-width="3" stroke-linejoin="round"/><circle cx="10" cy="13" r="2.5" fill="#E8657E"/></svg>
+  <header>
+    <div class="brand-hero">
+      <div class="big-logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M9 5l17 10-7.5 2L14 25z" fill="#1A1A2E"/></svg></div>
+      <div class="brand-title">
+        <span class="sticker" aria-hidden="true">無料</span>
+        <h1>ぽちっと</h1>
+      </div>
     </div>
-    <div class="title">
-      <span class="sticker" aria-hidden="true">無料</span>
-      <h1>録画ファイル<wbr>サイズ計算機</h1>
-      <p>何GBになる？ 何時間撮れる？ スライドするだけで計算できます。</p>
-    </div>
+    <p class="tagline">押すだけ、スライドするだけで答えが出る。<br>ちいさな便利ツール集です。</p>
+    <ul class="pills" aria-label="特長">
+      <li>登録いらず</li><li>スマホでもサクサク</li><li>ずっと無料</li>
+    </ul>
   </header>
 
-  <div class="app">
-    <section class="card inputs" aria-label="条件の入力">
-      <div class="modes" role="group" aria-label="計算の種類">
-        <button type="button" id="modeSize" aria-pressed="true">何GBになる？</button>
-        <button type="button" id="modeTime" aria-pressed="false">何時間撮れる？</button>
+  <main>
+    <div class="sec-head"><h2>ツール一覧</h2><span>2つのツール</span></div>
+    <div class="tools">
+      <a class="tool" href="rec-size/">
+        <span class="ic" style="background: var(--hero)"><svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#1A1A2E" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><circle cx="10" cy="13" r="2.5" fill="#FF5FA2"/></svg></span>
+        <h3>録画ファイルサイズ計算機</h3>
+        <p>ビットレートと時間から「何GBになる？」、容量から「何時間撮れる？」をすぐ計算。形式どうしの比較もできます。</p>
+        <div class="tags"><span>映像</span><span>配信</span><span>スマホ撮影</span></div>
+        <span class="go">使ってみる</span>
+      </a>
+      <a class="tool" href="aspect/">
+        <span class="ic" style="background: var(--c3)"><svg viewBox="0 0 34 34" fill="none"><rect x="4" y="8" width="26" height="18" rx="4" stroke="#1A1A2E" stroke-width="3"/><path d="M9 13v-1.5h3M25 21v1.5h-3" stroke="#1A1A2E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>アスペクト比・解像度計算機</h3>
+        <p>解像度から比率を調べたり、比率からサイズを出したり。シネスコの黒帯や縦動画の見切れもわかります。</p>
+        <div class="tags"><span>映像</span><span>SNS</span><span>デザイン</span></div>
+        <span class="go">使ってみる</span>
+      </a>
+      <div class="tool soon" aria-label="準備中のツール">
+        <span class="ic"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="var(--sub)" stroke-width="3"/><path d="M17 10v7l5 3" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/></svg></span>
+        <h3>次のツールを準備中</h3>
+        <p>タイムコード計算機や、一人暮らしに役立つ生活のツールも作っていく予定です。</p>
+        <span class="go">もうすぐ</span>
       </div>
-
-      <div class="field">
-        <div class="field-head"><h2>記録形式</h2></div>
-        <div class="tabs" role="tablist" aria-label="プリセットの種類" id="tabs"></div>
-        <div class="chips" id="chips"></div>
-        <p class="note" id="presetNote"></p>
-      </div>
-
-      <div class="field">
-        <div class="field-head"><label for="vbr">映像ビットレート</label></div>
-        <div class="big-input"><input type="number" id="vbr" min="0" step="any" inputmode="decimal"><span>Mbps</span></div>
-        <input type="range" id="vbrRange" min="0" max="1000" step="1" aria-label="映像ビットレートのスライダー">
-        <div class="ticks" aria-hidden="true"><span>1</span><span>10</span><span>100</span><span>1000</span></div>
-      </div>
-
-      <div class="field">
-        <div class="field-head"><label for="audio">音声</label></div>
-        <select class="select" id="audio"></select>
-      </div>
-
-      <div class="field" id="durationField">
-        <div class="field-head"><h2>録画時間</h2></div>
-        <div class="time-inputs">
-          <label><input type="number" id="hh" min="0" step="1" inputmode="numeric" aria-label="時間">時間</label>
-          <label><input type="number" id="mm" min="0" step="1" inputmode="numeric" aria-label="分">分</label>
-          <label><input type="number" id="ss" min="0" step="1" inputmode="numeric" aria-label="秒">秒</label>
-        </div>
-        <input type="range" id="durRange" min="1" max="480" step="1" aria-label="録画時間のスライダー（分）">
-        <div class="ticks" aria-hidden="true"><span>0</span><span>2時間</span><span>4時間</span><span>6時間</span><span>8時間</span></div>
-        <div class="quick" id="durQuick">
-          <button type="button" data-s="600">10分</button><button type="button" data-s="1800">30分</button><button type="button" data-s="3600">1時間</button><button type="button" data-s="7200">2時間</button><button type="button" data-s="10800">3時間</button>
-        </div>
-      </div>
-
-      <div class="field" id="capacityField" hidden>
-        <div class="field-head"><label for="cap">ストレージの容量</label></div>
-        <div class="big-input">
-          <input type="number" id="cap" min="0" step="any" inputmode="decimal">
-          <select id="capUnit" aria-label="容量の単位"><option value="1e9">GB</option><option value="1e12">TB</option></select>
-        </div>
-        <input type="range" id="capRange" min="0" max="1000" step="1" aria-label="容量のスライダー">
-        <div class="ticks" aria-hidden="true"><span>8GB</span><span>80GB</span><span>800GB</span><span>8TB</span></div>
-        <div class="quick" id="capQuick">
-          <button type="button" data-c="64e9">64GB</button><button type="button" data-c="128e9">128GB</button><button type="button" data-c="256e9">256GB</button><button type="button" data-c="512e9">512GB</button><button type="button" data-c="1e12">1TB</button><button type="button" data-c="2e12">2TB</button>
-        </div>
-        <p class="note">フォーマット後に使える容量は、表記より少し少なくなります。</p>
-      </div>
-    </section>
-
-    <aside class="result" aria-label="計算結果">
-      <div class="hero" id="hero">
-        <div class="hero-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="hero-body" aria-live="polite">
-          <div class="hero-label" id="rLabel">ファイルサイズ</div>
-          <div class="hero-main"><span class="hero-value" id="rValue">—</span><span class="hero-unit" id="rUnit"></span></div>
-          <p class="hero-sub" id="rSub1"></p>
-          <p class="hero-sub" id="rSub2"></p>
-          <p class="hero-formula" id="rFormula"></p>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button type="button" class="btn primary" id="addCmp"><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>この設定を比較に追加</button>
-        <button type="button" class="btn" id="copyBtn"><svg viewBox="0 0 20 20" fill="none"><rect x="6" y="6" width="10" height="11" rx="2.5" stroke="currentColor" stroke-width="2.4"/><path d="M4 13V5a2 2 0 0 1 2-2h7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>結果をコピー</button>
-        <button type="button" class="btn" id="shareBtn"><svg viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 7l4-4 4 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 11v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>リンクを共有</button>
-        <a class="btn" id="xBtn" href="#" target="_blank" rel="noopener" style="grid-column: 1 / -1;"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M11.7 8.6 17.6 2h-1.4l-5.1 5.7L7 2H2.3l6.2 8.6L2.3 18h1.4l5.4-6.1 4.4 6.1h4.7l-6.5-9.4Zm-1.9 2.2-.6-.9-5-7h2.1l4 5.6.6.9 5.3 7.3h-2.1l-4.3-5.9Z"/></svg>Xでポストする</a>
-      </div>
-
-      <section class="card media" aria-live="polite">
-        <h2 id="mediaTitle">メディアに入れると</h2>
-        <p class="note" id="mediaNote"></p>
-        <div id="meters"></div>
-      </section>
-    </aside>
-  </div>
-
-  <section class="card compare">
-    <div class="compare-head">
-      <div>
-        <h2>形式を比べる</h2>
-        <p class="lead" id="cmpLead"></p>
-      </div>
-      <button type="button" class="btn" id="clearCmp" hidden>すべて消す</button>
     </div>
-    <ul class="cmp-list" id="cmpList"></ul>
-    <div class="empty" id="cmpEmpty">「この設定を比較に追加」を押すと、ここに形式を並べて比べられます。</div>
-  </section>
+  </main>
 
   <!-- 広告を置く場合はこの位置がおすすめです -->
   <div class="ad-slot"></div>
 
-  <article>
-    <h2>計算のしくみ</h2>
-    <p>動画のファイルサイズは「ビットレート × 時間 ÷ 8」で求められます。ビットレートは1秒あたりのデータ量をビットで表したもので、8で割るとバイトになります。たとえば100 Mbpsで1時間録画すると、<code>100,000,000 × 3,600 ÷ 8 = 45,000,000,000</code>バイト、つまり約45 GBです。映像と音声のビットレートは足し合わせて計算します。</p>
-
-    <h2>PCで表示される容量が計算より小さい理由</h2>
-    <p>ストレージのメーカーは1 GBを10億バイトとして表記しますが、Windowsは1 GBを1,073,741,824バイト（2の30乗）として表示します。そのため同じファイルでも、Windowsでは約7%小さい数字になります。Macは10億バイト基準なので、この計算機の結果とほぼ同じ数字で表示されます。</p>
-
-    <h2>計算結果と実際のサイズがずれる理由</h2>
-    <p>多くの記録形式は可変ビットレート（VBR）で、動きの少ない映像では指定値より小さく、激しい映像では大きくなることがあります。またファイルにはメタデータなどの付加情報も含まれるため、実際のサイズは数%前後します。収録の容量計画では、計算結果に1〜2割の余裕を持たせるのがおすすめです。</p>
-
-    <h2>よく使う形式の1時間あたりの目安</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>記録形式</th><th>ビットレート</th><th>1時間あたり</th></tr></thead>
-        <tbody>
-          <tr><td>ProRes 422 HQ 4K UHD 29.97p</td><td class="num">707 Mbps</td><td class="num">約318 GB</td></tr>
-          <tr><td>ProRes 422 HQ 1080 29.97p</td><td class="num">220 Mbps</td><td class="num">約99 GB</td></tr>
-          <tr><td>XAVC S 4K</td><td class="num">100 Mbps</td><td class="num">約45 GB</td></tr>
-          <tr><td>ゲーム録画 1080p60（目安）</td><td class="num">30 Mbps</td><td class="num">約13.5 GB</td></tr>
-          <tr><td>YouTube ライブ 1080p60（目安）</td><td class="num">9 Mbps</td><td class="num">約4.1 GB</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="note">映像のみの値です。音声を含めると少し増えます。</p>
-
-    <h2>よくある質問</h2>
-    <dl>
-      <dt>MbpsとMB/sの違いは？</dt>
-      <dd>Mbpsは1秒あたりのメガビット、MB/sは1秒あたりのメガバイトです。8ビットで1バイトなので、100 Mbpsは12.5 MB/sになります。SDカードの書き込み速度（MB/s）を確認するときに役立ちます。</dd>
-      <dt>256GBのSDカードで4Kは何時間撮れる？</dt>
-      <dd>100 MbpsのXAVC S 4Kなら約5時間40分が目安です。上の「何時間撮れる？」で、お使いの形式に合わせて確認できます。</dd>
-      <dt>配信のアーカイブは何GBになる？</dt>
-      <dd>配信のビットレートをそのまま入力すれば目安がわかります。9 Mbpsで2時間配信した場合は約8.1 GBです。</dd>
-    </dl>
-  </article>
+  <section class="about">
+    <h2>ぽちっとについて</h2>
+    <p>放送の現場で働くビデオエンジニアが、「これ、毎回計算するの面倒だな」と思ったことをツールにしています。</p>
+    <p>どのツールもブラウザだけで動き、入力した内容がどこかに送られることはありません。</p>
+  </section>
 
   <footer>
-    <p>現役のビデオエンジニアが制作・運営しています。計算結果は目安としてご利用ください。</p>
+    <p>© ぽちっと　計算結果は目安としてご利用ください。</p>
   </footer>
 </div>
-
-<button type="button" class="mbar" id="mbar" aria-label="計算結果へ移動">
-  <span id="mbLabel">ファイルサイズ</span><span class="v" id="mbValue">—</span>
-</button>
 <div class="toast" id="toast" role="status"></div>
-
 <script>
-(function () {
-  "use strict";
-  var $ = function (id) { return document.getElementById(id); };
-
-  var GROUPS = [
-    { id: "pro", name: "業務用・編集", note: "メーカー公表値に基づく代表的な値です。" },
-    { id: "live", name: "配信・ゲーム", note: "一般的な目安です。配信ソフトの設定に合わせて調整してください。" },
-    { id: "phone", name: "スマホ", note: "一般的な目安です。機種や設定で変わります。" }
-  ];
-  var PRESETS = [
-    { id: "phq4k", g: "pro", short: "ProRes HQ 4K", name: "ProRes 422 HQ 4K UHD 29.97p", mbps: 707 },
-    { id: "phq", g: "pro", short: "ProRes HQ 1080", name: "ProRes 422 HQ 1080 29.97p", mbps: 220 },
-    { id: "p422", g: "pro", short: "ProRes 422 1080", name: "ProRes 422 1080 29.97p", mbps: 147 },
-    { id: "plt", g: "pro", short: "ProRes LT 1080", name: "ProRes 422 LT 1080 29.97p", mbps: 102 },
-    { id: "ppx", g: "pro", short: "ProRes Proxy 1080", name: "ProRes 422 Proxy 1080 29.97p", mbps: 45 },
-    { id: "xsi", g: "pro", short: "XAVC S-I 4K60", name: "XAVC S-I 4K 59.94p", mbps: 600 },
-    { id: "xs4k", g: "pro", short: "XAVC S 4K", name: "XAVC S 4K", mbps: 100 },
-    { id: "xshd", g: "pro", short: "XAVC S HD", name: "XAVC S HD", mbps: 50 },
-    { id: "yt", g: "live", short: "YouTube 1080p60", name: "YouTube ライブ 1080p60", mbps: 9 },
-    { id: "tw", g: "live", short: "Twitch 1080p60", name: "Twitch 配信 1080p60", mbps: 6 },
-    { id: "g1080", g: "live", short: "ゲーム録画 1080p60", name: "ゲーム録画 1080p60 高画質", mbps: 30 },
-    { id: "g4k", g: "live", short: "ゲーム録画 4K60", name: "ゲーム録画 4K60 高画質", mbps: 60 },
-    { id: "s1080", g: "phone", short: "スマホ 1080p30", name: "スマホ 1080p30", mbps: 16 },
-    { id: "s4k", g: "phone", short: "スマホ 4K30", name: "スマホ 4K30", mbps: 40 }
-  ];
-  var AUDIO = [
-    { v: 0, name: "なし（映像のみ）", short: "音声なし" },
-    { v: 128, name: "AAC 128 kbps", short: "AAC 128k" },
-    { v: 192, name: "AAC 192 kbps", short: "AAC 192k" },
-    { v: 320, name: "AAC 320 kbps", short: "AAC 320k" },
-    { v: 1536, name: "リニアPCM 48kHz/16bit ステレオ", short: "PCM 16bit 2ch" },
-    { v: 2304, name: "リニアPCM 48kHz/24bit ステレオ", short: "PCM 24bit 2ch" },
-    { v: 4608, name: "リニアPCM 48kHz/24bit 4ch", short: "PCM 24bit 4ch" },
-    { v: 9216, name: "リニアPCM 48kHz/24bit 8ch", short: "PCM 24bit 8ch" }
-  ];
-  var MEDIA = [32e9, 64e9, 128e9, 256e9, 512e9, 1e12, 2e12];
-  var COLORS = ["var(--c1)", "var(--c2)", "var(--c3)", "var(--c4)", "var(--c5)", "var(--c6)"];
-
-  var S = { mode: "size", group: "pro", preset: "phq", video: 220, audio: 2304, secs: 3600, cap: 256e9 };
-  var compare = [];
-
-  /* ---------- 計算と表示用の整形 ---------- */
-  function totalMbps(v, a) { return v + a / 1000; }
-  function bytesFor(mbps, secs) { return mbps * 1e6 * secs / 8; }
-  function secsFor(mbps, bytes) { return mbps > 0 ? bytes * 8 / (mbps * 1e6) : 0; }
-  function nf(n, d) { return n.toLocaleString("ja-JP", { minimumFractionDigits: d, maximumFractionDigits: d }); }
-  function digits(v) { return v >= 100 ? 0 : v >= 10 ? 1 : 2; }
-  function sizeParts(b) {
-    var p = b >= 1e12 ? [b / 1e12, "TB"] : b >= 1e9 ? [b / 1e9, "GB"] : [b / 1e6, "MB"];
-    return [nf(p[0], digits(p[0])), p[1]];
-  }
-  function sizeText(b) { var p = sizeParts(b); return p[0] + " " + p[1]; }
-  function binText(b) {
-    var u = b >= Math.pow(2, 40) ? [Math.pow(2, 40), "TB"] : b >= Math.pow(2, 30) ? [Math.pow(2, 30), "GB"] : [Math.pow(2, 20), "MB"];
-    var v = b / u[0]; return nf(v, digits(v)) + " " + u[1];
-  }
-  function capLabel(b) { return b >= 1e12 ? nf(b / 1e12, b % 1e12 ? 1 : 0) + "TB" : nf(b / 1e9, 0) + "GB"; }
-  function pad(n) { return String(n).padStart(2, "0"); }
-  function hms(t) { t = Math.floor(t); return [Math.floor(t / 3600), Math.floor(t % 3600 / 60), t % 60]; }
-  function durText(t) {
-    var p = hms(t);
-    if (p[0] > 0) return p[0] + "時間" + (p[1] ? p[1] + "分" : "");
-    if (p[1] > 0) return p[1] + "分" + (p[2] ? p[2] + "秒" : "");
-    return p[2] + "秒";
-  }
-  function mbpsText(m) { return nf(m, m % 1 ? (m * 100 % 10 ? 3 : 1) : 0).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""); }
-  function presetById(id) { for (var i = 0; i < PRESETS.length; i++) if (PRESETS[i].id === id) return PRESETS[i]; return null; }
-  function audioBy(v) { for (var i = 0; i < AUDIO.length; i++) if (AUDIO[i].v === v) return AUDIO[i]; return AUDIO[0]; }
-  function formatName(video, preset) { var p = presetById(preset); return p && p.mbps === video ? p.name : "カスタム " + mbpsText(video) + " Mbps"; }
-
-  /* ---------- スライダーの対応 ---------- */
-  function vToRange(m) { m = Math.min(1000, Math.max(1, m || 1)); return Math.round(Math.log10(m) / 3 * 1000); }
-  function rangeToV(x) { var m = Math.pow(10, 3 * x / 1000); return m < 10 ? Math.round(m * 10) / 10 : Math.round(m); }
-  function cToRange(b) { b = Math.min(8e12, Math.max(8e9, b || 8e9)); return Math.round(Math.log10(b / 8e9) / 3 * 1000); }
-  function rangeToC(x) {
-    var b = 8e9 * Math.pow(10, 3 * x / 1000);
-    return b >= 1e12 ? Math.round(b / 1e11) * 1e11 : Math.round(b / 1e9) * 1e9;
-  }
-  function fillRange(el) { el.style.setProperty("--p", ((el.value - el.min) / (el.max - el.min) * 100) + "%"); }
-
-  /* ---------- 入力欄の同期 ---------- */
-  function syncVideo(skipInput) {
-    if (!skipInput) $("vbr").value = S.video || "";
-    $("vbrRange").value = vToRange(S.video); fillRange($("vbrRange"));
-  }
-  function syncDur(skipInput) {
-    var p = hms(S.secs);
-    if (!skipInput) { $("hh").value = p[0]; $("mm").value = p[1]; $("ss").value = p[2]; }
-    $("durRange").value = Math.max(1, Math.min(480, Math.round(S.secs / 60))); fillRange($("durRange"));
-  }
-  function syncCap(skipInput) {
-    if (!skipInput) {
-      var tb = S.cap >= 1e12;
-      $("capUnit").value = tb ? "1e12" : "1e9";
-      $("cap").value = tb ? +(S.cap / 1e12).toFixed(2) : +(S.cap / 1e9).toFixed(1);
-    }
-    $("capRange").value = cToRange(S.cap); fillRange($("capRange"));
-  }
-
-  function renderTabs() {
-    $("tabs").innerHTML = "";
-    GROUPS.forEach(function (g) {
-      var b = document.createElement("button");
-      b.type = "button"; b.setAttribute("role", "tab");
-      b.setAttribute("aria-selected", S.group === g.id);
-      b.textContent = g.name;
-      b.addEventListener("click", function () { S.group = g.id; renderTabs(); renderChips(); markChips(); });
-      $("tabs").appendChild(b);
-    });
-    var gr = GROUPS.filter(function (g) { return g.id === S.group; })[0];
-    $("presetNote").textContent = gr ? gr.note : "";
-  }
-  function renderChips() {
-    $("chips").innerHTML = "";
-    PRESETS.filter(function (p) { return p.g === S.group; }).forEach(function (p) {
-      var b = document.createElement("button");
-      b.type = "button"; b.className = "chip"; b.dataset.id = p.id;
-      b.innerHTML = "";
-      b.appendChild(document.createTextNode(p.short));
-      var sm = document.createElement("small"); sm.textContent = p.mbps + " Mbps"; b.appendChild(sm);
-      b.title = p.name;
-      b.addEventListener("click", function () { S.preset = p.id; S.video = p.mbps; syncVideo(); update(); });
-      $("chips").appendChild(b);
-    });
-  }
-
-  function markChips() {
-    Array.prototype.forEach.call($("chips").children, function (b) {
-      var p = presetById(b.dataset.id);
-      b.setAttribute("aria-pressed", !!p && S.preset === p.id && S.video === p.mbps);
-    });
-  }
-
-  /* ---------- 結果の表示 ---------- */
-  var lastValue = "";
-  function setHero(label, value, unit, s1, s2, formula) {
-    $("rLabel").textContent = label; $("rUnit").textContent = unit;
-    $("rSub1").textContent = s1; $("rSub2").textContent = s2; $("rFormula").textContent = formula;
-    var el = $("rValue");
-    el.classList.toggle("tc", value.length > 6);
-    if (el.textContent !== value) {
-      el.textContent = value;
-      if (lastValue) { el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); }
-    }
-    lastValue = value;
-    $("mbLabel").textContent = label;
-    $("mbValue").textContent = value + (unit ? " " + unit : "");
-  }
-
-  function meterRow(label, pct, text, cls) {
-    var row = document.createElement("div"); row.className = "meter";
-    var b = document.createElement("b"); b.textContent = label;
-    var tr = document.createElement("div"); tr.className = "track";
-    var f = document.createElement("div"); f.className = "fill" + (cls ? " " + cls : "");
-    f.style.width = Math.max(2, Math.min(100, pct)) + "%"; tr.appendChild(f);
-    var sp = document.createElement("span"); sp.textContent = text; if (cls === "over") sp.className = "over";
-    row.appendChild(b); row.appendChild(tr); row.appendChild(sp);
-    return row;
-  }
-
-  function update() {
-    markChips();
-    var m = totalMbps(S.video, S.audio);
-    var meters = $("meters"); meters.innerHTML = "";
-    $("modeSize").setAttribute("aria-pressed", S.mode === "size");
-    $("modeTime").setAttribute("aria-pressed", S.mode === "time");
-    $("durationField").hidden = S.mode !== "size";
-    $("capacityField").hidden = S.mode !== "time";
-
-    if (m <= 0) {
-      setHero(S.mode === "size" ? "ファイルサイズ" : "録画できる時間", "—", "", "映像ビットレートを入力してください。", "", "");
-      $("mediaNote").textContent = "";
-    } else if (S.mode === "size") {
-      if (S.secs <= 0) {
-        setHero("ファイルサイズ", "—", "", "録画時間を入力してください。", "", "");
-      } else {
-        var b = bytesFor(m, S.secs), p = sizeParts(b);
-        setHero("ファイルサイズ", p[0], p[1],
-          "Windowsでの表示目安：" + binText(b),
-          "1分あたり：" + sizeText(bytesFor(m, 60)) + "／書き込み速度 " + nf(m / 8, 1) + " MB/s",
-          "合計 " + mbpsText(m) + " Mbps × " + nf(S.secs, 0) + " 秒 ÷ 8 = " + nf(b, 0) + " バイト");
-        $("mediaTitle").textContent = "メディアに入れると";
-        $("mediaNote").textContent = durText(S.secs) + "の録画を、それぞれの容量に保存した場合です。";
-        MEDIA.forEach(function (c) {
-          var pct = b / c * 100;
-          var text = pct <= 100 ? nf(pct, pct < 10 ? 1 : 0) + "%を使用・" + Math.floor(c / b) + "本分入る"
-                                : "入りきらない（" + Math.ceil(b / c) + "枚必要）";
-          meters.appendChild(meterRow(capLabel(c), pct, text, pct > 100 ? "over" : ""));
-        });
-      }
-    } else {
-      if (S.cap <= 0) {
-        setHero("録画できる時間", "—", "", "ストレージの容量を入力してください。", "", "");
-      } else {
-        var t = secsFor(m, S.cap), h = hms(t);
-        setHero("録画できる時間", pad(h[0]) + ":" + pad(h[1]) + ":" + pad(h[2]), "",
-          "約 " + durText(t),
-          "1時間あたり：" + sizeText(bytesFor(m, 3600)),
-          capLabel(S.cap) + "（" + nf(S.cap, 0) + " バイト）× 8 ÷ 合計 " + mbpsText(m) + " Mbps");
-        $("mediaTitle").textContent = "容量ごとの録画時間";
-        $("mediaNote").textContent = "同じ設定で、よく使う容量に録画した場合です。";
-        var maxT = Math.sqrt(secsFor(m, MEDIA[MEDIA.length - 1]));
-        MEDIA.forEach(function (c) {
-          var tt = secsFor(m, c);
-          meters.appendChild(meterRow(capLabel(c), Math.sqrt(tt) / maxT * 100, durText(tt), Math.abs(c - S.cap) < 1e6 ? "cur" : ""));
-        });
-      }
-    }
-    renderCompare();
-    $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(summary(false)) + "&url=" + encodeURIComponent(shareUrl());
-  }
-
-  function renderCompare() {
-    var list = $("cmpList"); list.innerHTML = "";
-    $("cmpEmpty").hidden = compare.length > 0;
-    $("clearCmp").hidden = compare.length === 0;
-    $("cmpLead").textContent = S.mode === "size"
-      ? (S.secs > 0 ? durText(S.secs) + "録画したときのファイルサイズで比べています。" : "録画時間を入力すると比べられます。")
-      : (S.cap > 0 ? capLabel(S.cap) + "に録画できる時間で比べています。" : "容量を入力すると比べられます。");
-    var vals = compare.map(function (it) {
-      var m = totalMbps(it.video, it.audio);
-      return S.mode === "size" ? bytesFor(m, S.secs) : secsFor(m, S.cap);
-    });
-    var max = Math.max.apply(null, vals.concat([1]));
-    compare.forEach(function (it, i) {
-      var li = document.createElement("li"); li.className = "cmp-item";
-      var dot = document.createElement("span"); dot.className = "cmp-dot"; dot.style.background = COLORS[i % COLORS.length];
-      var nm = document.createElement("div"); nm.className = "cmp-name"; nm.textContent = it.name;
-      var sm = document.createElement("small"); sm.textContent = mbpsText(it.video) + " Mbps・" + audioBy(it.audio).short; nm.appendChild(sm);
-      var val = document.createElement("div"); val.className = "cmp-val";
-      val.textContent = S.mode === "size" ? sizeText(vals[i]) : durText(vals[i]);
-      var del = document.createElement("button"); del.type = "button"; del.className = "cmp-del"; del.textContent = "×";
-      del.setAttribute("aria-label", it.name + "を比較から外す");
-      del.addEventListener("click", function () { compare.splice(i, 1); renderCompare(); });
-      var bar = document.createElement("div"); bar.className = "cmp-bar";
-      var tr = document.createElement("div"); tr.className = "track";
-      var f = document.createElement("div"); f.className = "fill"; f.style.background = COLORS[i % COLORS.length];
-      f.style.width = Math.max(2, vals[i] / max * 100) + "%"; tr.appendChild(f); bar.appendChild(tr);
-      li.appendChild(dot); li.appendChild(nm); li.appendChild(val); li.appendChild(del);
-      li.appendChild(document.createElement("span")); li.appendChild(bar);
-      list.appendChild(li);
-    });
-  }
-
-  /* ---------- 共有 ---------- */
-  function shareUrl() {
-    var q = "m=" + S.mode + "&v=" + S.video + "&a=" + S.audio + "&t=" + S.secs + "&c=" + S.cap + (S.preset ? "&p=" + S.preset : "");
-    return location.href.split("#")[0] + "#" + q;
-  }
-  function summary(withUrl) {
-    var m = totalMbps(S.video, S.audio);
-    var fmt = formatName(S.video, S.preset) + "＋" + audioBy(S.audio).short;
-    var s = S.mode === "size"
-      ? fmt + "で" + durText(S.secs) + "録画すると約" + sizeText(bytesFor(m, S.secs)) + "でした"
-      : capLabel(S.cap) + "に" + fmt + "なら約" + durText(secsFor(m, S.cap)) + "録画できます";
-    s = "【録画ファイルサイズ計算機】" + s;
-    return withUrl ? s + "\n" + shareUrl() : s;
-  }
-  function toast(msg) {
-    var t = $("toast"); t.textContent = msg; t.classList.add("show");
-    clearTimeout(toast.timer); toast.timer = setTimeout(function () { t.classList.remove("show"); }, 1800);
-  }
-  function copyText(text, msg) {
-    function fallback() {
-      var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
-      document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); toast(msg); } catch (e) { toast("コピーできませんでした"); }
-      document.body.removeChild(ta);
-    }
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text).then(function () { toast(msg); }, fallback);
-    } else { fallback(); }
-  }
-
-  function loadHash() {
-    var h = location.hash.replace(/^#/, ""); if (!h) return;
-    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = decodeURIComponent(p[1] || ""); });
-    if (q.m === "size" || q.m === "time") S.mode = q.m;
-    var v = parseFloat(q.v); if (v > 0) S.video = v;
-    var a = parseFloat(q.a); if (AUDIO.some(function (x) { return x.v === a; })) S.audio = a;
-    var t = parseFloat(q.t); if (t > 0) S.secs = Math.round(t);
-    var c = parseFloat(q.c); if (c > 0) S.cap = c;
-    var p = presetById(q.p); S.preset = p ? p.id : "";
-    if (p) S.group = p.g;
-  }
-
-  /* ---------- イベント ---------- */
-  $("modeSize").addEventListener("click", function () { S.mode = "size"; update(); });
-  $("modeTime").addEventListener("click", function () { S.mode = "time"; update(); });
-
-  $("vbr").addEventListener("input", function () { var v = parseFloat(this.value); S.video = v > 0 ? v : 0; syncVideo(true); update(); });
-  $("vbrRange").addEventListener("input", function () { S.video = rangeToV(+this.value); syncVideo(); update(); });
-
-  AUDIO.forEach(function (a) { var o = document.createElement("option"); o.value = a.v; o.textContent = a.name; $("audio").appendChild(o); });
-  $("audio").addEventListener("change", function () { S.audio = parseFloat(this.value); update(); });
-
-  ["hh", "mm", "ss"].forEach(function (id) {
-    $(id).addEventListener("input", function () {
-      var g = function (x) { var n = parseFloat($(x).value); return n > 0 ? n : 0; };
-      S.secs = Math.round(g("hh") * 3600 + g("mm") * 60 + g("ss")); syncDur(true); update();
-    });
-  });
-  $("durRange").addEventListener("input", function () { S.secs = +this.value * 60; syncDur(); update(); });
-  Array.prototype.forEach.call($("durQuick").children, function (b) {
-    b.addEventListener("click", function () { S.secs = +b.dataset.s; syncDur(); update(); });
-  });
-
-  function readCap() { var v = parseFloat($("cap").value); S.cap = v > 0 ? v * parseFloat($("capUnit").value) : 0; syncCap(true); update(); }
-  $("cap").addEventListener("input", readCap);
-  $("capUnit").addEventListener("change", readCap);
-  $("capRange").addEventListener("input", function () { S.cap = rangeToC(+this.value); syncCap(); update(); });
-  Array.prototype.forEach.call($("capQuick").children, function (b) {
-    b.addEventListener("click", function () { S.cap = parseFloat(b.dataset.c); syncCap(); update(); });
-  });
-
-  $("addCmp").addEventListener("click", function () {
-    if (S.video <= 0) { toast("映像ビットレートを入力してください"); return; }
-    var dup = compare.some(function (it) { return it.video === S.video && it.audio === S.audio; });
-    if (dup) { toast("すでに比較に入っています"); return; }
-    if (compare.length >= 6) { toast("比較できるのは6つまでです"); return; }
-    compare.push({ name: formatName(S.video, S.preset), video: S.video, audio: S.audio });
-    renderCompare(); toast("比較に追加しました");
-  });
-  $("clearCmp").addEventListener("click", function () { compare = []; renderCompare(); });
-  $("copyBtn").addEventListener("click", function () { copyText(summary(true), "結果をコピーしました"); });
-  $("shareBtn").addEventListener("click", function () {
-    var url = shareUrl();
-    if (navigator.share) {
-      navigator.share({ title: "録画ファイルサイズ計算機", text: summary(false), url: url }).catch(function () {});
-    } else { copyText(url, "リンクをコピーしました"); }
-  });
-  $("mbar").addEventListener("click", function () { $("hero").scrollIntoView({ behavior: "smooth", block: "center" }); });
-
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (es) {
-      es.forEach(function (e) { $("mbar").classList.toggle("away", e.isIntersecting); });
-    }, { threshold: 0.3 }).observe($("hero"));
-  }
-
-  /* ---------- 初期化 ---------- */
-  loadHash();
-  $("audio").value = S.audio;
-  renderTabs(); renderChips(); syncVideo(); syncDur(); syncCap(); update();
-})();
+  // 以前のURL（トップ）で共有された計算結果のリンクを、録画ファイルサイズ計算機へ転送
+  (function () {
+    if (/(^#|&)m=(size|time)/.test(location.hash)) location.replace("rec-size/" + location.hash);
+  })();
 </script>
 </body>
 </html>
