@@ -4,14 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>今日の一曲ガチャ｜ぽちっと</title>
-<meta name="description" content="作者のプレイリスト302曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<meta name="description" content="作者のプレイリスト322曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <link rel="canonical" href="https://pochittools.github.io/music-gacha/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
 <meta property="og:title" content="今日の一曲ガチャ｜ぽちっと">
-<meta property="og:description" content="作者のプレイリスト302曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<meta property="og:description" content="作者のプレイリスト322曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <meta property="og:url" content="https://pochittools.github.io/music-gacha/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://pochittools.github.io/og/gacha.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pochittools.github.io/og/gacha.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -350,8 +354,10 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   .app { align-items: stretch; }
   .result { position: static; display: flex; }
   .result #resultCard { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .tiles { display: block; columns: 2; column-gap: 40px; margin-top: 40px; }
-  .tiles > .card { break-inside: avoid; margin: 0 0 40px; }
+  .tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; margin: 40px 0; align-items: stretch; }
+  #rewards { grid-column: 1; grid-row: 1; } #recCard { grid-column: 2; grid-row: 1; }
+  #bookCard { grid-column: 1; grid-row: 2; } #compCard { grid-column: 2; grid-row: 2; }
+  #bookCard .book, #compCard .stamps { height: 400px; max-height: 400px; }
   .hist-card { margin-top: 0; }
 }
 </style>
@@ -364,7 +370,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     <div class="title">
       <span class="sticker" aria-hidden="true">無料</span>
       <h1>今日の一曲ガチャ</h1>
-      <p>作者のプレイリスト302曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
+      <p>作者のプレイリスト322曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
     </div>
   </header>
 
@@ -447,7 +453,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
         </div>
       </section>
 
-      <section class="card">
+      <section class="card" id="compCard">
         <div class="stamp-head"><h2 style="margin:0; font-size:1.1rem; font-weight:800">コンプリートカード</h2><button type="button" class="mini-btn" id="resetBtn">リセット</button></div>
         <div class="progress" aria-hidden="true"><i id="progBar" style="width:0%"></i></div>
         <div class="stamps" id="stamps"></div>
@@ -817,7 +823,27 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     "1X1D6ZPjreIX7iBfm2i3HC",
     "4UnyffxWl8XjHRegnnESbu",
     "2FzLfVta0Sunv6EYkWz8Ua",
-    "30eB01pysTKP0ekul7OFMn"
+    "30eB01pysTKP0ekul7OFMn",
+    "6ZCVwf2danrMuTYqD6bzcu",
+    "7lu6RGDJtBC5Xzo0fkFrMz",
+    "2yhsjJUSNoxHpIJBM0rf7F",
+    "7lT3oj3gxE6AJb87ZK8up7",
+    "2NBC57E8goEAwYAbWZ9Erf",
+    "72DEWG0Aqa9JMt3OyslNJq",
+    "30Hpcx6Vj7IxyRTlQ22ftP",
+    "7EnroHOG1DxiGxQzUOcS5v",
+    "67ac4Gv6M977YUNSPY71LI",
+    "3g1Ca8PPhR4FBN6a66wkyq",
+    "4QKqdm2mt35HfINZ1PMFyx",
+    "3cKRfLeG1OOITcGQ59CQky",
+    "5ULGhbAW2ekd722f9sxksL",
+    "4zJZ0WUEqLaIAeqH9G5eoP",
+    "5bHPokT910xBN0Rs6O2gMA",
+    "2mIKHfFsfvgMLcLY6DwTRu",
+    "7lXEPbQO0zQSWVRPxmHuuY",
+    "3jpKZYgTUMNN2Mak3bWCWU",
+    "7xKq3bo7En9Crs8DwQWIXd",
+    "3cDKySSV2sOeEjoPLV5U4E"
   ];
   /* ===== リスナー推薦の棚（採用した曲をここに足す：{ id: "曲ID", by: "ニックネーム" }） ===== */
   var LISTENER = [
