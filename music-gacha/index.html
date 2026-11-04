@@ -426,7 +426,9 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
         <div class="pick-head"><span class="pick-no" id="pickNo">No.--<small></small></span></div>
         <div class="player empty" id="player">ハンドルを回すと、ここで曲が聴けます。</div>
         <div class="actions" style="margin-bottom:0">
-          <a class="btn primary" id="xBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M11.7 8.6 17.6 2h-1.4l-5.1 5.7L7 2H2.3l6.2 8.6L2.3 18h1.4l5.4-6.1 4.4 6.1h4.7l-6.5-9.4Zm-1.9 2.2-.6-.9-5-7h2.1l4 5.6.6.9 5.3 7.3h-2.1l-4.3-5.9Z"/></svg>引いた曲をXでポスト</a>
+          <button type="button" class="btn primary" id="cardBtn" style="grid-column:1 / -1"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="currentColor" stroke-width="2.4"/><circle cx="8" cy="8" r="1.8" fill="currentColor"/><path d="M4 15l4-4 3 3 2-2 3 3" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>今日の一曲を画像でシェア</button>
+          <a class="btn" id="lineBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2.5c-4.4 0-8 2.9-8 6.5 0 3.2 2.8 5.9 6.7 6.4.3.1.6.2.7.4.1.2.1.5 0 .7l-.1.7c0 .2-.2.8.7.4.9-.4 4.8-2.8 6.5-4.8 1.2-1.3 1.5-2.5 1.5-3.8 0-3.6-3.6-6.5-8-6.5Z"/></svg>LINEで送る</a>
+          <a class="btn" id="xBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M11.7 8.6 17.6 2h-1.4l-5.1 5.7L7 2H2.3l6.2 8.6L2.3 18h1.4l5.4-6.1 4.4 6.1h4.7l-6.5-9.4Zm-1.9 2.2-.6-.9-5-7h2.1l4 5.6.6.9 5.3 7.3h-2.1l-4.3-5.9Z"/></svg>引いた曲をXでポスト</a>
           <button type="button" class="btn" id="copyBtn"><svg viewBox="0 0 20 20" fill="none"><rect x="6" y="6" width="10" height="11" rx="2.5" stroke="currentColor" stroke-width="2.4"/><path d="M4 13V5a2 2 0 0 1 2-2h7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>曲のリンクをコピー</button>
           <a class="btn" id="spBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="none"><path d="M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3M11 4h5v5M16 4l-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Spotifyで開く</a>
         </div>
@@ -1057,7 +1059,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
       box.appendChild(cell);
     });
     $("bookCount").textContent = "ステッカー " + got + "/" + maxN + "枚・シークレット " + sgot + "/" + SECRETS.length + "枚" + (kiraN ? "・キラ " + kiraN + "枚" : "");
-    $("bookX").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("ぼたんのシール帳、" + got + "/" + maxN + "枚まで集まった！" + (kiraN ? "（キラ" + kiraN + "枚）" : "") + " #今日の一曲ガチャ") + "&url=" + encodeURIComponent(location.href.split("#")[0]);
+    $("bookX").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("ぼたんのシール帳、" + got + "/" + maxN + "枚まで集まった！" + (kiraN ? "（キラ" + kiraN + "枚）" : "") + " #今日の一曲ガチャ") + "&url=" + encodeURIComponent(pageUrl());
   }
   function showNew(list) {
     if (!list.length) return;
@@ -1125,7 +1127,9 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
     $("pickNo").innerHTML = "No." + pad3(i + 1) + "<small>／" + TRACKS.length + "曲</small>";
     var pl = $("player"); pl.className = "player reveal"; pl.innerHTML = embed(id, 152);
     $("spBtn").href = "https://open.spotify.com/track/" + id;
-    $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで No." + pad3(i + 1) + " が出た！") + "&url=" + encodeURIComponent(location.href.split("#")[0] + "#t=" + id);
+    $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで No." + pad3(i + 1) + " が出た！") + "&url=" + encodeURIComponent(pageUrl() + "#t=" + id);
+    $("lineBtn").href = "https://social-plugins.line.me/lineit/share?url=" + encodeURIComponent(pageUrl() + "?openExternalBrowser=1#t=" + id);
+    prepareCard(i); fetchTitle(id, function () { if (current === i) prepareCard(i); });
     render();
   }
 
@@ -1150,7 +1154,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
     var t = title();
     $("titleName").textContent = t || "まだありません";
     $("titleX").hidden = !t;
-    if (t) $("titleX").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで称号「" + t + "」をもらいました！（" + D.total + "曲）") + "&url=" + encodeURIComponent(location.href.split("#")[0]);
+    if (t) $("titleX").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで称号「" + t + "」をもらいました！（" + D.total + "曲）") + "&url=" + encodeURIComponent(pageUrl());
     var c = D.total % 30; if (c === 0 && D.total > 0) c = 30;
     var nodes = $("cycle").children;
     for (var k = 0; k < nodes.length; k++) nodes[k].classList.toggle("on", c >= (k + 1) * 5);
@@ -1174,7 +1178,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
     $("recRight").textContent = rr;
     $("recLocked").textContent = "30曲そろえるごとに、1曲推薦できます。次の推薦まで あと" + (30 - (D.total % 30)) + "曲。";
 
-    $("copyBtn").disabled = current < 0; $("spBtn").style.visibility = current < 0 ? "hidden" : "visible";
+    $("cardBtn").disabled = current < 0; $("lineBtn").style.pointerEvents = current < 0 ? "none" : ""; $("lineBtn").style.opacity = current < 0 ? ".5" : ""; $("copyBtn").disabled = current < 0; $("spBtn").style.visibility = current < 0 ? "hidden" : "visible";
     $("xBtn").style.pointerEvents = current < 0 ? "none" : ""; $("xBtn").style.opacity = current < 0 ? ".5" : "";
     trInfo();
   }
@@ -1274,9 +1278,13 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
     var p = k.split("-"), y = +p[0], now = new Date();
     return (y !== now.getFullYear() ? y + "年" : "") + (+p[1]) + "月" + (+p[2]) + "日";
   }
+  var titleWait = {};
   function fetchTitle(id, cb) {
-    if (titles[id] || fetching[id] || !window.fetch) return;
+    if (titles[id] || !window.fetch) return;
+    if (cb) (titleWait[id] = titleWait[id] || []).push(cb);
+    if (fetching[id]) return;
     fetching[id] = true;
+    cb = function () { var w = titleWait[id] || []; delete titleWait[id]; w.forEach(function (f) { f(); }); };
     fetch("https://open.spotify.com/oembed?url=" + encodeURIComponent("https://open.spotify.com/track/" + id))
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) { if (j && j.title) { titles[id] = j.title; try { localStorage.setItem(TKEY, JSON.stringify(titles)); } catch (e) {} if (cb) cb(); } })
@@ -1352,6 +1360,58 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { toast(msg); }, fallback); else fallback();
   }
 
+
+  /* ---------- 今日の一曲を画像でシェア（1080×1350） ---------- */
+  function pageUrl() { return location.origin + location.pathname; }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function wrapTitle(s, per, max) {
+    var out = [], a = Array.from(s);
+    while (a.length && out.length < max) { out.push(a.splice(0, per).join("")); }
+    if (a.length) out[max - 1] = Array.from(out[max - 1]).slice(0, per - 1).join("") + "…";
+    return out;
+  }
+  var BOTAN = '<circle cx="60" cy="62" r="57" fill="#fff" stroke="#D5D9EA" stroke-width="1.5"/><circle cx="60" cy="62" r="50" fill="#E3F2FF"/><g stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"><ellipse cx="46" cy="100" rx="8" ry="5" fill="#FFD93D"/><ellipse cx="74" cy="100" rx="8" ry="5" fill="#FFD93D"/><rect x="26" y="76" width="68" height="20" rx="9" fill="#FFD93D"/><path d="M30 78 Q30 32 60 32 Q90 32 90 78 Z" fill="#FF5FA2"/></g><path d="M26 62 Q26 16 60 16 Q94 16 94 62" fill="none" stroke="#1A1A2E" stroke-width="5" stroke-linecap="round"/><rect x="17" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><rect x="90" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><ellipse cx="45" cy="46" rx="7" ry="3.5" fill="#fff" opacity=".8" transform="rotate(-30 45 46)"/><ellipse cx="42" cy="67" rx="5" ry="3" fill="#C2185B" opacity=".3"/><ellipse cx="78" cy="67" rx="5" ry="3" fill="#C2185B" opacity=".3"/><path d="M44 59 q5 3 10 0 M66 59 q5 3 10 0 M57 67 q3 3 6 0" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/>';
+  function songCardSvg(i) {
+    var W = 1080, H = 1350, id = TRACKS[i], col = colorOf(i), F = 'font-family="Hiragino Maru Gothic ProN, M PLUS Rounded 1c, sans-serif"';
+    var t = titles[id] ? wrapTitle(titles[id], 13, 2) : [], ty = t.length === 2 ? 905 : 950, tl = "";
+    t.forEach(function (line, k) { tl += '<text x="540" y="' + (ty + k * 84) + '" text-anchor="middle" font-size="68" font-weight="800" fill="' + INK + '" ' + F + '>' + esc(line) + "</text>"; });
+    var dk = (D.today.id === id && D.today.date) ? D.today.date : dateKey(), dm = dk.split("-");
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '"><defs><pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2.2" fill="rgba(26,26,46,.12)"/></pattern></defs>' +
+      '<rect width="100%" height="100%" fill="#FFD93D"/><rect width="100%" height="100%" fill="url(#dots)"/>' +
+      '<rect x="60" y="60" width="960" height="1230" rx="48" fill="' + INK + '"/><rect x="48" y="48" width="960" height="1230" rx="48" fill="#fff" stroke="' + INK + '" stroke-width="6"/>' +
+      '<text x="528" y="160" text-anchor="middle" font-size="44" font-weight="800" fill="' + INK + '" ' + F + '>' + (+dm[1]) + "月" + (+dm[2]) + '日の、今日の一曲</text>' +
+      '<g transform="translate(528 330)"><rect x="-190" y="-62" width="380" height="124" rx="62" fill="' + col + '" stroke="' + INK + '" stroke-width="6"/><text x="0" y="26" text-anchor="middle" font-size="76" font-weight="800" fill="' + INK + '" ' + F + '>No.' + pad3(i + 1) + '</text></g>' +
+      '<text x="528" y="440" text-anchor="middle" font-size="30" font-weight="700" fill="#555872" ' + F + '>全' + TRACKS.length + '曲の中から、1日1回だけ</text>' +
+      '<g transform="translate(378 470) scale(2.5)">' + BOTAN + "</g>" + tl +
+      '<text x="528" y="1175" text-anchor="middle" font-size="34" font-weight="800" fill="' + INK + '" ' + F + '>今日の一曲ガチャ</text>' +
+      '<text x="528" y="1225" text-anchor="middle" font-size="28" font-weight="700" fill="#555872" font-family="sans-serif">pochittools.github.io/music-gacha</text></svg>';
+  }
+  // 押したらすぐ共有できるよう、曲が出た時点で画像を作っておく（共有シートはタップ直後でないと開けないため）
+  var cardReady = null;
+  function prepareCard(i) {
+    cardReady = null;
+    var img = new Image();
+    img.onload = function () {
+      var c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
+      c.getContext("2d").drawImage(img, 0, 0);
+      c.toBlob(function (blob) { if (current === i && blob) cardReady = { i: i, blob: blob }; });
+    };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(songCardSvg(i));
+  }
+  function songCard() {
+    if (current < 0) return;
+    if (!cardReady || cardReady.i !== current) { prepareCard(current); toast("画像を準備しています。もう一度押してください"); return; }
+    var i = cardReady.i, id = TRACKS[i], blob = cardReady.blob, name = "kyou-no-ikkyoku-" + pad3(i + 1) + ".png";
+    var text = "今日の一曲ガチャで No." + pad3(i + 1) + (titles[id] ? "「" + titles[id] + "」" : "") + " が出た！";
+    var file = null; try { file = new File([blob], name, { type: "image/png" }); } catch (e) {}
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], text: text + " " + pageUrl() }).catch(function () {});
+      return;
+    }
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    toast("画像を保存しました");
+  }
 
   /* ---------- 記録の引き継ぎ ---------- */
   // 形式：p1.カード.履歴.累計.チケット.推薦.完了.今日.ステッカー.シークレット.推薦した曲.チェック
@@ -1497,6 +1557,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   load(); importFromHash(); var adopted = checkAdopted(); drawBalls(); shelf(); render();
   if (adopted) setTimeout(function () { toast("あなたの推薦が採用されました！ シークレットステッカーをゲット", 3600); }, 800);
   $("bookSave").addEventListener("click", saveBook);
+  $("cardBtn").addEventListener("click", songCard);
   Array.prototype.forEach.call(document.querySelectorAll("[data-ho]"), function (b) { b.addEventListener("click", function () { histOrder = b.dataset.ho; renderHist(); }); });
   var m = location.hash.match(/t=([A-Za-z0-9]{22})/);
   if (m && TRACKS.indexOf(m[1]) >= 0) { var i = TRACKS.indexOf(m[1]); setCapsule(i, true); show(i); }
