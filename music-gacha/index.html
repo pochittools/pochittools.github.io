@@ -299,6 +299,11 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .mine { margin-top: 22px; padding: 16px; border: 2.5px solid var(--edge); border-radius: 18px; background: var(--hero); color: #1A1A2E; box-shadow: 4px 4px 0 var(--shadow); }
 .mine-head { margin: 0 0 12px; font-weight: 800; }
 .mine .lcard p { color: #1A1A2E; }
+.owner { position: fixed; left: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 40; width: 230px; padding: 12px; background: #1A1A2E; color: #fff; border: 3px solid #FFD93D; border-radius: 14px; box-shadow: 4px 4px 0 #000; font-size: 0.8rem; }
+.owner b { display: block; color: #FFD93D; margin-bottom: 4px; }
+.owner p { margin: 0 0 8px; line-height: 1.5; }
+.owner button { display: block; width: 100%; margin-top: 6px; padding: 6px 8px; border: 2px solid #fff; border-radius: 8px; background: transparent; color: #fff; font-weight: 800; cursor: pointer; text-align: left; }
+.owner button:hover { background: rgba(255, 255, 255, .12); }
 </style>
 </head>
 <body>
@@ -942,6 +947,48 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { toast(msg); }, fallback); else fallback();
   }
 
+
+  /* ---------- オーナーモード（合言葉つきURLで開く） ---------- */
+  var OKEY = KEY + "-o";
+  function fnv(s) { var h = 2166136261; var b = unescape(encodeURIComponent(s)); for (var i = 0; i < b.length; i++) { h ^= b.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+  function ownerOn() { try { return localStorage.getItem(OKEY) === "1"; } catch (e) { return false; } }
+  (function () {
+    var h = location.hash.replace(/^#/, "");
+    if (h && fnv(h) === 1782473686) { try { localStorage.setItem(OKEY, "1"); } catch (e) {} history.replaceState(null, "", location.pathname); }
+  })();
+  function ownerPanel() {
+    if (!ownerOn()) return;
+    var p = document.createElement("div"); p.className = "owner"; p.id = "owner";
+    p.innerHTML = '<b>オーナーモード</b><p id="oState"></p>' +
+      '<button type="button" data-o="again">今日の制限を解除</button>' +
+      '<button type="button" data-o="p5">曲数 +5</button><button type="button" data-o="p30">曲数 +30</button>' +
+      '<button type="button" data-o="rec">推薦権 +1</button><button type="button" data-o="clear">記録をすべて消す</button>' +
+      '<button type="button" data-o="exit">オーナーモードを終了</button>';
+    document.body.appendChild(p);
+    p.addEventListener("click", function (e) {
+      var a = e.target.getAttribute && e.target.getAttribute("data-o"); if (!a) return;
+      if (a === "again") { D.today = { date: "", id: "" }; toast("今日の制限を解除しました"); }
+      if (a === "p5" || a === "p30") {
+        var n = a === "p5" ? 5 : 30;
+        for (var k = 0; k < n; k++) {
+          if (D.got.length >= TRACKS.length) D.got = [];
+          var rest = TRACKS.filter(function (id) { return D.got.indexOf(id) < 0; });
+          D.got.push(rest[Math.floor(Math.random() * rest.length)]); D.total += 1;
+        }
+        var msg = celebrate(); toast("曲数を" + n + "曲ふやしました" + (msg ? "：" + msg : ""), 3000);
+      }
+      if (a === "rec") { D.recUsed -= 1; toast("推薦権を1つ追加しました"); }
+      if (a === "clear") { if (!confirm("記録をすべて消しますか？")) return; D = { got: [], today: { date: "", id: "" }, total: 0, ticketsUsed: 0, recUsed: 0, sent: [], done: false }; toast("記録を消しました"); }
+      if (a === "exit") { try { localStorage.removeItem(OKEY); } catch (err) {} p.remove(); toast("オーナーモードを終了しました"); return; }
+      save(); render(); shelf(); tick(); oState();
+    });
+    oState();
+  }
+  function oState() {
+    var el = $("oState"); if (!el) return;
+    el.textContent = "累計" + D.total + "曲／カード" + D.got.length + "曲／チケット" + tickets() + "枚／推薦権" + recRights() + "回";
+  }
+
   $("spin").addEventListener("click", function () { spin(false); });
   $("ticketBtn").addEventListener("click", function () { spin(true); });
   $("recBtn").addEventListener("click", recommend);
@@ -957,6 +1004,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   if (m && TRACKS.indexOf(m[1]) >= 0) { var i = TRACKS.indexOf(m[1]); setCapsule(i, true); show(i); }
   else if (drawnToday()) { var j = TRACKS.indexOf(D.today.id); setCapsule(j, true); show(j); }
   tick(); setInterval(tick, 1000);
+  ownerPanel();
 })();
 </script>
 </body>
