@@ -343,6 +343,17 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .hist-side .btn { margin-top: 10px; }
 .hist-side .note { margin-top: 10px; font-weight: 700; }
 .stamp.got { cursor: pointer; }
+
+/* レイアウト：スマホは縦に1列、PCは上の段を横並び＋下を2列タイル */
+.tiles { display: grid; gap: 24px; margin-top: 24px; }
+@media (min-width: 920px) {
+  .app { align-items: stretch; }
+  .result { position: static; display: flex; }
+  .result #resultCard { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .tiles { display: block; columns: 2; column-gap: 40px; margin-top: 40px; }
+  .tiles > .card { break-inside: avoid; margin: 0 0 40px; }
+  .hist-card { margin-top: 0; }
+}
 </style>
 </head>
 <body>
@@ -391,7 +402,11 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
         </div>
       </section>
 
-      <section class="card" id="rewards" style="margin-top:24px">
+    </aside>
+  </div>
+
+  <div class="tiles">
+      <section class="card" id="rewards">
         <h2 class="card-title">ごほうび</h2>
         <div class="title-box">
           <span class="title-label">いまの称号</span>
@@ -408,7 +423,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
         <p class="note">5曲ごとにスタンプ、10曲ごとにぼたんのステッカー、30曲ごとに称号・おかわりチケット・推薦権がもらえます。</p>
       </section>
 
-      <section class="card" id="bookCard" style="margin-top:24px">
+      <section class="card" id="bookCard">
         <h2 class="card-title">ぼたんのシール帳</h2>
         <p class="note" id="bookCount" style="margin:-6px 0 14px; font-weight:700"></p>
         <div class="book" id="book"></div>
@@ -419,7 +434,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
         <p class="note">保存した画像をXの投稿に添えると、シール帳を見せられます。</p>
       </section>
 
-      <section class="card" id="recCard" style="margin-top:24px">
+      <section class="card" id="recCard">
         <h2 class="card-title">この曲、聴いてほしい</h2>
         <p class="note" id="recLocked"></p>
         <div id="recOpen" hidden>
@@ -432,13 +447,12 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
         </div>
       </section>
 
-      <section class="card" style="margin-top:24px">
+      <section class="card">
         <div class="stamp-head"><h2 style="margin:0; font-size:1.1rem; font-weight:800">コンプリートカード</h2><button type="button" class="mini-btn" id="resetBtn">リセット</button></div>
         <div class="progress" aria-hidden="true"><i id="progBar" style="width:0%"></i></div>
         <div class="stamps" id="stamps"></div>
         <p class="note" id="stampNote"></p>
       </section>
-    </aside>
   </div>
 
   <section class="card hist-card" id="histCard" aria-labelledby="h-hist">
