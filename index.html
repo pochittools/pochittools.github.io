@@ -231,6 +231,10 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .more-item b { display: block; font-weight: 800; line-height: 1.35; }
 .more-item small { display: block; color: var(--sub); font-size: 0.78rem; line-height: 1.5; }
 
+/* 本文中のリンク（Zenn記事など） */
+article p a, .about p a { color: var(--ink); font-weight: 800; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 3px; }
+article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E; }
+
 /* トップページ */
 .brand-hero { display: flex; align-items: center; gap: 28px; margin: 12px 0 18px; flex-wrap: wrap; }
 .big-logo { flex: none; width: 104px; height: 104px; border-radius: 30px; background: var(--accent); border: 3px solid var(--edge); box-shadow: 6px 6px 0 var(--shadow); display: grid; place-items: center; transform: rotate(-6deg); }
@@ -347,6 +351,24 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
           <span class="ic"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="var(--sub)" stroke-width="3"/><path d="M17 10v7l5 3" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/></svg></span>
           <h3>次の棚を準備中</h3>
           <p>好きなものを、少しずつ並べていきます。</p>
+          <span class="go">もうすぐ</span>
+        </div>
+      </div>
+    </section>
+    <section class="shelf" id="story" aria-labelledby="h-story">
+      <div class="sec-head"><h2 id="h-story"><span class="shelf-tag" style="background: var(--c3); color: #1A1A2E">ぽちっと</span>の裏話</h2><span>作り方や選曲の話を、記事にまとめました</span></div>
+      <div class="tools">
+        <a class="tool" href="https://zenn.dev/pochittools/articles/ba4b8c95ec0b5b" target="_blank" rel="noopener">
+          <span class="ic" style="background: var(--c3)"><svg viewBox="0 0 34 34" fill="none"><path d="M8 5h13l6 6v18H8z" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><path d="M13 16h9M13 21h9" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>1日1曲しか引けない<wbr>音楽ガチャを作った話</h3>
+          <p>なぜ1日1回にしたのか、ごほうびをどう決めたのか。今日の一曲ガチャの設計を、心理学の話もまじえて書きました。</p>
+          <div class="tags"><span>Zenn</span><span>個人開発</span><span>UX</span></div>
+          <span class="go">読んでみる</span>
+        </a>
+        <div class="tool soon" aria-label="準備中の記事">
+          <span class="ic"><svg viewBox="0 0 34 34" fill="none"><path d="M7 27l3-8L23 6l5 5-13 13z" stroke="var(--sub)" stroke-width="3" stroke-linejoin="round"/><path d="M20 9l5 5" stroke="var(--sub)" stroke-width="3"/></svg></span>
+          <h3>選曲の話を準備中</h3>
+          <p>ガチャに入っている322曲をどう選んだのか、noteに書いています。</p>
           <span class="go">もうすぐ</span>
         </div>
       </div>
