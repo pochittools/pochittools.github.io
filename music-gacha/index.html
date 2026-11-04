@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>今日の一曲ガチャ｜ぽちっと</title>
-<meta name="description" content="作者のプレイリスト282曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<meta name="description" content="作者のプレイリスト302曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <link rel="canonical" href="https://pochittools.github.io/music-gacha/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
 <meta property="og:title" content="今日の一曲ガチャ｜ぽちっと">
-<meta property="og:description" content="作者のプレイリスト282曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<meta property="og:description" content="作者のプレイリスト302曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <meta property="og:url" content="https://pochittools.github.io/music-gacha/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
@@ -304,18 +304,45 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .owner p { margin: 0 0 8px; line-height: 1.5; }
 .owner button { display: block; width: 100%; margin-top: 6px; padding: 6px 8px; border: 2px solid #fff; border-radius: 8px; background: transparent; color: #fff; font-weight: 800; cursor: pointer; text-align: left; }
 .owner button:hover { background: rgba(255, 255, 255, .12); }
-.badge-book { margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--soft); }
-.book-head { margin: 0 0 10px; font-weight: 800; font-size: 0.9rem; }
-.badges { display: flex; flex-wrap: wrap; gap: 10px; max-height: 160px; overflow-y: auto; padding: 2px 4px 6px 2px; }
-.bdg { width: 40px; height: 40px; display: grid; place-items: center; border: 2.5px dashed var(--sub); border-radius: 12px; color: var(--sub); font-weight: 800; font-size: 0.78rem; transform: rotate(45deg); }
-.bdg { font-variant-numeric: tabular-nums; }
-.bdg::before { content: none; }
-.bdg.on { border-style: solid; border-color: var(--edge); background: var(--c2); color: #fff; box-shadow: 2px 2px 0 var(--shadow); }
-.bdg.big { width: 46px; height: 46px; border-radius: 50%; transform: none; }
-.bdg.big.on { background: var(--hero); color: #1A1A2E; box-shadow: 0 0 0 3px var(--accent), 2px 2px 0 3px var(--shadow); }
-.bdg.comp { background: var(--accent) !important; }
-.bdg > i { font-style: normal; transform: rotate(-45deg); }
-.bdg.big > i { transform: none; }
+.book { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 12px 8px; max-height: 420px; overflow-y: auto; padding: 4px 4px 8px; }
+.stk { text-align: center; }
+.stk svg { width: 100%; max-width: 86px; height: auto; display: block; margin: 0 auto; }
+.stk.on svg { filter: drop-shadow(2px 3px 0 rgba(26, 26, 46, .25)); }
+.stk:nth-child(3n+1).on svg { transform: rotate(-4deg); } .stk:nth-child(3n+2).on svg { transform: rotate(3deg); }
+.stk span { display: block; font-size: 0.68rem; font-weight: 800; line-height: 1.35; margin-top: 4px; color: var(--sub); }
+.stk.on span { color: var(--ink); }
+.stk.kira span { color: #C2185B; }
+.stk.kira svg { animation: shine 2.4s ease-in-out infinite; }
+@keyframes shine { 0%, 100% { filter: drop-shadow(2px 3px 0 rgba(26,26,46,.25)) brightness(1); } 50% { filter: drop-shadow(2px 3px 0 rgba(26,26,46,.25)) brightness(1.12) saturate(1.3); } }
+.stk.secret span { color: var(--c5); }
+.book-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.new-sticker { display: flex; align-items: center; gap: 14px; margin-top: 16px; padding: 12px 14px; border: 2.5px solid var(--edge); border-radius: 16px; background: var(--chip); box-shadow: 3px 3px 0 var(--shadow); }
+.new-sticker svg { width: 84px; height: 84px; flex: none; }
+.new-sticker b { display: block; font-weight: 800; color: var(--accent); }
+.new-sticker span { font-weight: 800; }
+.new-sticker.pop svg { animation: stpop .6s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes stpop { from { transform: scale(.3) rotate(-30deg); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .stk.kira svg, .new-sticker.pop svg { animation: none; } }
+.hist-card { margin-top: 40px; }
+.hist-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.hist-head .seg { margin: 0; }
+.seg { display: inline-grid; grid-auto-flow: column; gap: 4px; background: var(--soft); border-radius: 12px; padding: 4px; }
+.seg button { border: 0; background: transparent; border-radius: 9px; padding: 7px 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; color: var(--sub); }
+.seg button[aria-pressed="true"] { background: var(--hero); color: #1A1A2E; box-shadow: 0 0 0 2.5px var(--edge); }
+.hist-body { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 760px) { .hist-body { grid-template-columns: 1fr; } .hist-side { order: -1; } }
+.hist-list { list-style: none; margin: 0; padding: 4px; max-height: 380px; overflow-y: auto; display: grid; gap: 6px; border: 2.5px solid var(--edge); border-radius: 16px; background: var(--soft); }
+.hrow { width: 100%; display: grid; grid-template-columns: 14px auto minmax(0, 1fr) auto; gap: 10px; align-items: center; text-align: left; border: 2px solid transparent; background: var(--chip); border-radius: 10px; padding: 8px 10px; cursor: pointer; font: inherit; color: var(--ink); }
+.hrow:hover { border-color: var(--edge); }
+.hrow.sel { border-color: var(--edge); background: var(--hero); color: #1A1A2E; box-shadow: 2px 2px 0 var(--shadow); }
+.hdot { width: 14px; height: 14px; border-radius: 50%; background: var(--cap); border: 2px solid var(--edge); }
+.hno { font-weight: 800; font-variant-numeric: tabular-nums; }
+.htitle { font-size: 0.82rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hdate { font-size: 0.75rem; font-weight: 700; color: var(--sub); white-space: nowrap; }
+.hrow.sel .hdate { color: #1A1A2E; }
+.hist-side .btn { margin-top: 10px; }
+.hist-side .note { margin-top: 10px; font-weight: 700; }
+.stamp.got { cursor: pointer; }
 </style>
 </head>
 <body>
@@ -326,7 +353,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     <div class="title">
       <span class="sticker" aria-hidden="true">無料</span>
       <h1>今日の一曲ガチャ</h1>
-      <p>作者のプレイリスト282曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
+      <p>作者のプレイリスト302曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
     </div>
   </header>
 
@@ -376,12 +403,20 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
         </div>
         <p class="note" id="cycleNote" style="margin-top:8px; font-weight:700"></p>
         <p class="note" id="haul"></p>
-        <div class="badge-book">
-          <p class="book-head">バッジ帳</p>
-          <div class="badges" id="badges"></div>
-        </div>
+        <div class="new-sticker" id="newSticker" hidden></div>
         <div class="ticket-row"><span class="ticket-ic" aria-hidden="true">おかわり</span><span>おかわりチケット <b id="ticketCount">0</b>枚</span></div>
-        <p class="note">5曲ごとにスタンプ、10曲ごとにバッジ、30曲ごとに称号・おかわりチケット・推薦権がもらえます。</p>
+        <p class="note">5曲ごとにスタンプ、10曲ごとにぼたんのステッカー、30曲ごとに称号・おかわりチケット・推薦権がもらえます。</p>
+      </section>
+
+      <section class="card" id="bookCard" style="margin-top:24px">
+        <h2 class="card-title">ぼたんのシール帳</h2>
+        <p class="note" id="bookCount" style="margin:-6px 0 14px; font-weight:700"></p>
+        <div class="book" id="book"></div>
+        <div class="book-actions">
+          <button type="button" class="btn" id="bookSave">画像で保存</button>
+          <a class="btn" id="bookX" href="#" target="_blank" rel="noopener">Xでポスト</a>
+        </div>
+        <p class="note">保存した画像をXの投稿に添えると、シール帳を見せられます。</p>
       </section>
 
       <section class="card" id="recCard" style="margin-top:24px">
@@ -406,6 +441,22 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     </aside>
   </div>
 
+  <section class="card hist-card" id="histCard" aria-labelledby="h-hist">
+    <div class="hist-head">
+      <div><h2 id="h-hist" class="card-title" style="margin-bottom:2px">これまでに引いた曲</h2><p class="note" id="histCount" style="margin:0"></p></div>
+      <div class="seg" role="group" aria-label="並び順"><button type="button" data-ho="new" aria-pressed="true">新しい順</button><button type="button" data-ho="num" aria-pressed="false">番号順</button></div>
+    </div>
+    <div class="hist-body" id="histBody">
+      <ul class="hist-list" id="histList"></ul>
+      <div class="hist-side">
+        <div class="player empty" id="histPlayer">リストから曲を選ぶと、ここで聴けます。</div>
+        <p class="note" id="histInfo"></p>
+        <a class="btn" id="histSp" href="#" target="_blank" rel="noopener" hidden>Spotifyで開く</a>
+      </div>
+    </div>
+    <div class="empty" id="histEmpty">まだ1曲も引いていません。ガチャを回すと、ここにたまっていきます。</div>
+  </section>
+
   <section class="card listener-shelf" aria-labelledby="h-listener">
     <h2 id="h-listener" class="card-title">今日のリスナー推薦</h2>
     <p class="lead">30曲そろえたリスナーが推薦してくれた曲から、作者が選んだものを1日1曲ずつ紹介します。</p>
@@ -421,7 +472,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   <article>
     <h2>このガチャについて</h2>
     <p>放送の現場で働く作者が、ふだん聴いている邦楽のプレイリストから1曲をランダムに選びます。ガチャは1日1回、深夜0時にまた回せるようになります。全曲を引き終わるまで、同じ曲は出てきません。引いた曲はコンプリートカードに色がつき、押せばもう一度聴けます。</p>
-    <p>5曲ごとにスタンプ、10曲ごとにバッジ、30曲ごとに称号がもらえます。30曲ごとに「おかわりチケット」（好きな日にもう1回引ける）と、おすすめの曲を1曲推薦できる権利もつきます。</p>
+    <p>5曲ごとにスタンプ、10曲ごとにマスコット「ぼたん」のステッカー、30曲ごとに称号がもらえます。ステッカーはまれにキラキラの「キラ」になり、条件がヒミツのシークレットステッカーもあります。30曲ごとに「おかわりチケット」（好きな日にもう1回引ける）と、おすすめの曲を1曲推薦できる権利もつきます。</p>
     <p>曲の再生にはSpotifyの埋め込みプレーヤーを使っています。Spotifyにログインしていると曲を最後まで、ログインしていない場合は試聴版が再生されます。コンプリートカードやごほうびの記録は、お使いのブラウザの中にだけ保存されます。推薦された曲とニックネームは作者に届き、採用された場合はこのページに掲載されます。</p>
   </article>
 
@@ -732,7 +783,27 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     "1XeOqgzh2fZhmgxnmyiIJ8",
     "4fDWZUtMp2Aoe8wmenloa7",
     "4ReCD8wyqRUxjqg6qOhC8u",
-    "4PU60inccBpdPS46QveEHc"
+    "4PU60inccBpdPS46QveEHc",
+    "549qYN9K5xXGnW1jih0iau",
+    "46bBxYiMQx0PdpbAswwv86",
+    "6mMpeDOLZGhF6p82pRFgOZ",
+    "2JFRl4AMLjl7sO0lEQ2yXs",
+    "7cKoafWOIHW3R3CG7eXWm7",
+    "4ILt1uY9aPNhsQwfdIpc4k",
+    "6tucykg7Srw72sYKMSyPys",
+    "1V7xIhsDAk2GoITZFBHwAq",
+    "2YfE0VF7XENPWTf7hP6TQU",
+    "4QQZw019EXzf6ZDi4ytD5Z",
+    "76oCvJj6LRoed2754GybpH",
+    "52NqmuUOLbw9xWdd8wpyka",
+    "0CIaxGq2u4TwdU83PiejQD",
+    "7vR4kFTyEVRqkLDh2gdym9",
+    "1OjuHWcYwr2j5IMM83mhHE",
+    "4GKijBSQdb90GQP4TQh8d8",
+    "1X1D6ZPjreIX7iBfm2i3HC",
+    "4UnyffxWl8XjHRegnnESbu",
+    "2FzLfVta0Sunv6EYkWz8Ua",
+    "30eB01pysTKP0ekul7OFMn"
   ];
   /* ===== リスナー推薦の棚（採用した曲をここに足す：{ id: "曲ID", by: "ニックネーム" }） ===== */
   var LISTENER = [
@@ -755,7 +826,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   var KEY = "pochitto-music-gacha";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var D = { got: [], today: { date: "", id: "" }, total: 0, ticketsUsed: 0, recUsed: 0, sent: [], done: false };
+  var D = { got: [], today: { date: "", id: "" }, total: 0, ticketsUsed: 0, recUsed: 0, sent: [], done: false, stickers: [], secrets: [], hist: [] };
   var current = -1, spinning = false, turns = 0;
 
   function pad(n) { return (n < 10 ? "0" : "") + n; }
@@ -768,6 +839,10 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       D.today = d.today || D.today;
       D.total = typeof d.total === "number" ? d.total : D.got.length;
       D.ticketsUsed = d.ticketsUsed || 0; D.recUsed = d.recUsed || 0; D.sent = d.sent || []; D.done = !!d.done;
+      D.secrets = d.secrets || [];
+      if (d.hist) D.hist = d.hist.filter(function (h) { return TRACKS.indexOf(h.id) >= 0; });
+      else D.hist = D.got.map(function (id) { return { id: id, d: id === (d.today && d.today.id) ? d.today.date : "" }; });
+      if (d.stickers) D.stickers = d.stickers; else { D.stickers = []; for (var q = 10; q <= D.total; q += 10) if (stickerDef(q)) grantSticker(q); }
     } catch (e) {}
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(D)); } catch (e) {} }
@@ -785,6 +860,161 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     var t = ""; TITLES.forEach(function (x) { if (D.total >= x[0]) t = x[1]; }); return t;
   }
   function trackIdFrom(s) { var m = String(s).match(/open\.spotify\.com\/(?:intl-[a-z]{2}\/)?track\/([A-Za-z0-9]{22})/); return m ? m[1] : null; }
+
+  /* ===================== ぼたんのステッカー ===================== */
+  var INK = "#1A1A2E";
+  var BG = ["#FFE7F1", "#E3F2FF", "#E0FAF4", "#FFF4D1", "#EFE6FF", "#FFE9DF"];
+  var STICKERS = [
+    [10, "はじめまして", ""], [20, "ヘッドホン", "A"], [30, "カセット", "B"], [40, "うたた寝", "C"], [50, "レコード", "D"],
+    [60, "マイク", "E"], [70, "イヤホン", "F"], [80, "ラジオ", "G"], [90, "ギター", "H"], [100, "100曲の王冠", "I"],
+    [110, "スピーカー", "J"], [120, "夜ふかし", "L"], [130, "雨の日", "K"], [140, "ペンライト", "M"], [150, "サングラス", "N"],
+    [160, "鼻歌", "O"], [170, "夜のヘッドホン", "AL"], [180, "カセットでうたた寝", "BC"], [190, "レコードとサングラス", "DN"], [200, "200曲の王冠", "IO"],
+    [210, "マイクとペンライト", "EM"], [220, "雨の日のイヤホン", "KF"], [230, "ラジオで夜ふかし", "GL"], [240, "ギターとサングラス", "HN"], [250, "スピーカーで鼻歌", "JO"],
+    [260, "ヘッドホンでうたた寝", "AC"], [270, "王冠とレコード", "ID"], [280, "マイクとサングラス", "EN"], [290, "ペンライトと夜", "ML"], [300, "300曲の王冠", "IN"]
+  ];
+  var SECRETS = [
+    ["night", "眠れない夜", "深夜0〜4時にガチャを回した", "Lw"],
+    ["zoro", "ゾロ目", "No.111のようなゾロ目を引いた", "Zw"],
+    ["okawari", "おかわり", "はじめておかわりチケットを使った", "Pw"],
+    ["saiyou", "推薦採用", "推薦した曲が採用された", "Qw"]
+  ];
+  function face(type) {
+    var s = 'fill="none" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"';
+    if (type === "closed") return '<path d="M44 61 h10 M66 61 h10 M58 68 h4" ' + s + "/>";
+    if (type === "awake") return '<circle cx="49" cy="60" r="3" fill="' + INK + '"/><circle cx="71" cy="60" r="3" fill="' + INK + '"/><path d="M57 67 q3 3 6 0" ' + s + "/>";
+    if (type === "hum") return '<circle cx="49" cy="60" r="3" fill="' + INK + '"/><circle cx="71" cy="60" r="3" fill="' + INK + '"/><ellipse cx="60" cy="68" rx="2.6" ry="3" fill="' + INK + '"/>';
+    if (type === "none") return '<path d="M57 68 q3 3 6 0" ' + s + "/>";
+    return '<path d="M44 59 q5 3 10 0 M66 59 q5 3 10 0 M57 67 q3 3 6 0" ' + s + "/>";
+  }
+  var ST = 'stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"';
+  var BEHIND = {
+    D: '<circle cx="90" cy="40" r="22" fill="' + INK + '"/><circle cx="90" cy="40" r="15" fill="none" stroke="#444a66" stroke-width="1.5"/><circle cx="90" cy="40" r="7" fill="#FFD93D"/>',
+    H: '<path d="M88 78 L110 26" stroke="#8B5A2B" stroke-width="7" stroke-linecap="round"/><path d="M88 78 L110 26" stroke="' + INK + '" stroke-width="2" stroke-dasharray="3 5"/><ellipse cx="94" cy="88" rx="15" ry="13" fill="#FFB300" ' + ST + '/><circle cx="94" cy="88" r="4" fill="' + INK + '"/>',
+    J: '<rect x="4" y="54" width="22" height="42" rx="4" fill="#3D5AFE" ' + ST + '/><circle cx="15" cy="66" r="5" fill="#fff" ' + ST + '/><circle cx="15" cy="84" r="7" fill="#fff" ' + ST + "/>",
+    K: '<path d="M22 32 Q60 -8 98 32 Z" fill="#00C2A8" ' + ST + '/><path d="M41 32 Q60 6 79 32" fill="none" stroke="' + INK + '" stroke-width="2"/>',
+    E: '<path d="M102 104 V60" stroke="' + INK + '" stroke-width="3"/><path d="M92 104 h20" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"/>'
+  };
+  var FRONT = {
+    A: '<path d="M26 62 Q26 16 60 16 Q94 16 94 62" fill="none" stroke="' + INK + '" stroke-width="5" stroke-linecap="round"/><rect x="17" y="52" width="13" height="22" rx="5" fill="#3D5AFE" ' + ST + '/><rect x="90" y="52" width="13" height="22" rx="5" fill="#3D5AFE" ' + ST + "/>",
+    B: '<rect x="36" y="74" width="48" height="28" rx="4" fill="#00C2A8" ' + ST + '/><rect x="43" y="79" width="34" height="11" rx="2" fill="#fff" stroke="' + INK + '" stroke-width="2"/><circle cx="52" cy="84.5" r="3" fill="' + INK + '"/><circle cx="68" cy="84.5" r="3" fill="' + INK + '"/>',
+    C: '<g fill="#9B5DE5" stroke="' + INK + '" stroke-width="2"><ellipse cx="98" cy="40" rx="5" ry="4"/><ellipse cx="108" cy="28" rx="4" ry="3.2"/></g><path d="M102.5 39 V24 M111.5 27 V16" stroke="' + INK + '" stroke-width="2.5" stroke-linecap="round"/>',
+    E: '<ellipse cx="102" cy="52" rx="7" ry="9" fill="#C9CCE0" ' + ST + '/><path d="M96 50 h12 M96 55 h12" stroke="' + INK + '" stroke-width="1.5"/>',
+    F: '<path d="M33 66 Q36 84 60 86 Q84 84 87 66" fill="none" stroke="#fff" stroke-width="2.5"/><circle cx="31" cy="62" r="6" fill="#fff" ' + ST + '/><circle cx="89" cy="62" r="6" fill="#fff" ' + ST + "/>",
+    G: '<path d="M80 72 L98 46" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"/><rect x="32" y="72" width="56" height="30" rx="6" fill="#FF6B35" ' + ST + '/><circle cx="47" cy="87" r="8" fill="#fff" ' + ST + '/><rect x="62" y="80" width="18" height="6" rx="2" fill="#fff" stroke="' + INK + '" stroke-width="2"/>',
+    I: '<path d="M42 33 L46 16 L54 27 L60 12 L66 27 L74 16 L78 33 Z" fill="#FFD93D" ' + ST + '/><circle cx="60" cy="25" r="2.5" fill="#FF5FA2"/>',
+    L: '<path d="M102 12 A13 13 0 1 0 108 36 A10 10 0 1 1 102 12Z" fill="#FFD93D" ' + ST + '/><path d="M20 30 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z M30 16 l1 3 3 1 -3 1 -1 3 -1 -3 -3 -1 3 -1z" fill="#FFD93D" stroke="' + INK + '" stroke-width="1.5"/>',
+    M: '<path d="M90 84 L106 38" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/><path d="M90 84 L106 38" stroke="#FF5FA2" stroke-width="4" stroke-linecap="round"/><circle cx="106" cy="36" r="6" fill="#4BE1A0" ' + ST + "/>",
+    N: '<rect x="39" y="53" width="19" height="11" rx="4" fill="' + INK + '"/><rect x="62" y="53" width="19" height="11" rx="4" fill="' + INK + '"/><path d="M58 57 h4" stroke="' + INK + '" stroke-width="3"/><path d="M43 56 l4 0" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',
+    O: '<g fill="#9B5DE5" stroke="' + INK + '" stroke-width="2"><ellipse cx="20" cy="46" rx="5" ry="4"/><ellipse cx="30" cy="30" rx="4" ry="3.2"/></g><path d="M24.5 45 V30 M33.5 29 V18" stroke="' + INK + '" stroke-width="2.5" stroke-linecap="round"/>',
+    Z: '<path d="M18 30 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z M100 30 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill="#FFD93D" stroke="' + INK + '" stroke-width="1.5"/><text x="60" y="27" text-anchor="middle" font-size="15" font-weight="800" fill="' + INK + '" font-family="sans-serif">777</text>',
+    P: '<g ' + ST + '><circle cx="34" cy="96" r="9" fill="#fff"/><path d="M25 96 A9 9 0 0 1 43 96 Z" fill="#00C2A8"/><circle cx="86" cy="96" r="9" fill="#fff"/><path d="M77 96 A9 9 0 0 1 95 96 Z" fill="#FFD93D"/></g>',
+    Q: '<path d="M52 72 L56 84 M68 72 L64 84" stroke="#3D5AFE" stroke-width="5"/><circle cx="60" cy="90" r="10" fill="#FFD93D" ' + ST + '/><path d="M60 84 l2 4 4 .5 -3 3 1 4 -4 -2 -4 2 1 -4 -3 -3 4 -.5z" fill="#FF5FA2"/>'
+  };
+  function faceFor(code) {
+    if (code.indexOf("N") >= 0) return "none";
+    if (code.indexOf("C") >= 0) return "closed";
+    if (/[OQ]/.test(code)) return "hum";
+    if (/[LZPw]/.test(code)) return "awake";
+    return "sleepy";
+  }
+  function stickerInner(code, idx, kira, big) {
+    var bg = BG[idx % BG.length], b = "", f = "";
+    for (var i = 0; i < code.length; i++) { var c = code.charAt(i); if (BEHIND[c]) b += BEHIND[c]; if (FRONT[c]) f += FRONT[c]; }
+    var dome = kira ? "url(#kiraG)" : "#FF5FA2";
+    var ring = big ? '<circle cx="60" cy="62" r="57" fill="none" stroke="#FFB300" stroke-width="4"/>' : "";
+    var spark = kira ? '<path d="M98 92 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z M20 86 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z" fill="#fff" stroke="' + INK + '" stroke-width="1.5"/>' : "";
+    return '<circle cx="60" cy="62" r="57" fill="#fff" stroke="#D5D9EA" stroke-width="1.5"/>' + ring +
+      '<circle cx="60" cy="62" r="50" fill="' + (kira ? "url(#kiraBg)" : bg) + '"/>' + b +
+      '<g ' + ST + '><ellipse cx="46" cy="100" rx="8" ry="5" fill="#FFD93D"/><ellipse cx="74" cy="100" rx="8" ry="5" fill="#FFD93D"/><rect x="26" y="76" width="68" height="20" rx="9" fill="#FFD93D"/><path d="M30 78 Q30 32 60 32 Q90 32 90 78 Z" fill="' + dome + '"/></g>' +
+      '<ellipse cx="45" cy="46" rx="7" ry="3.5" fill="#fff" opacity=".8" transform="rotate(-30 45 46)"/>' +
+      '<ellipse cx="42" cy="67" rx="5" ry="3" fill="#C2185B" opacity=".3"/><ellipse cx="78" cy="67" rx="5" ry="3" fill="#C2185B" opacity=".3"/>' +
+      face(faceFor(code)) + f + spark;
+  }
+  var KDEFS = '<linearGradient id="kiraG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9AC8"/><stop offset=".35" stop-color="#FFE47A"/><stop offset=".65" stop-color="#7FE3D6"/><stop offset="1" stop-color="#A9B8FF"/></linearGradient>' +
+    '<linearGradient id="kiraBg" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9F7FF"/><stop offset=".5" stop-color="#FFF6D6"/><stop offset="1" stop-color="#FDE6FF"/></linearGradient>';
+  function lockedInner(label) {
+    return '<circle cx="60" cy="62" r="56" fill="none" stroke="#9AA0BC" stroke-width="2.5" stroke-dasharray="6 6"/>' +
+      '<g fill="#D5D9EA"><ellipse cx="46" cy="100" rx="8" ry="5"/><ellipse cx="74" cy="100" rx="8" ry="5"/><rect x="26" y="76" width="68" height="20" rx="9"/><path d="M30 78 Q30 32 60 32 Q90 32 90 78 Z"/></g>' +
+      '<text x="60" y="66" text-anchor="middle" font-size="18" font-weight="800" fill="#fff" font-family="sans-serif">' + label + "</text>";
+  }
+  function svg120(inner) { return '<svg viewBox="-2 -2 124 124" aria-hidden="true">' + inner + "</svg>"; }
+
+  function stickerOwned(n) { for (var i = 0; i < D.stickers.length; i++) if (D.stickers[i].n === n) return D.stickers[i]; return null; }
+  function grantSticker(n) {
+    if (stickerOwned(n)) return null;
+    var kira = Math.random() < 1 / 20, s = { n: n, k: kira }; D.stickers.push(s); return s;
+  }
+  function grantSecret(key) { if (D.secrets.indexOf(key) >= 0) return false; D.secrets.push(key); return true; }
+  function stickerDef(n) { for (var i = 0; i < STICKERS.length; i++) if (STICKERS[i][0] === n) return { def: STICKERS[i], idx: i }; return null; }
+
+  var preview = { all: false, kira: false };
+  function renderBook() {
+    var box = $("book"); box.innerHTML = "";
+    var maxN = STICKERS.length, got = 0, kiraN = 0;
+    STICKERS.forEach(function (s, i) {
+      var own = stickerOwned(s[0]), show = own || preview.all, k = own ? own.k : false;
+      if (preview.all) k = preview.kira;
+      var big = s[0] % 30 === 0, cell = document.createElement("div");
+      cell.className = "stk" + (show ? " on" : "") + (k && show ? " kira" : "");
+      cell.innerHTML = show ? svg120(stickerInner(s[2], i, k, big)) : svg120(lockedInner(s[0]));
+      var cap = document.createElement("span"); cap.textContent = show ? s[1] + (k ? "（キラ）" : "") : s[0] + "曲"; cell.appendChild(cap);
+      cell.title = show ? s[0] + "曲：" + s[1] + (k ? "（キラ）" : "") : "あと" + Math.max(0, s[0] - D.total) + "曲";
+      if (own) { got++; if (own.k) kiraN++; }
+      box.appendChild(cell);
+    });
+    var sgot = 0;
+    SECRETS.forEach(function (s, i) {
+      var own = D.secrets.indexOf(s[0]) >= 0, show = own || preview.all, cell = document.createElement("div");
+      cell.className = "stk secret" + (show ? " on" : "");
+      cell.innerHTML = show ? svg120(stickerInner(s[3], i + 2, false, false)) : svg120(lockedInner("？"));
+      var cap = document.createElement("span"); cap.textContent = show ? s[1] : "シークレット"; cell.appendChild(cap);
+      cell.title = show ? s[1] + "：" + s[2] : "条件はヒミツ";
+      if (own) sgot++;
+      box.appendChild(cell);
+    });
+    $("bookCount").textContent = "ステッカー " + got + "/" + maxN + "枚・シークレット " + sgot + "/" + SECRETS.length + "枚" + (kiraN ? "・キラ " + kiraN + "枚" : "");
+    $("bookX").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("ぼたんのシール帳、" + got + "/" + maxN + "枚まで集まった！" + (kiraN ? "（キラ" + kiraN + "枚）" : "") + " #今日の一曲ガチャ") + "&url=" + encodeURIComponent(location.href.split("#")[0]);
+  }
+  function showNew(list) {
+    if (!list.length) return;
+    var s = list[list.length - 1], el = $("newSticker");
+    el.innerHTML = svg120(s.inner) + '<div><b>' + (s.kira ? "キラ！ " : "") + "新しいステッカー</b><span>" + s.name + "</span></div>";
+    el.hidden = false; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
+  }
+
+  /* シール帳を画像で保存（X用の縦長4:5） */
+  function saveBook() {
+    var W = 1080, H = 1350, cols = 6, cell = 160, gx = (W - cols * cell) / 2, gy = 250;
+    var items = [];
+    STICKERS.forEach(function (s, i) { var o = stickerOwned(s[0]); items.push(o ? stickerInner(s[2], i, o.k, s[0] % 30 === 0) : lockedInner(s[0])); });
+    SECRETS.forEach(function (s, i) { items.push(D.secrets.indexOf(s[0]) >= 0 ? stickerInner(s[3], i + 2, false, false) : lockedInner("？")); });
+    var body = "";
+    items.forEach(function (inner, i) {
+      var x = gx + (i % cols) * cell + 14, y = gy + Math.floor(i / cols) * cell + 6;
+      body += '<g transform="translate(' + x + " " + y + ') scale(1.08)">' + inner + "</g>";
+    });
+    var got = D.stickers.length, k = D.stickers.filter(function (s) { return s.k; }).length;
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '"><defs>' + KDEFS +
+      '<pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2" fill="rgba(26,26,46,.12)"/></pattern></defs>' +
+      '<rect width="100%" height="100%" fill="#CFE6FF"/><rect width="100%" height="100%" fill="url(#dots)"/>' +
+      '<rect x="40" y="40" width="1000" height="1270" rx="40" fill="#fff" stroke="' + INK + '" stroke-width="6"/>' +
+      '<text x="540" y="140" text-anchor="middle" font-size="64" font-weight="800" fill="' + INK + '" font-family="Hiragino Maru Gothic ProN, M PLUS Rounded 1c, sans-serif">ぼたんのシール帳</text>' +
+      '<text x="540" y="200" text-anchor="middle" font-size="32" font-weight="700" fill="#555872" font-family="Hiragino Maru Gothic ProN, M PLUS Rounded 1c, sans-serif">' + got + " / " + STICKERS.length + "枚" + (k ? "　キラ " + k + "枚" : "") + "　シークレット " + D.secrets.length + " / " + SECRETS.length + "</text>" +
+      body +
+      '<text x="540" y="1280" text-anchor="middle" font-size="26" font-weight="700" fill="#555872" font-family="sans-serif">今日の一曲ガチャ｜pochittools.github.io/music-gacha</text></svg>';
+    var img = new Image();
+    img.onload = function () {
+      var c = document.createElement("canvas"); c.width = W; c.height = H;
+      c.getContext("2d").drawImage(img, 0, 0);
+      c.toBlob(function (blob) {
+        var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "botan-sticker-book.png";
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+        toast("シール帳を画像で保存しました");
+      });
+    };
+    img.onerror = function () { toast("画像を作れませんでした"); };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }
 
   /* ---------- マシン ---------- */
   function drawBalls() {
@@ -819,7 +1049,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     var n = TRACKS.length, g = D.got.length;
     $("leftCount").textContent = g >= n ? "全" + n + "曲コンプリート！ 次からもう一周" : "あと" + (n - g) + "曲でコンプリート";
     $("progBar").style.width = (g / n * 100) + "%";
-    $("stampNote").textContent = n + "曲中 " + g + "曲ゲット。色のついた番号を押すと、その曲をもう一度聴けます。";
+    $("stampNote").textContent = n + "曲中 " + g + "曲ゲット。色のついた番号を押すと「これまでに引いた曲」で聴けます。";
 
     /* コンプリートカード */
     var box = $("stamps"); box.innerHTML = "";
@@ -827,7 +1057,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       var has = D.got.indexOf(id) >= 0, b = document.createElement("button");
       b.type = "button"; b.className = "stamp" + (has ? " got" : "") + (i === current ? " now" : "");
       b.textContent = pad3(i + 1);
-      if (has) { b.style.setProperty("--cap", colorOf(i)); b.setAttribute("aria-label", "No." + pad3(i + 1) + "をもう一度聴く"); b.addEventListener("click", function () { setCapsule(i, true); show(i); }); }
+      if (has) { b.style.setProperty("--cap", colorOf(i)); b.setAttribute("aria-label", "No." + pad3(i + 1) + "をもう一度聴く"); b.addEventListener("click", function () { playHist(id, true); }); }
       else { b.disabled = true; b.setAttribute("aria-label", "No." + pad3(i + 1) + "（まだ出ていません）"); }
       box.appendChild(b);
     });
@@ -842,22 +1072,11 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     for (var k = 0; k < nodes.length; k++) nodes[k].classList.toggle("on", c >= (k + 1) * 5);
     $("cycleNote").textContent = c === 30 ? "大ゴール達成！ 次の1曲から、また新しいゴールがはじまります。" : "次の大ゴールまで あと" + (30 - c) + "曲";
     var nextTitle = null; TITLES.forEach(function (x) { if (!nextTitle && x[0] > D.total) nextTitle = x; });
-    $("haul").textContent = "これまでに スタンプ" + Math.floor(D.total / 5) + "個・バッジ" + Math.floor(D.total / 10) + "個・大ゴール" + bigCount() + "回" +
+    $("haul").textContent = "これまでに スタンプ" + Math.floor(D.total / 5) + "個・ステッカー" + D.stickers.length + "枚・大ゴール" + bigCount() + "回" +
       (nextTitle ? "。次の称号は" + nextTitle[0] + "曲で。" : "");
 
-    /* バッジ帳：10曲ごとのバッジ。30曲ごとは称号つきの大バッジ。次の2つは鍵つきで見せる */
-    var bb = $("badges"); bb.innerHTML = "";
-    var have = Math.floor(D.total / 10), show = Math.max(3, have + 2);
-    for (var q = 1; q <= show; q++) {
-      var nSongs = q * 10, big = nSongs % 30 === 0, el = document.createElement("span");
-      var tt = null; TITLES.forEach(function (x) { if (x[0] === nSongs) tt = x[1]; });
-      el.className = "bdg" + (big ? " big" : "") + (q <= have ? " on" : "");
-      el.innerHTML = "<i>" + nSongs + "</i>";
-      el.title = q <= have ? nSongs + "曲バッジ" + (tt ? "（称号「" + tt + "」）" : "") : "あと" + (nSongs - D.total) + "曲";
-      el.setAttribute("aria-label", el.title);
-      bb.appendChild(el);
-    }
-    if (D.done) { var cp = document.createElement("span"); cp.className = "bdg big on comp"; cp.textContent = "全"; cp.title = "コンプリート（称号「" + COMPLETE_TITLE + "」）"; bb.appendChild(cp); }
+    renderBook();
+    if ($("histList")) renderHist();
 
     /* チケット */
     var tk = tickets();
@@ -882,12 +1101,30 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   }
 
   /* ---------- 回す ---------- */
+  function isZoro(n) { var s = String(n); return s.length >= 2 && /^(\d)\1+$/.test(s); }
+  function addDraw(i, useTicket) {
+    var id = TRACKS[i], news = [];
+    if (D.got.length >= TRACKS.length) D.got = [];
+    D.got.push(id); D.total += 1;
+    if (useTicket) D.ticketsUsed += 1;
+    D.hist = D.hist.filter(function (h) { return h.id !== id; }); D.hist.push({ id: id, d: dateKey() });
+    if (D.total % 10 === 0) {
+      var sd = stickerDef(D.total), g = sd ? grantSticker(D.total) : null;
+      if (g) news.push({ inner: stickerInner(sd.def[2], sd.idx, g.k, D.total % 30 === 0), name: sd.def[1], kira: g.k });
+    }
+    function sec(key) { if (grantSecret(key)) { var j = 0; SECRETS.forEach(function (x, k) { if (x[0] === key) j = k; }); news.push({ inner: stickerInner(SECRETS[j][3], j + 2, false, false), name: "シークレット「" + SECRETS[j][1] + "」", kira: false }); } }
+    if (new Date().getHours() < 4) sec("night");
+    if (isZoro(i + 1)) sec("zoro");
+    if (useTicket) sec("okawari");
+    return news;
+  }
+  function checkAdopted() { if (LISTENER.some(function (x) { return D.sent.indexOf(x.id) >= 0; }) && grantSecret("saiyou")) { save(); return true; } return false; }
   function celebrate() {
     var T = D.total, n = TRACKS.length;
     if (D.got.length >= n && !D.done) { D.done = true; save(); return "コンプリート！ 称号「" + COMPLETE_TITLE + "」をゲット"; }
-    if (T % 30 === 0) return "大ゴール！ 称号「" + title() + "」と、おかわりチケット・推薦権をゲット";
+    if (T % 30 === 0) return "大ゴール！ 称号「" + title() + "」と、特別なステッカー・おかわりチケット・推薦権をゲット";
     if (T === 1) return "称号「はじめての一曲」をゲット";
-    if (T % 10 === 0) return T + "曲バッジをゲット！";
+    if (T % 10 === 0) { var sd = stickerDef(T), o = stickerOwned(T); return sd ? (o && o.k ? "キラ！ " : "") + "ステッカー「" + sd.def[1] + "」をゲット" : ""; }
     if (T % 5 === 0) return "スタンプをゲット！";
     return "";
   }
@@ -911,12 +1148,12 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       setCapsule(i, false);
       setTimeout(function () {
         cap.classList.add("open");
-        var id = TRACKS[i];
-        D.got.push(id); D.total += 1; D.today = { date: dateKey(), id: id };
-        if (useTicket) D.ticketsUsed += 1;
+        var news = addDraw(i, useTicket);
+        D.today = { date: dateKey(), id: TRACKS[i] };
         save();
         show(i);
-        var msg = celebrate(); render();
+        var msg = celebrate(); render(); showNew(news);
+        if (!msg && news.length) msg = news[news.length - 1].name + "をゲット！";
         if (msg) { setTimeout(function () { toast(msg, 3200); }, 500); $("rewards").classList.remove("reveal"); void $("rewards").offsetWidth; $("rewards").classList.add("reveal"); }
         spinning = false; $("spin").disabled = false; $("ticketBtn").disabled = false; tick();
         if (window.innerWidth < 920) $("resultCard").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
@@ -941,6 +1178,59 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       toast("推薦を送りました！ 採用されたら棚に並びます", 3000); render();
     }).catch(function () { msg.textContent = "送れませんでした。通信状況を確かめて、もう一度お試しください。"; })
       .then(function () { $("recBtn").disabled = false; });
+  }
+
+
+  /* ---------- これまでの曲 ---------- */
+  var TKEY = KEY + "-titles", titles = {}, histOrder = "new", histSel = null, fetching = {};
+  try { titles = JSON.parse(localStorage.getItem(TKEY) || "{}"); } catch (e) { titles = {}; }
+  function niceDate(k) {
+    if (!k) return "日付の記録前";
+    var p = k.split("-"), y = +p[0], now = new Date();
+    return (y !== now.getFullYear() ? y + "年" : "") + (+p[1]) + "月" + (+p[2]) + "日";
+  }
+  function fetchTitle(id, cb) {
+    if (titles[id] || fetching[id] || !window.fetch) return;
+    fetching[id] = true;
+    fetch("https://open.spotify.com/oembed?url=" + encodeURIComponent("https://open.spotify.com/track/" + id))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.title) { titles[id] = j.title; try { localStorage.setItem(TKEY, JSON.stringify(titles)); } catch (e) {} if (cb) cb(); } })
+      .catch(function () {});
+  }
+  function renderHist() {
+    var list = $("histList"); list.innerHTML = "";
+    var items = D.hist.slice();
+    if (histOrder === "new") items.reverse();
+    else items.sort(function (a, b) { return TRACKS.indexOf(a.id) - TRACKS.indexOf(b.id); });
+    $("histCount").textContent = items.length ? items.length + "曲を引きました" : "";
+    $("histEmpty").hidden = items.length > 0;
+    $("histBody").hidden = items.length === 0;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-ho]"), function (b) { b.setAttribute("aria-pressed", b.dataset.ho === histOrder); });
+    var queue = [];
+    items.forEach(function (h) {
+      var i = TRACKS.indexOf(h.id), li = document.createElement("li"), b = document.createElement("button");
+      b.type = "button"; b.className = "hrow" + (h.id === histSel ? " sel" : "");
+      b.style.setProperty("--cap", colorOf(i));
+      b.innerHTML = '<span class="hdot"></span><span class="hno">No.' + pad3(i + 1) + '</span><span class="htitle"></span><span class="hdate"></span>';
+      b.querySelector(".htitle").textContent = titles[h.id] || "";
+      b.querySelector(".hdate").textContent = niceDate(h.d);
+      b.addEventListener("click", function () { playHist(h.id, false); });
+      li.appendChild(b); list.appendChild(li);
+      if (!titles[h.id]) queue.push(h.id);
+    });
+    queue.slice(0, 40).forEach(function (id, k) { setTimeout(function () { fetchTitle(id, function () { renderHistSoon(); }); }, k * 120); });
+  }
+  var histTimer = null;
+  function renderHistSoon() { clearTimeout(histTimer); histTimer = setTimeout(function () { var st = $("histList").scrollTop; renderHist(); $("histList").scrollTop = st; }, 300); }
+  function playHist(id, scroll) {
+    histSel = id; var i = TRACKS.indexOf(id), h = null;
+    D.hist.forEach(function (x) { if (x.id === id) h = x; });
+    var pl = $("histPlayer"); pl.className = "player reveal"; pl.innerHTML = embed(id, 152);
+    $("histInfo").textContent = "No." + pad3(i + 1) + "・" + (h && h.d ? niceDate(h.d) + "に引いた曲" : "日付の記録前に引いた曲");
+    $("histSp").href = "https://open.spotify.com/track/" + id; $("histSp").hidden = false;
+    renderHist();
+    if (scroll) $("histCard").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    fetchTitle(id, renderHistSoon);
   }
 
   /* ---------- 今日のリスナー推薦（日付で決まるので、その日は誰が見ても同じ曲） ---------- */
@@ -992,7 +1282,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     p.innerHTML = '<b>オーナーモード</b><p id="oState"></p>' +
       '<button type="button" data-o="again">今日の制限を解除</button>' +
       '<button type="button" data-o="p5">曲数 +5</button><button type="button" data-o="p30">曲数 +30</button>' +
-      '<button type="button" data-o="rec">推薦権 +1</button><button type="button" data-o="clear">記録をすべて消す</button>' +
+      '<button type="button" data-o="rec">推薦権 +1</button><button type="button" data-o="all">ステッカーを全部見る（確認用）</button><button type="button" data-o="kira">確認用の表示をキラに切替</button><button type="button" data-o="clear">記録をすべて消す</button>' +
       '<button type="button" data-o="exit">オーナーモードを終了</button>';
     document.body.appendChild(p);
     p.addEventListener("click", function (e) {
@@ -1000,15 +1290,18 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       if (a === "again") { D.today = { date: "", id: "" }; toast("今日の制限を解除しました"); }
       if (a === "p5" || a === "p30") {
         var n = a === "p5" ? 5 : 30;
+        var allNews = [];
         for (var k = 0; k < n; k++) {
-          if (D.got.length >= TRACKS.length) D.got = [];
-          var rest = TRACKS.filter(function (id) { return D.got.indexOf(id) < 0; });
-          D.got.push(rest[Math.floor(Math.random() * rest.length)]); D.total += 1;
+          var rest = []; TRACKS.forEach(function (id, x) { if (D.got.length >= TRACKS.length || D.got.indexOf(id) < 0) rest.push(x); });
+          allNews = allNews.concat(addDraw(rest[Math.floor(Math.random() * rest.length)], false));
         }
+        showNew(allNews);
         var msg = celebrate(); toast("曲数を" + n + "曲ふやしました" + (msg ? "：" + msg : ""), 3000);
       }
+      if (a === "all") { preview.all = !preview.all; toast(preview.all ? "全ステッカーを表示中（確認用）" : "確認用の表示を終了"); }
+      if (a === "kira") { preview.kira = !preview.kira; preview.all = true; toast(preview.kira ? "キラ版で表示中" : "ふつう版で表示中"); }
       if (a === "rec") { D.recUsed -= 1; toast("推薦権を1つ追加しました"); }
-      if (a === "clear") { if (!confirm("記録をすべて消しますか？")) return; D = { got: [], today: { date: "", id: "" }, total: 0, ticketsUsed: 0, recUsed: 0, sent: [], done: false }; toast("記録を消しました"); }
+      if (a === "clear") { if (!confirm("記録をすべて消しますか？")) return; D = { got: [], today: { date: "", id: "" }, total: 0, ticketsUsed: 0, recUsed: 0, sent: [], done: false, stickers: [], secrets: [], hist: [] }; toast("記録を消しました"); }
       if (a === "exit") { try { localStorage.removeItem(OKEY); } catch (err) {} p.remove(); toast("オーナーモードを終了しました"); return; }
       save(); render(); shelf(); tick(); oState();
     });
@@ -1025,11 +1318,15 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   $("copyBtn").addEventListener("click", function () { if (current >= 0) copyText("https://open.spotify.com/track/" + TRACKS[current], "曲のリンクをコピーしました"); });
   $("resetBtn").addEventListener("click", function () {
     if (confirm("コンプリートカードの記録を消しますか？（称号・チケット・推薦権もリセットされます）")) {
-      D = { got: [], today: D.today, total: 0, ticketsUsed: 0, recUsed: 0, sent: D.sent, done: false }; save(); render(); toast("リセットしました");
+      D = { got: [], today: D.today, total: 0, ticketsUsed: 0, recUsed: 0, sent: D.sent, done: false, stickers: [], secrets: [], hist: [] }; save(); render(); toast("リセットしました");
     }
   });
 
-  load(); drawBalls(); shelf(); render();
+  (function () { var d = document.createElement("div"); d.innerHTML = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + KDEFS + "</defs></svg>"; document.body.appendChild(d.firstChild); })();
+  load(); var adopted = checkAdopted(); drawBalls(); shelf(); render();
+  if (adopted) setTimeout(function () { toast("あなたの推薦が採用されました！ シークレットステッカーをゲット", 3600); }, 800);
+  $("bookSave").addEventListener("click", saveBook);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ho]"), function (b) { b.addEventListener("click", function () { histOrder = b.dataset.ho; renderHist(); }); });
   var m = location.hash.match(/t=([A-Za-z0-9]{22})/);
   if (m && TRACKS.indexOf(m[1]) >= 0) { var i = TRACKS.indexOf(m[1]); setCapsule(i, true); show(i); }
   else if (drawnToday()) { var j = TRACKS.indexOf(D.today.id); setCapsule(j, true); show(j); }
