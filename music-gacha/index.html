@@ -364,6 +364,22 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   #bookCard .book, #compCard .stamps { height: 400px; max-height: 400px; }
   .hist-card { margin-top: 0; }
 }
+
+/* アプリ内ブラウザの案内 */
+.inapp { margin: 0 0 28px; padding: 16px 18px; background: var(--hero); color: #1A1A2E; border: 3px solid var(--edge); border-radius: 18px; box-shadow: 5px 5px 0 var(--shadow); }
+.inapp-t { margin: 0 0 12px; font-weight: 800; font-size: 0.9rem; line-height: 1.7; }
+.inapp-a { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.inapp-a .btn { color: #1A1A2E; }
+.inapp .mini-btn { color: #1A1A2E; background: #fff; border-color: #1A1A2E; }
+/* 記録の引き継ぎ */
+.transfer-card { margin-top: 40px; }
+.transfer-card .lead { margin: 0 0 18px; color: var(--sub); font-size: 0.85rem; line-height: 1.7; }
+.tr-grid { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; align-items: start; }
+.tr-step { background: var(--soft); border-radius: 16px; padding: 18px; }
+.tr-step h3 { margin: 0 0 12px; font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.tr-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #1A1A2E; border: 2px solid var(--edge); font-size: 0.8rem; }
+.tr-step .btn { width: 100%; }
+@media (max-width: 720px) { .tr-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -377,6 +393,10 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
       <p>作者のプレイリスト322曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
     </div>
   </header>
+  <div class="inapp" id="inapp" hidden>
+    <p class="inapp-t" id="inappT"></p>
+    <div class="inapp-a"><a class="btn primary" id="inappGo" href="#" hidden>いつものブラウザで開く</a><a class="btn" href="#transfer">記録の引き継ぎへ</a><button type="button" class="mini-btn" id="inappX">閉じる</button></div>
+  </div>
 
   <div class="app">
     <section class="card machine-card" aria-label="ガチャマシン">
@@ -491,6 +511,26 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
       <p class="mine-head">あなたの推薦が採用されました！</p>
       <div class="lgrid" id="mineList"></div>
     </div>
+  </section>
+
+  <section class="card transfer-card" id="transfer" aria-labelledby="h-transfer">
+    <h2 id="h-transfer" class="card-title">記録の引き継ぎ</h2>
+    <p class="lead">ガチャの記録は、いま開いているブラウザの中にだけ保存されます。LINEやInstagramから開いたとき、スマホを替えたとき、PCでも遊びたいときは、引き継ぎリンクを使うと続きから遊べます。</p>
+    <div class="tr-grid">
+      <div class="tr-step">
+        <h3><span class="tr-n">1</span>今のブラウザで</h3>
+        <button type="button" class="btn primary" id="trCopy">引き継ぎリンクをコピー</button>
+        <p class="note" id="trInfo"></p>
+      </div>
+      <div class="tr-step">
+        <h3><span class="tr-n">2</span>移したい先のブラウザで</h3>
+        <p class="note" style="margin-top:0">コピーしたリンクをアドレス欄に貼って開くと、そのまま引き継げます。下に貼ってもOKです。</p>
+        <textarea class="select" id="trIn" rows="3" placeholder="引き継ぎリンクを貼る" style="margin-top:10px; resize:vertical"></textarea>
+        <button type="button" class="btn" id="trBtn" style="width:100%; margin-top:10px">この記録で続きから遊ぶ</button>
+        <p class="note rec-msg" id="trMsg" role="status"></p>
+      </div>
+    </div>
+    <p class="note">iPhoneのSafariは、7日ほど開かないと記録が消えることがあります。しばらくお休みするときは、引き継ぎリンクをメモしておくと安心です。</p>
   </section>
 
   <article>
@@ -1136,6 +1176,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
 
     $("copyBtn").disabled = current < 0; $("spBtn").style.visibility = current < 0 ? "hidden" : "visible";
     $("xBtn").style.pointerEvents = current < 0 ? "none" : ""; $("xBtn").style.opacity = current < 0 ? ".5" : "";
+    trInfo();
   }
 
   function tick() {
@@ -1312,6 +1353,92 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   }
 
 
+  /* ---------- 記録の引き継ぎ ---------- */
+  // 形式：p1.カード.履歴.累計.チケット.推薦.完了.今日.ステッカー.シークレット.推薦した曲.チェック
+  function b36(n, w) { var s = n.toString(36); while (s.length < w) s = "0" + s; return s; }
+  var DAY0 = Date.UTC(2020, 0, 1);
+  function dayEnc(dk) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dk || ""); if (!m) return "zzz";
+    return b36(Math.round((Date.UTC(+m[1], +m[2] - 1, +m[3]) - DAY0) / 864e5), 3);
+  }
+  function dayDec(s) {
+    if (s === "zzz") return "";
+    var d = new Date(DAY0 + parseInt(s, 36) * 864e5);
+    return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate());
+  }
+  function hasRecord() { return D.total > 0 || D.got.length > 0 || D.hist.length > 0; }
+  function encodeRec() {
+    var ix = function (id) { return TRACKS.indexOf(id); };
+    var ti = ix(D.today.id);
+    var body = ["p1",
+      D.got.filter(function (id) { return ix(id) >= 0; }).map(function (id) { return b36(ix(id), 2); }).join(""),
+      D.hist.filter(function (h) { return ix(h.id) >= 0; }).map(function (h) { return b36(ix(h.id), 2) + dayEnc(h.d); }).join(""),
+      String(D.total), String(D.ticketsUsed), String(D.recUsed), D.done ? "1" : "0",
+      ti >= 0 ? b36(ti, 2) + dayEnc(D.today.date) : "",
+      D.stickers.map(function (s) { return b36(s.n, 2) + (s.k ? "1" : "0"); }).join(""),
+      D.secrets.join("~"), D.sent.join("~")].join(".");
+    return body + "." + b36(fnv(body) % 1296, 2);
+  }
+  function decodeRec(str) {
+    str = String(str || "").replace(/\s+/g, "");
+    var at = str.indexOf("import="); if (at >= 0) str = str.slice(at + 7);
+    try { str = decodeURIComponent(str); } catch (e) {}
+    var p = str.split(".");
+    if (p.length !== 12 || p[0] !== "p1") return null;
+    if (b36(fnv(p.slice(0, 11).join(".")) % 1296, 2) !== p[11]) return null;
+    function idAt(s) { var n = parseInt(s, 36); return n >= 0 && n < TRACKS.length ? TRACKS[n] : null; }
+    var o = { got: [], today: { date: "", id: "" }, total: 0, ticketsUsed: 0, recUsed: 0, sent: [], done: false, stickers: [], secrets: [], hist: [] }, k, id;
+    for (k = 0; k < p[1].length; k += 2) { id = idAt(p[1].substr(k, 2)); if (id) o.got.push(id); }
+    for (k = 0; k < p[2].length; k += 5) { id = idAt(p[2].substr(k, 2)); if (id) o.hist.push({ id: id, d: dayDec(p[2].substr(k + 2, 3)) }); }
+    o.total = parseInt(p[3], 10) || 0; o.ticketsUsed = parseInt(p[4], 10) || 0; o.recUsed = parseInt(p[5], 10) || 0; o.done = p[6] === "1";
+    if (p[7].length === 5) { id = idAt(p[7].substr(0, 2)); if (id) o.today = { date: dayDec(p[7].substr(2, 3)), id: id }; }
+    for (k = 0; k < p[8].length; k += 3) o.stickers.push({ n: parseInt(p[8].substr(k, 2), 36), k: p[8].charAt(k + 2) === "1" });
+    o.secrets = p[9] ? p[9].split("~") : []; o.sent = p[10] ? p[10].split("~") : [];
+    return o;
+  }
+  function transferLink() { return location.origin + location.pathname + "#import=" + encodeRec(); }
+  function applyRec(o) {
+    if (hasRecord() && !confirm("このブラウザには " + D.total + "曲分の記録があります。引き継ぎの記録（" + o.total + "曲）で上書きしますか？")) return false;
+    D = o; save(); return true;
+  }
+  function importFromHash() {
+    var h = location.hash; if (h.indexOf("#import=") !== 0) return;
+    history.replaceState(null, "", location.pathname + location.search);
+    var o = decodeRec(h);
+    if (!o) { setTimeout(function () { toast("引き継ぎリンクが読み取れませんでした。もう一度コピーしてください", 3600); }, 400); return; }
+    if (applyRec(o)) setTimeout(function () { toast(o.total + "曲分の記録を引き継ぎました", 3000); }, 400);
+  }
+  function trInfo() {
+    $("trCopy").disabled = !hasRecord();
+    $("trInfo").textContent = hasRecord() ? "いまの記録（" + D.total + "曲・シール" + D.stickers.length + "枚）がリンクに入ります。" : "まだ記録がありません。ガチャを回すと使えます。";
+  }
+  function inappBanner() {
+    var ua = navigator.userAgent || "", line = /\bLine\//i.test(ua), ig = /Instagram/i.test(ua), fb = /FBAN|FBAV/.test(ua);
+    if (!(line || ig || fb)) return;
+    try { if (sessionStorage.getItem(KEY + "-inapp") === "x") return; } catch (e) {}
+    var name = line ? "LINE" : ig ? "Instagram" : "Facebook";
+    $("inappT").textContent = name + "の中で開いています。ガチャの記録は" + name + "の中にしか残らないので、いつものブラウザ（SafariやChrome）で開くのがおすすめです。" +
+      (line ? "下のボタンで、ここまでの記録ごと移れます。" : "右上の「…」メニューから「外部ブラウザで開く」を選んでください。ここで遊んだ記録は「記録の引き継ぎ」で移せます。");
+    if (line) {
+      $("inappGo").hidden = false;
+      $("inappGo").addEventListener("click", function () { this.href = location.pathname + "?openExternalBrowser=1" + (hasRecord() ? "#import=" + encodeRec() : ""); });
+    }
+    $("inapp").hidden = false;
+    $("inappX").addEventListener("click", function () { $("inapp").hidden = true; try { sessionStorage.setItem(KEY + "-inapp", "x"); } catch (e) {} });
+  }
+  $("trCopy").addEventListener("click", function () { if (hasRecord()) copyText(transferLink(), "引き継ぎリンクをコピーしました"); });
+  $("trBtn").addEventListener("click", function () {
+    var v = $("trIn").value, msg = $("trMsg");
+    if (!v.trim()) { msg.textContent = "引き継ぎリンクを貼ってください。"; return; }
+    var o = decodeRec(v);
+    if (!o) { msg.textContent = "読み取れませんでした。リンクを最後までコピーできているか確かめてください。"; return; }
+    if (!applyRec(o)) return;
+    $("trIn").value = ""; msg.textContent = "";
+    render(); shelf(); tick(); trInfo();
+    if (drawnToday()) { var k = TRACKS.indexOf(D.today.id); setCapsule(k, true); show(k); }
+    toast(o.total + "曲分の記録を引き継ぎました", 3000);
+  });
+
   /* ---------- オーナーモード（合言葉つきURLで開く） ---------- */
   var OKEY = KEY + "-o";
   function fnv(s) { var h = 2166136261; var b = unescape(encodeURIComponent(s)); for (var i = 0; i < b.length; i++) { h ^= b.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
@@ -1367,7 +1494,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   });
 
   (function () { var d = document.createElement("div"); d.innerHTML = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + KDEFS + "</defs></svg>"; document.body.appendChild(d.firstChild); })();
-  load(); var adopted = checkAdopted(); drawBalls(); shelf(); render();
+  load(); importFromHash(); var adopted = checkAdopted(); drawBalls(); shelf(); render();
   if (adopted) setTimeout(function () { toast("あなたの推薦が採用されました！ シークレットステッカーをゲット", 3600); }, 800);
   $("bookSave").addEventListener("click", saveBook);
   Array.prototype.forEach.call(document.querySelectorAll("[data-ho]"), function (b) { b.addEventListener("click", function () { histOrder = b.dataset.ho; renderHist(); }); });
@@ -1375,6 +1502,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   if (m && TRACKS.indexOf(m[1]) >= 0) { var i = TRACKS.indexOf(m[1]); setCapsule(i, true); show(i); }
   else if (drawnToday()) { var j = TRACKS.indexOf(D.today.id); setCapsule(j, true); show(j); }
   tick(); setInterval(tick, 1000);
+  trInfo(); inappBanner();
   ownerPanel();
 })();
 </script>
