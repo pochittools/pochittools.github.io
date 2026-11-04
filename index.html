@@ -5,12 +5,12 @@
 <meta name="google-site-verification" content="v3eP7UqN9ufmvrcOgsimSzkWakxA752DeSWcVb41O2I" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ぽちっと｜押すだけで答えが出る、ちいさな便利ツール集</title>
-<meta name="description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機など、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
+<meta name="description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機、一人暮らしの生活費シミュレーターなど、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
 <link rel="canonical" href="https://pochittools.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
 <meta property="og:title" content="ぽちっと｜押すだけで答えが出る、ちいさな便利ツール集">
-<meta property="og:description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機など、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
+<meta property="og:description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機、一人暮らしの生活費シミュレーターなど、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
 <meta property="og:url" content="https://pochittools.github.io/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
@@ -255,6 +255,12 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .tool.soon { border-style: dashed; box-shadow: none; background: transparent; pointer-events: none; }
 .tool.soon .ic { background: var(--soft); box-shadow: none; }
 .tool.soon .go { background: var(--soft); box-shadow: none; color: var(--sub); }
+.shelf + .shelf { margin-top: 64px; }
+.shelf-tag { display: inline-block; border: 2.5px solid var(--edge); border-radius: 10px; padding: 1px 12px; margin-right: 8px; color: #1A1A2E; box-shadow: 2px 2px 0 var(--shadow); transform: rotate(-2deg); }
+.sec-head { flex-wrap: wrap; row-gap: 2px; }
+.sec-head h2 { line-height: 1.6; font-size: 1.55rem; white-space: nowrap; }
+.tool h3 { word-break: keep-all; overflow-wrap: anywhere; }
+.pills a { color: inherit; text-decoration: none; }
 .about { max-width: 680px; margin: 72px auto 0; }
 .about h2 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 800; }
 .about p { margin: 0 0 12px; line-height: 1.9; }
@@ -279,29 +285,50 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   </header>
 
   <main>
-    <div class="sec-head"><h2>ツール一覧</h2><span>2つのツール</span></div>
-    <div class="tools">
-      <a class="tool" href="rec-size/">
-        <span class="ic" style="background: var(--hero)"><svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#1A1A2E" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><circle cx="10" cy="13" r="2.5" fill="#FF5FA2"/></svg></span>
-        <h3>録画ファイルサイズ計算機</h3>
-        <p>ビットレートと時間から「何GBになる？」、容量から「何時間撮れる？」をすぐ計算。形式どうしの比較もできます。</p>
-        <div class="tags"><span>映像</span><span>配信</span><span>スマホ撮影</span></div>
-        <span class="go">使ってみる</span>
-      </a>
-      <a class="tool" href="aspect/">
-        <span class="ic" style="background: var(--c3)"><svg viewBox="0 0 34 34" fill="none"><rect x="4" y="8" width="26" height="18" rx="4" stroke="#1A1A2E" stroke-width="3"/><path d="M9 13v-1.5h3M25 21v1.5h-3" stroke="#1A1A2E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <h3>アスペクト比・解像度計算機</h3>
-        <p>解像度から比率を調べたり、比率からサイズを出したり。シネスコの黒帯や縦動画の見切れもわかります。</p>
-        <div class="tags"><span>映像</span><span>SNS</span><span>デザイン</span></div>
-        <span class="go">使ってみる</span>
-      </a>
-      <div class="tool soon" aria-label="準備中のツール">
-        <span class="ic"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="var(--sub)" stroke-width="3"/><path d="M17 10v7l5 3" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/></svg></span>
-        <h3>次のツールを準備中</h3>
-        <p>タイムコード計算機や、一人暮らしに役立つ生活のツールも作っていく予定です。</p>
-        <span class="go">もうすぐ</span>
+    <section class="shelf" id="video" aria-labelledby="h-video">
+      <div class="sec-head"><h2 id="h-video"><span class="shelf-tag" style="background: var(--c2); color: #fff">映像・配信</span>のツール</h2><span>撮影・編集・配信の計算に</span></div>
+      <div class="tools">
+        <a class="tool" href="rec-size/">
+          <span class="ic" style="background: var(--hero)"><svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#1A1A2E" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><circle cx="10" cy="13" r="2.5" fill="#FF5FA2"/></svg></span>
+          <h3>録画ファイル<wbr>サイズ計算機</h3>
+          <p>ビットレートと時間から「何GBになる？」、容量から「何時間撮れる？」をすぐ計算。形式どうしの比較もできます。</p>
+          <div class="tags"><span>撮影</span><span>配信</span><span>スマホ撮影</span></div>
+          <span class="go">使ってみる</span>
+        </a>
+        <a class="tool" href="aspect/">
+          <span class="ic" style="background: var(--c3)"><svg viewBox="0 0 34 34" fill="none"><rect x="4" y="8" width="26" height="18" rx="4" stroke="#1A1A2E" stroke-width="3"/><path d="M9 13v-1.5h3M25 21v1.5h-3" stroke="#1A1A2E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3>アスペクト比・<wbr>解像度計算機</h3>
+          <p>解像度から比率を調べたり、比率からサイズを出したり。シネスコの黒帯や縦動画の見切れもわかります。</p>
+          <div class="tags"><span>編集</span><span>SNS</span><span>デザイン</span></div>
+          <span class="go">使ってみる</span>
+        </a>
+        <div class="tool soon" aria-label="準備中のツール">
+          <span class="ic"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="var(--sub)" stroke-width="3"/><path d="M17 10v7l5 3" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>タイムコード計算機</h3>
+          <p>尺の足し算・引き算や、フレームと時間の変換ができるツールを準備中です。</p>
+          <span class="go">もうすぐ</span>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="shelf" id="life" aria-labelledby="h-life">
+      <div class="sec-head"><h2 id="h-life"><span class="shelf-tag" style="background: var(--c6)">くらし</span>のツール</h2><span>一人暮らしのお金と毎日に</span></div>
+      <div class="tools">
+        <a class="tool" href="living-cost/">
+          <span class="ic" style="background: var(--c6)"><svg viewBox="0 0 34 34" fill="none"><path d="M5 16 17 6l12 10" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14v13h18V14" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><path d="M14 27v-7h6v7" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/></svg></span>
+          <h3>一人暮らしの<wbr>生活費シミュレーター</h3>
+          <p>手取りと支出をスライドするだけで、毎月いくら残るかがわかります。家賃の目安チェックや貯金目標までの期間も。</p>
+          <div class="tags"><span>家計</span><span>一人暮らし</span><span>貯金</span></div>
+          <span class="go">使ってみる</span>
+        </a>
+        <div class="tool soon" aria-label="準備中のツール">
+          <span class="ic"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="var(--sub)" stroke-width="3"/><path d="M17 10v7l5 3" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>次のツールを準備中</h3>
+          <p>電気代や割り勘など、毎日の「ちょっと計算したい」に役立つツールを増やしていきます。</p>
+          <span class="go">もうすぐ</span>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- 広告を置く場合はこの位置がおすすめです -->
@@ -309,7 +336,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 
   <section class="about">
     <h2>ぽちっとについて</h2>
-    <p>放送の現場で働くビデオエンジニアが、「これ、毎回計算するの面倒だな」と思ったことをツールにしています。</p>
+    <p>放送の現場で働くビデオエンジニアが、仕事や一人暮らしの中で「これ、毎回計算するの面倒だな」と思ったことをツールにしています。</p>
     <p>どのツールもブラウザだけで動き、入力した内容がどこかに送られることはありません。</p>
   </section>
 
