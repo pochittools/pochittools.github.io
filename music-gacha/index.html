@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>今日の一曲ガチャ｜ぽちっと</title>
-<meta name="description" content="作者のプレイリスト281曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<meta name="description" content="作者のプレイリスト282曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <link rel="canonical" href="https://pochittools.github.io/music-gacha/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
 <meta property="og:title" content="今日の一曲ガチャ｜ぽちっと">
-<meta property="og:description" content="作者のプレイリスト281曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<meta property="og:description" content="作者のプレイリスト282曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <meta property="og:url" content="https://pochittools.github.io/music-gacha/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
@@ -295,6 +295,10 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .lcard .player { min-height: 80px; box-shadow: 3px 3px 0 var(--shadow); }
 .lcard .player iframe { height: 80px; }
 .lcard p { margin: 8px 0 0; font-size: 0.85rem; font-weight: 800; }
+.lgrid.one { grid-template-columns: minmax(0, 560px); }
+.mine { margin-top: 22px; padding: 16px; border: 2.5px solid var(--edge); border-radius: 18px; background: var(--hero); color: #1A1A2E; box-shadow: 4px 4px 0 var(--shadow); }
+.mine-head { margin: 0 0 12px; font-weight: 800; }
+.mine .lcard p { color: #1A1A2E; }
 </style>
 </head>
 <body>
@@ -305,7 +309,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     <div class="title">
       <span class="sticker" aria-hidden="true">無料</span>
       <h1>今日の一曲ガチャ</h1>
-      <p>作者のプレイリスト281曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
+      <p>作者のプレイリスト282曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
     </div>
   </header>
 
@@ -382,10 +386,15 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
   </div>
 
   <section class="card listener-shelf" aria-labelledby="h-listener">
-    <h2 id="h-listener" class="card-title">リスナー推薦の棚</h2>
-    <p class="lead">30曲そろえたリスナーが推薦してくれた曲の中から、作者が選んで並べています。</p>
-    <div class="lgrid" id="listener"></div>
+    <h2 id="h-listener" class="card-title">今日のリスナー推薦</h2>
+    <p class="lead">30曲そろえたリスナーが推薦してくれた曲から、作者が選んだものを1日1曲ずつ紹介します。</p>
+    <div class="lgrid one" id="listener"></div>
+    <p class="note" id="listenerCount"></p>
     <div class="empty" id="listenerEmpty">まだ推薦曲はありません。30曲そろえると、あなたも推薦できます。</div>
+    <div class="mine" id="mine" hidden>
+      <p class="mine-head">あなたの推薦が採用されました！</p>
+      <div class="lgrid" id="mineList"></div>
+    </div>
   </section>
 
   <article>
@@ -701,7 +710,8 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     "4wYCZ6QS5EClBXqjakTieR",
     "1XeOqgzh2fZhmgxnmyiIJ8",
     "4fDWZUtMp2Aoe8wmenloa7",
-    "4ReCD8wyqRUxjqg6qOhC8u"
+    "4ReCD8wyqRUxjqg6qOhC8u",
+    "4PU60inccBpdPS46QveEHc"
   ];
   /* ===== リスナー推薦の棚（採用した曲をここに足す：{ id: "曲ID", by: "ニックネーム" }） ===== */
   var LISTENER = [
@@ -898,16 +908,26 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       .then(function () { $("recBtn").disabled = false; });
   }
 
-  /* ---------- リスナー推薦の棚 ---------- */
+  /* ---------- 今日のリスナー推薦（日付で決まるので、その日は誰が見ても同じ曲） ---------- */
+  function daySeed() { var k = dateKey(), h = 0; for (var i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) >>> 0; return h; }
+  function lcard(x, label) {
+    var d = document.createElement("div"); d.className = "lcard";
+    d.innerHTML = '<div class="player">' + embed(x.id, 80) + "</div>";
+    var p = document.createElement("p"); p.textContent = label; d.appendChild(p);
+    return d;
+  }
   function shelf() {
     var box = $("listener"); box.innerHTML = "";
     $("listenerEmpty").hidden = LISTENER.length > 0;
-    LISTENER.slice().reverse().forEach(function (x) {
-      var d = document.createElement("div"); d.className = "lcard";
-      d.innerHTML = '<div class="player">' + embed(x.id, 80) + "</div>";
-      var p = document.createElement("p"); p.textContent = (x.by || "名無しのリスナー") + " さんの推薦"; d.appendChild(p);
-      box.appendChild(d);
-    });
+    $("listenerCount").textContent = LISTENER.length ? "これまでに " + LISTENER.length + "曲 が推薦の棚に並びました。毎日0時に入れ替わります。" : "";
+    if (LISTENER.length) {
+      var x = LISTENER[daySeed() % LISTENER.length];
+      box.appendChild(lcard(x, (x.by || "名無しのリスナー") + " さんの推薦"));
+    }
+    var mine = LISTENER.filter(function (y) { return D.sent.indexOf(y.id) >= 0; });
+    $("mine").hidden = mine.length === 0;
+    var mb = $("mineList"); mb.innerHTML = "";
+    mine.forEach(function (y) { mb.appendChild(lcard(y, "あなた（" + (y.by || "名無しのリスナー") + "）の推薦")); });
   }
 
   /* ---------- 共通 ---------- */
