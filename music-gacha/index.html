@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>今日の一曲ガチャ｜ぽちっと</title>
-<meta name="description" content="作者のプレイリストから、1日1回ランダムに1曲。ボタンを押すとガチャが回って、Spotifyで今日の一曲が聴けます。全曲そろえるコンプリートカード付き。">
+<meta name="description" content="作者のプレイリスト281曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <link rel="canonical" href="https://pochittools.github.io/music-gacha/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
 <meta property="og:title" content="今日の一曲ガチャ｜ぽちっと">
-<meta property="og:description" content="作者のプレイリストから、1日1回ランダムに1曲。ボタンを押すとガチャが回って、Spotifyで今日の一曲が聴けます。全曲そろえるコンプリートカード付き。">
+<meta property="og:description" content="作者のプレイリスト281曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やバッジがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <meta property="og:url" content="https://pochittools.github.io/music-gacha/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
@@ -268,6 +268,33 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .complete { margin: 0 0 14px; padding: 12px 16px; border: 2.5px solid var(--edge); border-radius: 14px; background: var(--hero); color: #1A1A2E; font-weight: 800; }
 
 .spin-btn:not(.primary) { font-size: 1rem; font-variant-numeric: tabular-nums; }
+
+.ticket-btn { margin-top: 10px; width: 100%; max-width: 300px; background: var(--hero); color: #1A1A2E; }
+.card-title { margin: 0 0 14px; font-size: 1.1rem; font-weight: 800; }
+.title-box { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 14px 16px; border: 2.5px solid var(--edge); border-radius: 16px; background: var(--hero); color: #1A1A2E; box-shadow: 3px 3px 0 var(--shadow); margin-bottom: 18px; }
+.title-box .title-label { font-size: 0.75rem; font-weight: 800; width: 100%; opacity: .75; }
+.title-box b { font-size: 1.25rem; font-weight: 800; flex: 1; }
+.title-box .mini-btn { text-decoration: none; color: #1A1A2E; }
+.cycle { display: grid; grid-template-columns: repeat(6, 1fr); align-items: center; position: relative; padding: 0 4px; }
+.cycle::before { content: ""; position: absolute; left: 8%; right: 8%; top: 50%; height: 4px; background: var(--soft); border: 1.5px solid var(--edge); border-radius: 4px; transform: translateY(-50%); }
+.node { position: relative; justify-self: center; display: grid; place-items: center; border: 2.5px solid var(--edge); background: var(--chip); color: var(--sub); font-weight: 800; font-size: 0.72rem; }
+.node.s { width: 30px; height: 30px; border-radius: 50%; }
+.node.m { width: 38px; height: 38px; border-radius: 10px; transform: rotate(45deg); }
+.node.m > i { transform: rotate(-45deg); font-style: normal; }
+.node.l { width: 48px; height: 48px; border-radius: 50%; font-size: 0.85rem; }
+.node.on.s { background: var(--accent); color: #1A1A2E; }
+.node.on.m { background: var(--c2); color: #fff; }
+.node.on.l { background: var(--hero); color: #1A1A2E; box-shadow: 0 0 0 4px var(--accent); }
+.ticket-row { display: flex; align-items: center; gap: 12px; margin-top: 14px; font-weight: 700; }
+.ticket-ic { border: 2.5px dashed var(--edge); background: var(--tab-on); color: #1A1A2E; border-radius: 8px; padding: 2px 10px; font-size: 0.75rem; font-weight: 800; transform: rotate(-3deg); }
+.ticket-row b { font-size: 1.2rem; }
+.rec-msg { color: var(--warn); font-weight: 700; min-height: 1em; }
+.listener-shelf { margin-top: 40px; }
+.listener-shelf .lead { margin: 0 0 18px; color: var(--sub); font-size: 0.85rem; }
+.lgrid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.lcard .player { min-height: 80px; box-shadow: 3px 3px 0 var(--shadow); }
+.lcard .player iframe { height: 80px; }
+.lcard p { margin: 8px 0 0; font-size: 0.85rem; font-weight: 800; }
 </style>
 </head>
 <body>
@@ -278,7 +305,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     <div class="title">
       <span class="sticker" aria-hidden="true">無料</span>
       <h1>今日の一曲ガチャ</h1>
-      <p>作者のプレイリストから、1日1回ランダムに1曲。何が出るかは回してのお楽しみ。</p>
+      <p>作者のプレイリスト281曲から、1日1回ランダムに1曲。集めるほど、ごほうびが増えていきます。</p>
     </div>
   </header>
 
@@ -300,6 +327,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       </svg>
       <div class="tray"><div class="capsule" id="capsule"><span class="top"></span><span class="bot"></span></div></div>
       <button type="button" class="btn primary spin-btn" id="spin">ガチャを回す</button>
+      <button type="button" class="btn ticket-btn" id="ticketBtn" hidden></button>
       <p class="left-count" id="leftCount"></p>
       <p class="note" style="margin:4px 0 0; text-align:center">1日1回、深夜0時にまた回せるようになります。</p>
     </section>
@@ -315,21 +343,56 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
         </div>
       </section>
 
+      <section class="card" id="rewards" style="margin-top:24px">
+        <h2 class="card-title">ごほうび</h2>
+        <div class="title-box">
+          <span class="title-label">いまの称号</span>
+          <b id="titleName">まだありません</b>
+          <a class="mini-btn" id="titleX" href="#" target="_blank" rel="noopener" hidden>Xでポスト</a>
+        </div>
+        <div class="cycle" id="cycle" aria-label="大ゴールまでの道のり">
+          <span class="node s">5</span><span class="node m"><i>10</i></span><span class="node s">15</span><span class="node m"><i>20</i></span><span class="node s">25</span><span class="node l">30</span>
+        </div>
+        <p class="note" id="cycleNote" style="margin-top:8px; font-weight:700"></p>
+        <p class="note" id="haul"></p>
+        <div class="ticket-row"><span class="ticket-ic" aria-hidden="true">おかわり</span><span>おかわりチケット <b id="ticketCount">0</b>枚</span></div>
+        <p class="note">5曲ごとにスタンプ、10曲ごとにバッジ、30曲ごとに称号・おかわりチケット・推薦権がもらえます。</p>
+      </section>
+
+      <section class="card" id="recCard" style="margin-top:24px">
+        <h2 class="card-title">この曲、聴いてほしい</h2>
+        <p class="note" id="recLocked"></p>
+        <div id="recOpen" hidden>
+          <p class="note" style="margin-top:0">推薦できる回数：<b id="recRight">0</b>回。Spotifyで曲の「共有」→「曲のリンクをコピー」して貼ってください。</p>
+          <input type="url" class="select" id="recLink" placeholder="https://open.spotify.com/track/…" inputmode="url" style="margin-top:8px">
+          <input type="text" class="select" id="recName" placeholder="ニックネーム（なくてもOK）" maxlength="20" style="margin-top:8px">
+          <p class="note">ニックネームは、採用されたときに「リスナー推薦の棚」に表示されます。</p>
+          <button type="button" class="btn primary" id="recBtn" style="width:100%; margin-top:10px">推薦する</button>
+          <p class="note rec-msg" id="recMsg" role="status"></p>
+        </div>
+      </section>
+
       <section class="card" style="margin-top:24px">
         <div class="stamp-head"><h2 style="margin:0; font-size:1.1rem; font-weight:800">コンプリートカード</h2><button type="button" class="mini-btn" id="resetBtn">リセット</button></div>
         <div class="progress" aria-hidden="true"><i id="progBar" style="width:0%"></i></div>
-        <p class="note" id="milestone" style="margin:-8px 0 14px; font-weight:700"></p>
-        <p class="complete" id="complete" hidden>コンプリート！全曲そろいました。次に回すと、もう一周はじまります。</p>
         <div class="stamps" id="stamps"></div>
         <p class="note" id="stampNote"></p>
       </section>
     </aside>
   </div>
 
+  <section class="card listener-shelf" aria-labelledby="h-listener">
+    <h2 id="h-listener" class="card-title">リスナー推薦の棚</h2>
+    <p class="lead">30曲そろえたリスナーが推薦してくれた曲の中から、作者が選んで並べています。</p>
+    <div class="lgrid" id="listener"></div>
+    <div class="empty" id="listenerEmpty">まだ推薦曲はありません。30曲そろえると、あなたも推薦できます。</div>
+  </section>
+
   <article>
     <h2>このガチャについて</h2>
     <p>放送の現場で働く作者が、ふだん聴いている邦楽のプレイリストから1曲をランダムに選びます。ガチャは1日1回、深夜0時にまた回せるようになります。全曲を引き終わるまで、同じ曲は出てきません。引いた曲はコンプリートカードに色がつき、押せばもう一度聴けます。</p>
-    <p>曲の再生にはSpotifyの埋め込みプレーヤーを使っています。Spotifyにログインしていると曲を最後まで、ログインしていない場合は試聴版が再生されます。コンプリートカードの記録は、お使いのブラウザの中にだけ保存されます。</p>
+    <p>5曲ごとにスタンプ、10曲ごとにバッジ、30曲ごとに称号がもらえます。30曲ごとに「おかわりチケット」（好きな日にもう1回引ける）と、おすすめの曲を1曲推薦できる権利もつきます。</p>
+    <p>曲の再生にはSpotifyの埋め込みプレーヤーを使っています。Spotifyにログインしていると曲を最後まで、ログインしていない場合は試聴版が再生されます。コンプリートカードやごほうびの記録は、お使いのブラウザの中にだけ保存されます。推薦された曲とニックネームは作者に届き、採用された場合はこのページに掲載されます。</p>
   </article>
 
   <section class="more" aria-label="ほかのツール">
@@ -355,7 +418,8 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  // 曲を増やすときは、この一覧にSpotifyの曲IDを1行ずつ足すだけでOK
+
+  /* ===== 作者のプレイリスト（曲を増やすときはIDを1行ずつ足すだけ） ===== */
   var TRACKS = [
     "1Caa9269TRBYKsAmyU6AhH",
     "5BKwzntuwwe6V5oapO6eJ4",
@@ -469,43 +533,229 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     "0M47xHUyYQvhSnso8GFHSA",
     "3TIwC2ybHe4SxjPpIaIc9H",
     "4WhHNXBgRglnkjy7TMzgdh",
-    "1sMXlcxi0R2tUUZgPQ6vOQ"
+    "1sMXlcxi0R2tUUZgPQ6vOQ",
+    "4btYb7Tfjw5bQazC6bQXpl",
+    "68BmFo8k9wtaAXgQjRt51s",
+    "3KBlutfYq0kxQWl2P9t4Ht",
+    "144pIQC3mpmUkZXMt8fIwb",
+    "6OXJ6wAlCu8LYALGJPu7df",
+    "3j7gjKmwraazOQyoibP5PA",
+    "5ZAsWvt7N700RZR7WoOkRs",
+    "0wOkiindak4Dx5e4CuylaP",
+    "2l2JbsZwpWVsAMiScxTBfA",
+    "4EqTqw8zW7JGIYDQ8PPbYe",
+    "17JZ5WJ1XZfAMmI1s1OGB0",
+    "0JCPQeCsghusihpnv9hVrg",
+    "2uWlL56OdmgMy9eCMTUZmN",
+    "7dODNcz1h6UFj8GHlvRyqP",
+    "34hPjDaxfJxqnXdoGgQFwC",
+    "61DzuO5GOWbN9aX9G4Pop9",
+    "7ue4j1Jq6f1xdgH5LXIxW6",
+    "22CL32a9QBbkKeCxmV77wL",
+    "6DJufb1am2ldhryvhP3dpC",
+    "4f374elZ54PnCY2g6SwaUS",
+    "09gBx310Z7KnMI5LdB3fDl",
+    "3txqYlzoDZGLoW8MGll9tQ",
+    "5gIipJHMB18S4aDfo4l8Q3",
+    "3yfFvKtiFnTiQhqfucj1Ay",
+    "2E4Dv2RWwYpb1tYaaJG8nW",
+    "5JVieSOgyRg2vB8HFGTAbf",
+    "1ZOFEQMPuSbcHYkrPHx8ux",
+    "5tDnrXI3oowmppw6Zl6FTy",
+    "3o0Nlc7DVVC39pfv4nTi9Y",
+    "5xJgF12zKoxMqayN8YldLB",
+    "0Pn1J7xuwYfIS9CNtHHmKG",
+    "4n7nwDqrdx3qmJvEACOMrN",
+    "7DU9Ttw5ugUKXo8LqwO6M6",
+    "2gS2dANnOz50i79AFw8wNZ",
+    "0b7IBgZjedM53ufZV4f4CL",
+    "5rNmTueR51ym4tXPot3i4s",
+    "26ET1M21sUgAr9b9FDDfhz",
+    "74GJbmNHys47ZfdoQCySpM",
+    "4mEA3heXentIxosR6AHHvA",
+    "6xGo0VrMRvv7GupeWe6uM5",
+    "3a48At7rlVvVcGV4mN4HIE",
+    "2nUwIqNF0R5v1lurmP1Irj",
+    "7lIupxoo3mPrYxCUwoP9fP",
+    "6pllZAdgBf4QTcFUrF3DzL",
+    "0kdqcbwei4MDWFEX5f33yG",
+    "685E7VfekdXLLM2KB6zpav",
+    "76CIRxX21LDv3vN02EH7Qw",
+    "5dH4asCl80Mvbsoz6zJVyZ",
+    "6s8A7i321AAB4g4OTZY09D",
+    "6YLjq21cq39MrEGtGGQ7DU",
+    "0NZNtJar3qon6oVIR6XjIA",
+    "2ntPdBkZyvwpCNpTimZ6bB",
+    "76Tz5SxVVaRSvduZZQj8lG",
+    "49F3htNmwzPKFycPdOrDvf",
+    "6WEb2QTuXBzm6Qqe4m0dXG",
+    "4CJwbh7koWFirpcNqz6rN4",
+    "1PvDnTxwVndr7bOrbtI2Zx",
+    "21JQaUURrZvW2SutiOtX1Y",
+    "5aF7JEshjhV8gsg8INAOYX",
+    "48eX2QzBJfuEUz9k1zGrwV",
+    "6W12q6aj9KCLI97W8kBQOD",
+    "4xHKYFUmIRjpW98hbuvwWm",
+    "4cPwi7lcWxRQNEb4xC77fC",
+    "4zqL8VPaENBwu8GVD08jyr",
+    "6NKn02oJDkUkRa9IHbMe3n",
+    "0yfCqF92YWnmsJB3MsBfCs",
+    "3AoEQRuFf8zVXWqSLo2UOi",
+    "6DuWwQPRJwbfTygikrxOJv",
+    "2J3BzhevHS1UjZ5wHoboZd",
+    "2WpgKrUoWaZHQLTgT6aZBF",
+    "1NabPfsC4hEMd6lSEragQE",
+    "4hWI3r78IDOhPXSHd2f0Az",
+    "4LCJXB7w5ZV0oT6cu9mv5k",
+    "1h1X0s5L9PwU5FhdjH77s1",
+    "6YSiCQPEEEimysown5ad19",
+    "5vKeKeMQEOVVHvWoboCWdK",
+    "04OUZdPUt3cnqmogtNh9d3",
+    "1AhZZqFfC1fosJjl4V4Vwy",
+    "7uqJ3N5wiISiyzkQMMCeMR",
+    "6a5FG3A5rkMvcrig6QJPpC",
+    "6oGK40sTrlPSkR8yf0f04P",
+    "1mWN1USPKg632qQXG9sfDL",
+    "1or2OAFaWw7UhTMEZzx9Ub",
+    "3DMz5XiVasCKSHXgYrSc9i",
+    "2CzPCgj02ZAf6iugJoc9G0",
+    "22ddh4soKM3Soz0SMHzlAP",
+    "6Sa5NyKHX0gikNuG4t3CZr",
+    "3dBFEPvQIgJEF8Vbk0AU4z",
+    "3GGOKTfxgyluPvAFnB30zE",
+    "2rvOabnizdWAq46gUQ1LME",
+    "2zfIzqnle6a9Sw3uRpAXNd",
+    "0ouMwRwXZZggRTcPwrBK8D",
+    "6MF5izfGvk0tiA5wc1iRBd",
+    "0ZiO07cHvb675UDaKB1iix",
+    "0Wv7cs0HUehMsORxNqxsOM",
+    "7ovUcF5uHTBRzUpB6ZOmvt",
+    "2LhQsqnq5uyTtuobpoHCat",
+    "2s1QaY17lQh2Kljewis8Je",
+    "2sgXAzACFq1b01b01BY1xW",
+    "1GG4En8CXw8gJdD6ythBT0",
+    "52IsIvHidofM9JMjw78Jyz",
+    "41GHAXwcqJcmP3Y1U4CoiJ",
+    "4oyFtN6SG6eLFYdUKQ7x55",
+    "5f4kqQ9dP7wZuzf2fPfh2O",
+    "2iXZA6Ecf9AZHw92tZBNLv",
+    "3A0VFRUxhqpJeOxo0rklqC",
+    "7EfYn1qcLODXJnhH57dbAs",
+    "2HovXsvcdJur52BOcYGydz",
+    "6NffEVuGbmTvIpfSS93aMU",
+    "2yeLCBDvtCEQPDKvtDAiPx",
+    "0fG9lay0PuGHNFiAqsOVKO",
+    "4fMj0cYyIkt4y1rkFYAvdg",
+    "4vaF6fOWbXA3roAnjTmeoK",
+    "1sK707k14LThyEA2LNb3eC",
+    "73zh8mtxwyZLlbe62VBzsP",
+    "0lgZz4x4QuTo3nEl5uoVJl",
+    "4xSh6jogaOSkWjASpxFSdp",
+    "0rPrGZTtScNSRL2jZoooKO",
+    "2sQazWuwhXsa20qkMRNQQS",
+    "12ZJt0tZRUr1k4ROKm3MUT",
+    "2MTxc98soh0BFrQXDU0n4P",
+    "3QmJn4aRv6DvNNvGLsb5Uq",
+    "6UuZzF2cFwmALWa9Y3vwO8",
+    "3RJRPo3N1StuAjAjJqacYk",
+    "2PHZVtdPCqi7oTIw7jsyM1",
+    "4lKGembiDBdYHSCWfxOKIQ",
+    "56ISW3rNZJHEkUfVbZ61bq",
+    "2uMNMcjjUz8oNIxjIu20qE",
+    "4d1UVssVYSurK0dLnKatep",
+    "5wosJVYKzl3g7XElM98m23",
+    "5gGImelKVPAvcOjbjfB1xW",
+    "3T0YnUKkgr17L17H12wUSD",
+    "07iBdIBG7fbrcwoQQUfxGB",
+    "6iorX2x8Y8MAeMWtkX2rfF",
+    "0lwQkOZpsOKej5sjCcXWfU",
+    "7DxdvQZGhB2KsqmOZ8TeOa",
+    "540zbclf7PMTNliNeSO6By",
+    "4ZHPfDmmEu8ItB795BbF9W",
+    "037Z9dmkkqelP4cU0fcqWs",
+    "4EAFrjOpnbkUel0WrD9TTy",
+    "4hQ5tBCwPRkzhFB424U63U",
+    "5g1SvaEtzlKEqre9FbPQEc",
+    "21jD6u0xlRdBmmgzyzRekI",
+    "7qGqHTzBfUsDPTIE6vXIEb",
+    "0N8Xztr4pBHJ7V0moJWhbO",
+    "3u0e8pyoVc7l2u3T5thohY",
+    "11OHUXwYHjsRNysUDdO2JS",
+    "7GYGVDPbi0zQUBIkuOPAY0",
+    "34s49nvRfQy1kzx7DBqVRC",
+    "6KLaKHxwJE3CZECVJLH4cN",
+    "0XvOvUbvflmXxU8yqnF8Cp",
+    "51JOzfozDdPMKxyEccRltg",
+    "3sGKkQ5NlRJMzDVmeJFSYJ",
+    "58dxGXavrcagRqA58fNB0Z",
+    "32DE32bEtsQF0CM4suQ1Gp",
+    "1wlu75UMI83MUUI72OFhkJ",
+    "55k0yCjLOJTvfMok8vbmmT",
+    "0RAqtTVpdytfgevMWgGN80",
+    "2PFzK3kMDDYKhGnugvNYf1",
+    "24WOKllIT2yySSqtcTFmMf",
+    "5D16E22MJJyKesh9PrJf2L",
+    "2SihT7AVMiI2VtaAyVIcnO",
+    "00PZQzX3Bo1aLvMRB2kTuR",
+    "68TwxeHi1pyFDRIKHxSArM",
+    "4wYCZ6QS5EClBXqjakTieR",
+    "1XeOqgzh2fZhmgxnmyiIJ8",
+    "4fDWZUtMp2Aoe8wmenloa7",
+    "4ReCD8wyqRUxjqg6qOhC8u"
   ];
+  /* ===== リスナー推薦の棚（採用した曲をここに足す：{ id: "曲ID", by: "ニックネーム" }） ===== */
+  var LISTENER = [
+  ];
+  var _q = ["SFZXXVtFRl1HQRoaHRoRE0Fa", "W1pQQUZaQF5NERsAGgoMChAG", "BgQHCiICEQcPWzUJCBtaKzoC", "JyImPjImLRhNMBVWBzwDJRgs", "KjZQMSoaMAEJGFAmPTM5Jzk7", "VzERECcjIR8qKS9FWwpfC0wb", "BAYbCV8CDAtHERgIHwAERhoX", "GwtfQFkbGQAABw=="];
+  var _cfg = (function () {
+    var s = atob(_q.join("")), k = "pochitto", o = "";
+    for (var i = 0; i < s.length; i++) o += String.fromCharCode(s.charCodeAt(i) ^ k.charCodeAt(i % k.length));
+    return o.split("").reverse().join("").split("|");
+  })();
+  var FORM = _cfg[0], F_LINK = _cfg[1], F_NAME = _cfg[2];
+
+  var TITLES = [
+    [1, "はじめての一曲"], [30, "ぽちっと常連さん"], [60, "イヤホンが相棒"], [90, "B面までちゃんと聴く人"],
+    [120, "レコード棚の番人"], [150, "深夜ラジオのDJ見習い"], [180, "ほぼ作者"], [210, "ヘビーローテーション職人"],
+    [240, "耳が肥えすぎた人"], [270, "ぽちっと名誉館長"]
+  ];
+  var COMPLETE_TITLE = "全曲制覇の名誉リスナー";
   var COLORS = ["#FF5FA2", "#FFD93D", "#00C2A8", "#3D5AFE", "#9B5DE5", "#FF6B35", "#4BE1A0", "#7FB2FF"];
   var KEY = "pochitto-music-gacha";
-  var got = [], current = -1, spinning = false, turns = 0;
-  var today = { date: "", id: "" }, streak = 0, timer = null;
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  var D = { got: [], today: { date: "", id: "" }, total: 0, ticketsUsed: 0, recUsed: 0, sent: [], done: false };
+  var current = -1, spinning = false, turns = 0;
+
   function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function pad3(n) { return n < 10 ? "00" + n : n < 100 ? "0" + n : "" + n; }
   function colorOf(i) { return COLORS[i % COLORS.length]; }
   function load() {
     try {
       var d = JSON.parse(localStorage.getItem(KEY) || "{}");
-      got = (d.got || []).filter(function (id) { return TRACKS.indexOf(id) >= 0; });
-      today = d.today || { date: "", id: "" }; streak = d.streak || 0;
-    } catch (e) { got = []; }
+      D.got = (d.got || []).filter(function (id) { return TRACKS.indexOf(id) >= 0; });
+      D.today = d.today || D.today;
+      D.total = typeof d.total === "number" ? d.total : D.got.length;
+      D.ticketsUsed = d.ticketsUsed || 0; D.recUsed = d.recUsed || 0; D.sent = d.sent || []; D.done = !!d.done;
+    } catch (e) {}
   }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify({ got: got, today: today, streak: streak })); } catch (e) {} }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(D)); } catch (e) {} }
   function dateKey(d) { d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
-  function yesterdayKey() { var d = new Date(); d.setDate(d.getDate() - 1); return dateKey(d); }
-  function drawnToday() { return today.date === dateKey() && TRACKS.indexOf(today.id) >= 0; }
+  function drawnToday() { return D.today.date === dateKey() && TRACKS.indexOf(D.today.id) >= 0; }
   function untilMidnight() {
-    var n = new Date(), m = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1);
-    var s = Math.max(0, Math.floor((m - n) / 1000));
+    var n = new Date(), m = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1), s = Math.max(0, Math.floor((m - n) / 1000));
     return pad(Math.floor(s / 3600)) + ":" + pad(Math.floor(s % 3600 / 60)) + ":" + pad(s % 60);
   }
-  function tick() {
-    if (drawnToday()) {
-      $("spin").textContent = "次は " + untilMidnight() + " 後";
-      $("spin").classList.remove("primary");
-    } else {
-      $("spin").textContent = "ガチャを回す";
-      $("spin").classList.add("primary");
-    }
+  function bigCount() { return Math.floor(D.total / 30); }
+  function tickets() { return Math.max(0, bigCount() - D.ticketsUsed); }
+  function recRights() { return Math.max(0, bigCount() - D.recUsed); }
+  function title() {
+    if (D.done) return COMPLETE_TITLE;
+    var t = ""; TITLES.forEach(function (x) { if (D.total >= x[0]) t = x[1]; }); return t;
   }
+  function trackIdFrom(s) { var m = String(s).match(/open\.spotify\.com\/(?:intl-[a-z]{2}\/)?track\/([A-Za-z0-9]{22})/); return m ? m[1] : null; }
 
-  /* マシンの中のカプセル */
+  /* ---------- マシン ---------- */
   function drawBalls() {
     var P = [[80,178],[113,178],[146,178],[179,178],[64,150],[97,150],[130,150],[163,150],[196,150],[58,122],[91,122],[124,122],[157,122],[190,122],[75,96],[108,96],[141,96],[174,96],[118,70],[150,72]];
     var r = 16, out = "";
@@ -516,85 +766,152 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     });
     $("balls").innerHTML = out;
   }
+  function setCapsule(i, open) {
+    var c = $("capsule"); c.style.setProperty("--cap", colorOf(i));
+    c.classList.remove("drop", "open"); void c.offsetWidth; c.classList.add("drop"); if (open) c.classList.add("open");
+  }
 
-  function show(i, fromDraw) {
-    current = i;
-    var id = TRACKS[i];
-    $("pickNo").innerHTML = "No." + pad(i + 1) + "<small>／" + TRACKS.length + "曲</small>";
-    var pl = $("player");
-    pl.className = "player reveal";
-    pl.innerHTML = '<iframe title="Spotifyプレーヤー" src="https://open.spotify.com/embed/track/' + id + '?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
-    if (fromDraw) {
-      if (got.indexOf(id) < 0) got.push(id);
-      var t = dateKey();
-      if (today.date !== t) streak = today.date === yesterdayKey() ? streak + 1 : 1;
-      today = { date: t, id: id };
-      save();
-      if (got.length % 10 === 0 && got.length < TRACKS.length) setTimeout(function () { toast(got.length + "曲ゲット！ 次の" + (got.length + 10 > TRACKS.length ? "ゴール" : (got.length + 10) + "曲") + "を目指そう"); }, 600);
-    }
+  /* ---------- 表示 ---------- */
+  function embed(id, h) {
+    return '<iframe title="Spotifyプレーヤー" src="https://open.spotify.com/embed/track/' + id + '?utm_source=generator" style="height:' + h + 'px" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
+  }
+  function show(i) {
+    current = i; var id = TRACKS[i];
+    $("pickNo").innerHTML = "No." + pad3(i + 1) + "<small>／" + TRACKS.length + "曲</small>";
+    var pl = $("player"); pl.className = "player reveal"; pl.innerHTML = embed(id, 152);
     $("spBtn").href = "https://open.spotify.com/track/" + id;
-    $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで No." + pad(i + 1) + " が出た！") + "&url=" + encodeURIComponent(location.href.split("#")[0] + "#t=" + id);
+    $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで No." + pad3(i + 1) + " が出た！") + "&url=" + encodeURIComponent(location.href.split("#")[0] + "#t=" + id);
     render();
   }
 
   function render() {
-    var n = TRACKS.length, g = got.length;
-    var alive = streak > 0 && (today.date === dateKey() || today.date === yesterdayKey());
-    $("leftCount").textContent = (alive ? "連続 " + streak + "日目　" : "") + (g >= n ? "全" + n + "曲コンプリート済み" : "あと" + (n - g) + "曲でコンプリート");
-    var next = Math.min(n, (Math.floor(g / 10) + 1) * 10);
-    $("milestone").textContent = g >= n ? "" : "次の目標まで あと" + (next - g) + "曲（" + next + "曲ゲット）";
+    var n = TRACKS.length, g = D.got.length;
+    $("leftCount").textContent = g >= n ? "全" + n + "曲コンプリート！ 次からもう一周" : "あと" + (n - g) + "曲でコンプリート";
     $("progBar").style.width = (g / n * 100) + "%";
-    $("complete").hidden = g < n;
     $("stampNote").textContent = n + "曲中 " + g + "曲ゲット。色のついた番号を押すと、その曲をもう一度聴けます。";
+
+    /* コンプリートカード */
     var box = $("stamps"); box.innerHTML = "";
     TRACKS.forEach(function (id, i) {
-      var has = got.indexOf(id) >= 0, b = document.createElement("button");
+      var has = D.got.indexOf(id) >= 0, b = document.createElement("button");
       b.type = "button"; b.className = "stamp" + (has ? " got" : "") + (i === current ? " now" : "");
-      b.textContent = pad(i + 1);
-      if (has) { b.style.setProperty("--cap", colorOf(i)); b.setAttribute("aria-label", "No." + pad(i + 1) + "をもう一度聴く"); b.addEventListener("click", function () { setCapsule(i, true); show(i, false); }); }
-      else { b.disabled = true; b.setAttribute("aria-label", "No." + pad(i + 1) + "（まだ出ていません）"); }
+      b.textContent = pad3(i + 1);
+      if (has) { b.style.setProperty("--cap", colorOf(i)); b.setAttribute("aria-label", "No." + pad3(i + 1) + "をもう一度聴く"); b.addEventListener("click", function () { setCapsule(i, true); show(i); }); }
+      else { b.disabled = true; b.setAttribute("aria-label", "No." + pad3(i + 1) + "（まだ出ていません）"); }
       box.appendChild(b);
     });
+
+    /* ごほうび */
+    var t = title();
+    $("titleName").textContent = t || "まだありません";
+    $("titleX").hidden = !t;
+    if (t) $("titleX").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで称号「" + t + "」をもらいました！（" + D.total + "曲）") + "&url=" + encodeURIComponent(location.href.split("#")[0]);
+    var c = D.total % 30; if (c === 0 && D.total > 0) c = 30;
+    var nodes = $("cycle").children;
+    for (var k = 0; k < nodes.length; k++) nodes[k].classList.toggle("on", c >= (k + 1) * 5);
+    $("cycleNote").textContent = c === 30 ? "大ゴール達成！ 次の1曲から、また新しいゴールがはじまります。" : "次の大ゴールまで あと" + (30 - c) + "曲";
+    var nextTitle = null; TITLES.forEach(function (x) { if (!nextTitle && x[0] > D.total) nextTitle = x; });
+    $("haul").textContent = "これまでに スタンプ" + Math.floor(D.total / 5) + "個・バッジ" + Math.floor(D.total / 10) + "個・大ゴール" + bigCount() + "回" +
+      (nextTitle ? "。次の称号は" + nextTitle[0] + "曲で。" : "");
+
+    /* チケット */
+    var tk = tickets();
+    $("ticketCount").textContent = tk;
+    $("ticketBtn").hidden = !(drawnToday() && tk > 0);
+    $("ticketBtn").textContent = "おかわりチケットで回す（残り" + tk + "枚）";
+
+    /* 推薦 */
+    var rr = recRights();
+    $("recOpen").hidden = rr <= 0; $("recLocked").hidden = rr > 0;
+    $("recRight").textContent = rr;
+    $("recLocked").textContent = "30曲そろえるごとに、1曲推薦できます。次の推薦まで あと" + (30 - (D.total % 30)) + "曲。";
+
     $("copyBtn").disabled = current < 0; $("spBtn").style.visibility = current < 0 ? "hidden" : "visible";
     $("xBtn").style.pointerEvents = current < 0 ? "none" : ""; $("xBtn").style.opacity = current < 0 ? ".5" : "";
   }
 
-  function setCapsule(i, open) {
-    var c = $("capsule");
-    c.style.setProperty("--cap", colorOf(i));
-    c.classList.remove("drop", "open"); void c.offsetWidth;
-    c.classList.add("drop"); if (open) c.classList.add("open");
+  function tick() {
+    var b = $("spin");
+    if (drawnToday()) { b.textContent = "次は " + untilMidnight() + " 後"; b.classList.remove("primary"); }
+    else { b.textContent = "ガチャを回す"; b.classList.add("primary"); }
   }
 
-  function spin() {
+  /* ---------- 回す ---------- */
+  function celebrate() {
+    var T = D.total, n = TRACKS.length;
+    if (D.got.length >= n && !D.done) { D.done = true; save(); return "コンプリート！ 称号「" + COMPLETE_TITLE + "」をゲット"; }
+    if (T % 30 === 0) return "大ゴール！ 称号「" + title() + "」と、おかわりチケット・推薦権をゲット";
+    if (T === 1) return "称号「はじめての一曲」をゲット";
+    if (T % 10 === 0) return T + "曲バッジをゲット！";
+    if (T % 5 === 0) return "スタンプをゲット！";
+    return "";
+  }
+  function spin(useTicket) {
     if (spinning) return;
-    if (drawnToday()) {
-      var ti = TRACKS.indexOf(today.id);
-      setCapsule(ti, true); show(ti, false);
+    if (!useTicket && drawnToday()) {
+      var ti = TRACKS.indexOf(D.today.id); setCapsule(ti, true); show(ti);
       toast("今日の一曲はこれ！ 次は " + untilMidnight() + " 後に回せます");
       if (window.innerWidth < 920) $("resultCard").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
       return;
     }
-    if (got.length >= TRACKS.length) { got = []; save(); }
-    var rest = []; TRACKS.forEach(function (id, i) { if (got.indexOf(id) < 0) rest.push(i); });
+    if (useTicket && tickets() <= 0) return;
+    if (D.got.length >= TRACKS.length) D.got = [];
+    var rest = []; TRACKS.forEach(function (id, i) { if (D.got.indexOf(id) < 0) rest.push(i); });
     var i = rest[Math.floor(Math.random() * rest.length)];
-    spinning = true; $("spin").disabled = true;
+    spinning = true; $("spin").disabled = true; $("ticketBtn").disabled = true;
     turns += 1; $("knob").style.transform = "rotate(" + (turns * 360) + "deg)";
-    var b = $("balls"); b.classList.remove("shake"); void b.getBoundingClientRect(); b.classList.add("shake");
-    var c = $("capsule"); c.classList.remove("drop", "open");
-    var t1 = reduce ? 0 : 950, t2 = reduce ? 0 : 750;
+    var bl = $("balls"); bl.classList.remove("shake"); void bl.getBoundingClientRect(); bl.classList.add("shake");
+    var cap = $("capsule"); cap.classList.remove("drop", "open");
     setTimeout(function () {
       setCapsule(i, false);
       setTimeout(function () {
-        c.classList.add("open");
-        show(i, true);
-        spinning = false; $("spin").disabled = false; tick();
+        cap.classList.add("open");
+        var id = TRACKS[i];
+        D.got.push(id); D.total += 1; D.today = { date: dateKey(), id: id };
+        if (useTicket) D.ticketsUsed += 1;
+        save();
+        show(i);
+        var msg = celebrate(); render();
+        if (msg) { setTimeout(function () { toast(msg, 3200); }, 500); $("rewards").classList.remove("reveal"); void $("rewards").offsetWidth; $("rewards").classList.add("reveal"); }
+        spinning = false; $("spin").disabled = false; $("ticketBtn").disabled = false; tick();
         if (window.innerWidth < 920) $("resultCard").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-      }, t2);
-    }, t1);
+      }, reduce ? 0 : 750);
+    }, reduce ? 0 : 950);
   }
 
-  function toast(msg) { var t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.timer); toast.timer = setTimeout(function () { t.classList.remove("show"); }, 1800); }
+  /* ---------- 推薦 ---------- */
+  function recommend() {
+    var id = trackIdFrom($("recLink").value), name = $("recName").value.trim().slice(0, 20);
+    var msg = $("recMsg");
+    if (recRights() <= 0) return;
+    if (!id) { msg.textContent = "Spotifyの曲のリンク（open.spotify.com/track/…）を貼ってください。"; return; }
+    if (TRACKS.indexOf(id) >= 0) { msg.textContent = "その曲は、もうガチャに入っています。別の曲でお願いします。"; return; }
+    if (LISTENER.some(function (x) { return x.id === id; })) { msg.textContent = "その曲は、もう推薦の棚に並んでいます。"; return; }
+    if (D.sent.indexOf(id) >= 0) { msg.textContent = "その曲は、前に推薦してくれた曲です。"; return; }
+    var body = new URLSearchParams(); body.append(F_LINK, "https://open.spotify.com/track/" + id); body.append(F_NAME, name || "（ニックネームなし）");
+    $("recBtn").disabled = true; msg.textContent = "送っています…";
+    fetch(FORM, { method: "POST", mode: "no-cors", body: body }).then(function () {
+      D.recUsed += 1; D.sent.push(id); save();
+      $("recLink").value = ""; msg.textContent = "";
+      toast("推薦を送りました！ 採用されたら棚に並びます", 3000); render();
+    }).catch(function () { msg.textContent = "送れませんでした。通信状況を確かめて、もう一度お試しください。"; })
+      .then(function () { $("recBtn").disabled = false; });
+  }
+
+  /* ---------- リスナー推薦の棚 ---------- */
+  function shelf() {
+    var box = $("listener"); box.innerHTML = "";
+    $("listenerEmpty").hidden = LISTENER.length > 0;
+    LISTENER.slice().reverse().forEach(function (x) {
+      var d = document.createElement("div"); d.className = "lcard";
+      d.innerHTML = '<div class="player">' + embed(x.id, 80) + "</div>";
+      var p = document.createElement("p"); p.textContent = (x.by || "名無しのリスナー") + " さんの推薦"; d.appendChild(p);
+      box.appendChild(d);
+    });
+  }
+
+  /* ---------- 共通 ---------- */
+  function toast(msg, ms) { var t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.timer); toast.timer = setTimeout(function () { t.classList.remove("show"); }, ms || 1800); }
   function copyText(text, msg) {
     function fallback() {
       var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
@@ -605,15 +922,21 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { toast(msg); }, fallback); else fallback();
   }
 
-  $("spin").addEventListener("click", spin);
+  $("spin").addEventListener("click", function () { spin(false); });
+  $("ticketBtn").addEventListener("click", function () { spin(true); });
+  $("recBtn").addEventListener("click", recommend);
   $("copyBtn").addEventListener("click", function () { if (current >= 0) copyText("https://open.spotify.com/track/" + TRACKS[current], "曲のリンクをコピーしました"); });
-  $("resetBtn").addEventListener("click", function () { if (confirm("コンプリートカードの記録を消しますか？")) { got = []; streak = 0; save(); render(); toast("リセットしました"); } });
+  $("resetBtn").addEventListener("click", function () {
+    if (confirm("コンプリートカードの記録を消しますか？（称号・チケット・推薦権もリセットされます）")) {
+      D = { got: [], today: D.today, total: 0, ticketsUsed: 0, recUsed: 0, sent: D.sent, done: false }; save(); render(); toast("リセットしました");
+    }
+  });
 
-  load(); drawBalls(); render();
+  load(); drawBalls(); shelf(); render();
   var m = location.hash.match(/t=([A-Za-z0-9]{22})/);
-  if (m && TRACKS.indexOf(m[1]) >= 0) { var i = TRACKS.indexOf(m[1]); setCapsule(i, true); show(i, false); }
-  else if (drawnToday()) { var j = TRACKS.indexOf(today.id); setCapsule(j, true); show(j, false); }
-  tick(); timer = setInterval(tick, 1000);
+  if (m && TRACKS.indexOf(m[1]) >= 0) { var i = TRACKS.indexOf(m[1]); setCapsule(i, true); show(i); }
+  else if (drawnToday()) { var j = TRACKS.indexOf(D.today.id); setCapsule(j, true); show(j); }
+  tick(); setInterval(tick, 1000);
 })();
 </script>
 </body>
