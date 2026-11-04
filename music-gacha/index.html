@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>今日の一曲ガチャ｜ぽちっと</title>
-<meta name="description" content="作者のプレイリストから、ランダムに1曲。ボタンを押すとガチャが回って、Spotifyで今日の一曲が聴けます。全曲そろえるコンプリートカード付き。">
+<meta name="description" content="作者のプレイリストから、1日1回ランダムに1曲。ボタンを押すとガチャが回って、Spotifyで今日の一曲が聴けます。全曲そろえるコンプリートカード付き。">
 <link rel="canonical" href="https://pochittools.github.io/music-gacha/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
 <meta property="og:title" content="今日の一曲ガチャ｜ぽちっと">
-<meta property="og:description" content="作者のプレイリストから、ランダムに1曲。ボタンを押すとガチャが回って、Spotifyで今日の一曲が聴けます。全曲そろえるコンプリートカード付き。">
+<meta property="og:description" content="作者のプレイリストから、1日1回ランダムに1曲。ボタンを押すとガチャが回って、Spotifyで今日の一曲が聴けます。全曲そろえるコンプリートカード付き。">
 <meta property="og:url" content="https://pochittools.github.io/music-gacha/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
@@ -257,8 +257,8 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 @media (prefers-reduced-motion: reduce) { #knob { transition: none; } #balls.shake, .capsule.drop, .reveal { animation: none; } .capsule .top { transition: none; } }
 
 .stamp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.stamps { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 8px; margin-top: 4px; }
-.stamp { aspect-ratio: 1; border-radius: 50%; border: 2.5px solid var(--edge); background: var(--soft); color: var(--sub); font-weight: 800; font-size: 0.8rem; cursor: default; display: grid; place-items: center; font-variant-numeric: tabular-nums; padding: 0; }
+.stamps { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 6px; margin-top: 4px; max-height: 360px; overflow-y: auto; padding: 4px 6px 6px 2px; }
+.stamp { aspect-ratio: 1; border-radius: 50%; border: 2.5px solid var(--edge); background: var(--soft); color: var(--sub); font-weight: 800; font-size: 0.68rem; cursor: default; display: grid; place-items: center; font-variant-numeric: tabular-nums; padding: 0; }
 .stamp.got { background: var(--cap); color: #1A1A2E; cursor: pointer; box-shadow: 2px 2px 0 var(--shadow); }
 .stamp.got:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--shadow); }
 .stamp.now { outline: 3px solid var(--accent); outline-offset: 2px; }
@@ -266,6 +266,8 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 .progress i { display: block; height: 100%; background: repeating-linear-gradient(-45deg, var(--accent) 0 8px, #FF8CBF 8px 16px); border-right: 2.5px solid var(--edge); transition: width .4s ease; }
 .mini-btn { border: 2px solid var(--edge); background: var(--chip); border-radius: 999px; padding: 3px 12px; font-size: 0.8rem; font-weight: 800; cursor: pointer; }
 .complete { margin: 0 0 14px; padding: 12px 16px; border: 2.5px solid var(--edge); border-radius: 14px; background: var(--hero); color: #1A1A2E; font-weight: 800; }
+
+.spin-btn:not(.primary) { font-size: 1rem; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
@@ -276,7 +278,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     <div class="title">
       <span class="sticker" aria-hidden="true">無料</span>
       <h1>今日の一曲ガチャ</h1>
-      <p>作者のプレイリストから、ランダムに1曲。何が出るかは回してのお楽しみ。</p>
+      <p>作者のプレイリストから、1日1回ランダムに1曲。何が出るかは回してのお楽しみ。</p>
     </div>
   </header>
 
@@ -299,6 +301,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       <div class="tray"><div class="capsule" id="capsule"><span class="top"></span><span class="bot"></span></div></div>
       <button type="button" class="btn primary spin-btn" id="spin">ガチャを回す</button>
       <p class="left-count" id="leftCount"></p>
+      <p class="note" style="margin:4px 0 0; text-align:center">1日1回、深夜0時にまた回せるようになります。</p>
     </section>
 
     <aside class="result" aria-label="出てきた曲">
@@ -315,6 +318,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       <section class="card" style="margin-top:24px">
         <div class="stamp-head"><h2 style="margin:0; font-size:1.1rem; font-weight:800">コンプリートカード</h2><button type="button" class="mini-btn" id="resetBtn">リセット</button></div>
         <div class="progress" aria-hidden="true"><i id="progBar" style="width:0%"></i></div>
+        <p class="note" id="milestone" style="margin:-8px 0 14px; font-weight:700"></p>
         <p class="complete" id="complete" hidden>コンプリート！全曲そろいました。次に回すと、もう一周はじまります。</p>
         <div class="stamps" id="stamps"></div>
         <p class="note" id="stampNote"></p>
@@ -324,7 +328,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 
   <article>
     <h2>このガチャについて</h2>
-    <p>放送の現場で働く作者が、ふだん聴いている邦楽のプレイリストから1曲をランダムに選びます。全曲を引き終わるまで、同じ曲は出てきません。引いた曲はコンプリートカードに色がつき、押せばもう一度聴けます。</p>
+    <p>放送の現場で働く作者が、ふだん聴いている邦楽のプレイリストから1曲をランダムに選びます。ガチャは1日1回、深夜0時にまた回せるようになります。全曲を引き終わるまで、同じ曲は出てきません。引いた曲はコンプリートカードに色がつき、押せばもう一度聴けます。</p>
     <p>曲の再生にはSpotifyの埋め込みプレーヤーを使っています。Spotifyにログインしていると曲を最後まで、ログインしていない場合は試聴版が再生されます。コンプリートカードの記録は、お使いのブラウザの中にだけ保存されます。</p>
   </article>
 
@@ -367,17 +371,139 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     "3rezFiYVfZdXWeVmupxjmH",
     "6gwgYo3u9h6bryV3NQ1FmE",
     "2psjUf9K0NLjxEldo4Vl7A",
-    "4OZgLTWdsiogtoDdZVEtpZ"
+    "4OZgLTWdsiogtoDdZVEtpZ",
+    "6XhOrT6C9VG7UmH3e70CkF",
+    "64bVDKYuGiJN2ptowD1wVd",
+    "3tSpn2osk0KJ1TfOF8AQvP",
+    "4PS2vvzNpeRH4UU0QHYVGZ",
+    "428vfWii2yP680un6tby9J",
+    "0IIy5gJN0MMKeGIsrkZzMj",
+    "1DrDELqHERt3YQ0Q4y5MDK",
+    "7wZ3aT8Y8C6nhV4QsSLJ4h",
+    "7mxgPTMcACB1iAKKRq9Ebf",
+    "3onVM8XG0eW9ZtaLqu5zlw",
+    "2rwkaFdBNUlYHEpInYEeM0",
+    "4FNFo50hRpbtwSGxwW1OdZ",
+    "27udJcfu06TvbbOpgfxIlw",
+    "2WteyxKwXDUMHKSpc9GnnN",
+    "7MLRXVVgkCGHJFa81dRnW7",
+    "6eArsdpADo1RTt7zX2Ys1K",
+    "5NclFtKE9l08xM8XhDKyzx",
+    "2rUXvoihe7UXWbHogW3xNs",
+    "6YDX87CQy67xv0J6aMOCKu",
+    "7asq1uhwGEeeljOGQbgDEl",
+    "4gV3NX7dzBK68rp48mLlVt",
+    "74X2u8JMVooG2QbjRxXwR8",
+    "4gr83tANgE2hOcO79OafSn",
+    "7JdEX5CkWNaPB9jLFFrMli",
+    "0qzQ4KtXPqg9kOzWsuRo4L",
+    "5bIfUwPurq7SaWSKrcukw5",
+    "25mFwPo5V5lvMM0aHCDNvM",
+    "78MS9OT9Flm2V78fhTw4rk",
+    "3GiADMmI5jfkhF2o4a2G8N",
+    "4d7kU8Y5PUdZDsyuuLRlqq",
+    "3PuVum31FJThDBzkNxzij3",
+    "4im3CTGHMKvjnB4viW2Any",
+    "76fc73uRAcp0psxMuFJHGF",
+    "5h5ACEliQ9toZ3fJwVc09f",
+    "6eh0kyNpZlmJbtMb1mLHTo",
+    "62RawuaHiuLMiGKWj7KI07",
+    "3akniqbPdq5nhh19QtxAq2",
+    "5RIQU2JDuXC4NkLiHNNMon",
+    "1SzILWLWJd43fNe1Ltnxld",
+    "0TVfS8GKzlHNT9Z4IQ7Wrz",
+    "0Utf1kTcynD7Fg5u2NXtZC",
+    "1KKhyHwmk80BivAQ6sNuSc",
+    "1cWXVFFapByktCPp27NNyh",
+    "4HoLBNdBHAONTk8ZF1GBa9",
+    "4WuiXLX8I9N11p6dF3DuoZ",
+    "2wZux5EsJfcZF5kgJPtsrq",
+    "0Ajxm63ciUR7KdbbBMN86s",
+    "3RauRsiIxUOQTS8h9sVWcP",
+    "2v9iH0QCyXMNXSWqhJfr4E",
+    "3Z27gNml8048d5NuyVaJkt",
+    "568SN1Qz6PNLvrme0dNOHh",
+    "7zQpoDhcJx0WLHqNfQNEyo",
+    "5hbcrOiaILZ4WtwytP2ycK",
+    "6erkYj2Sf8Cl3zKAmYni7j",
+    "2ICVrUIyL20gOkhbx6umcB",
+    "0q4lgrOqmw6mJzvozCz0rN",
+    "3JVPp8uzlARY1YUceQxyED",
+    "0e1k2ptLJEtnlM4Fy8QVo6",
+    "6OfAPiNAZW8Mr5GX3wuJqp",
+    "3tX0FZImodNIjMECHwyOYa",
+    "3p5OYoGK7wW0UBe4HipmnI",
+    "2fhFA4EmTxzE5b0c1TSU37",
+    "2TRxremVZ0t2JVu5OFxbiA",
+    "0ZNbXoRUhaSMhYcL4LWDg9",
+    "5Hd6x8F9ttODbOJdXlWKdR",
+    "5YRDGgdOshUPA17m7yzY7p",
+    "0fy6lDOFDzmt0ygCzkft4e",
+    "2ektCq0B2HZyL38eRbI70W",
+    "3LtQtp24SRMuymIrQmQfKW",
+    "0edJN9w4tY8VXhNPt5U5qB",
+    "4I4cLKekxc9tz2IrZDZR9b",
+    "28H2R5DE6eVKIBBYvGbKRg",
+    "6WKFNrrrnGZShQBgcs0ZPc",
+    "71fU9EO0k1dPBk8fCUB3VK",
+    "6PbCnxdWt2sxv1V4cDRDS9",
+    "6Mavd9uk89Y9OTdvcDTfGG",
+    "170ExMDnLxyade2Xzsfw0Z",
+    "3opgyLP5M2gOyszzXQCKyW",
+    "1BVaTJoYRHVUFaLMyZYzCX",
+    "53Hc2k7eomhtV8ubkB6yhZ",
+    "3XpS5myFyf5fWVhacy5vV1",
+    "2n8ewWGYuw5MrVmKyzVZFM",
+    "4J355x8SX4orM1H3tyPBFa",
+    "4g00chpaw04nEN9YE59pl9",
+    "1iLYa7awXZxV8nyrsoTbcn",
+    "6lM8TkGnjBwijnAcM9sJlp",
+    "6M5zfM3WsDSbQFhK2diQ0x",
+    "3dOIgsfzZWsLcCTON0ebLt",
+    "3voShTcaRtbYVSPGuCLAzw",
+    "0XzMfqZiPCBhYwxVsMucAZ",
+    "3B8xP0JLPruHBRVPIWcntD",
+    "59hVbgr8rfYkDbHfr8RcGI",
+    "7oO80yRqJ0rqjZxFJa1QQd",
+    "0s2r51oFxs7nQHMfQhGkXj",
+    "0M47xHUyYQvhSnso8GFHSA",
+    "3TIwC2ybHe4SxjPpIaIc9H",
+    "4WhHNXBgRglnkjy7TMzgdh",
+    "1sMXlcxi0R2tUUZgPQ6vOQ"
   ];
   var COLORS = ["#FF5FA2", "#FFD93D", "#00C2A8", "#3D5AFE", "#9B5DE5", "#FF6B35", "#4BE1A0", "#7FB2FF"];
   var KEY = "pochitto-music-gacha";
   var got = [], current = -1, spinning = false, turns = 0;
+  var today = { date: "", id: "" }, streak = 0, timer = null;
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function pad(n) { return (n < 10 ? "0" : "") + n; }
   function colorOf(i) { return COLORS[i % COLORS.length]; }
-  function load() { try { var d = JSON.parse(localStorage.getItem(KEY) || "{}"); got = (d.got || []).filter(function (id) { return TRACKS.indexOf(id) >= 0; }); } catch (e) { got = []; } }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify({ got: got })); } catch (e) {} }
+  function load() {
+    try {
+      var d = JSON.parse(localStorage.getItem(KEY) || "{}");
+      got = (d.got || []).filter(function (id) { return TRACKS.indexOf(id) >= 0; });
+      today = d.today || { date: "", id: "" }; streak = d.streak || 0;
+    } catch (e) { got = []; }
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify({ got: got, today: today, streak: streak })); } catch (e) {} }
+  function dateKey(d) { d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function yesterdayKey() { var d = new Date(); d.setDate(d.getDate() - 1); return dateKey(d); }
+  function drawnToday() { return today.date === dateKey() && TRACKS.indexOf(today.id) >= 0; }
+  function untilMidnight() {
+    var n = new Date(), m = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1);
+    var s = Math.max(0, Math.floor((m - n) / 1000));
+    return pad(Math.floor(s / 3600)) + ":" + pad(Math.floor(s % 3600 / 60)) + ":" + pad(s % 60);
+  }
+  function tick() {
+    if (drawnToday()) {
+      $("spin").textContent = "次は " + untilMidnight() + " 後";
+      $("spin").classList.remove("primary");
+    } else {
+      $("spin").textContent = "ガチャを回す";
+      $("spin").classList.add("primary");
+    }
+  }
 
   /* マシンの中のカプセル */
   function drawBalls() {
@@ -398,7 +524,14 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
     var pl = $("player");
     pl.className = "player reveal";
     pl.innerHTML = '<iframe title="Spotifyプレーヤー" src="https://open.spotify.com/embed/track/' + id + '?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
-    if (fromDraw && got.indexOf(id) < 0) { got.push(id); save(); }
+    if (fromDraw) {
+      if (got.indexOf(id) < 0) got.push(id);
+      var t = dateKey();
+      if (today.date !== t) streak = today.date === yesterdayKey() ? streak + 1 : 1;
+      today = { date: t, id: id };
+      save();
+      if (got.length % 10 === 0 && got.length < TRACKS.length) setTimeout(function () { toast(got.length + "曲ゲット！ 次の" + (got.length + 10 > TRACKS.length ? "ゴール" : (got.length + 10) + "曲") + "を目指そう"); }, 600);
+    }
     $("spBtn").href = "https://open.spotify.com/track/" + id;
     $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent("今日の一曲ガチャで No." + pad(i + 1) + " が出た！") + "&url=" + encodeURIComponent(location.href.split("#")[0] + "#t=" + id);
     render();
@@ -406,7 +539,10 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 
   function render() {
     var n = TRACKS.length, g = got.length;
-    $("leftCount").textContent = g >= n ? "全" + n + "曲コンプリート済み" : "まだ出ていない曲 あと" + (n - g) + "曲（全" + n + "曲）";
+    var alive = streak > 0 && (today.date === dateKey() || today.date === yesterdayKey());
+    $("leftCount").textContent = (alive ? "連続 " + streak + "日目　" : "") + (g >= n ? "全" + n + "曲コンプリート済み" : "あと" + (n - g) + "曲でコンプリート");
+    var next = Math.min(n, (Math.floor(g / 10) + 1) * 10);
+    $("milestone").textContent = g >= n ? "" : "次の目標まで あと" + (next - g) + "曲（" + next + "曲ゲット）";
     $("progBar").style.width = (g / n * 100) + "%";
     $("complete").hidden = g < n;
     $("stampNote").textContent = n + "曲中 " + g + "曲ゲット。色のついた番号を押すと、その曲をもう一度聴けます。";
@@ -432,6 +568,13 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 
   function spin() {
     if (spinning) return;
+    if (drawnToday()) {
+      var ti = TRACKS.indexOf(today.id);
+      setCapsule(ti, true); show(ti, false);
+      toast("今日の一曲はこれ！ 次は " + untilMidnight() + " 後に回せます");
+      if (window.innerWidth < 920) $("resultCard").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      return;
+    }
     if (got.length >= TRACKS.length) { got = []; save(); }
     var rest = []; TRACKS.forEach(function (id, i) { if (got.indexOf(id) < 0) rest.push(i); });
     var i = rest[Math.floor(Math.random() * rest.length)];
@@ -445,7 +588,7 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
       setTimeout(function () {
         c.classList.add("open");
         show(i, true);
-        spinning = false; $("spin").disabled = false;
+        spinning = false; $("spin").disabled = false; tick();
         if (window.innerWidth < 920) $("resultCard").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
       }, t2);
     }, t1);
@@ -464,11 +607,13 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 
   $("spin").addEventListener("click", spin);
   $("copyBtn").addEventListener("click", function () { if (current >= 0) copyText("https://open.spotify.com/track/" + TRACKS[current], "曲のリンクをコピーしました"); });
-  $("resetBtn").addEventListener("click", function () { if (confirm("コンプリートカードの記録を消しますか？")) { got = []; save(); render(); toast("リセットしました"); } });
+  $("resetBtn").addEventListener("click", function () { if (confirm("コンプリートカードの記録を消しますか？")) { got = []; streak = 0; save(); render(); toast("リセットしました"); } });
 
   load(); drawBalls(); render();
   var m = location.hash.match(/t=([A-Za-z0-9]{22})/);
   if (m && TRACKS.indexOf(m[1]) >= 0) { var i = TRACKS.indexOf(m[1]); setCapsule(i, true); show(i, false); }
+  else if (drawnToday()) { var j = TRACKS.indexOf(today.id); setCapsule(j, true); show(j, false); }
+  tick(); timer = setInterval(tick, 1000);
 })();
 </script>
 </body>
