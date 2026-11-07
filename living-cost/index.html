@@ -2,6 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-0DUriocUAuk+NdymOKKILMt4jZ5w0xKALkGycZxLHvQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://open.spotify.com https://docs.google.com; frame-src https://open.spotify.com; form-action 'self'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>一人暮らしの生活費シミュレーター｜ぽちっと</title>
 <meta name="description" content="手取り月収と家賃・食費・光熱費などをスライドするだけで、毎月いくら残るかをシミュレーション。節約型・ふつう・ゆとり型のプリセット、家賃の目安チェック、貯金目標までの期間もわかる無料ツールです。">
@@ -586,7 +588,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   function shareUrl() { return location.href.split("#")[0] + "#i=" + S.inc + "&g=" + S.goal + "&c=" + S.v.join(","); }
   function loadHash() {
     var h = location.hash.replace(/^#/, ""); if (!h) return;
-    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = decodeURIComponent(p[1] || ""); });
+    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = (function (s) { try { return decodeURIComponent(s); } catch (e) { return ""; } })(p[1] || ""); });
     var i = parseFloat(q.i); if (i >= 0 && i < 1e8) S.inc = i;
     var g = parseFloat(q.g); if (g >= 0 && g < 1e10) S.goal = g;
     if (q.c) { var arr = q.c.split(",").map(parseFloat); if (arr.length === CATS.length && arr.every(function (x) { return x >= 0 && x < 1e8; })) S.v = arr; }

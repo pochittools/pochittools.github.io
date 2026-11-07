@@ -2,6 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-yLAI/CYlnOAy4rjqo2n3BZcBwOp5qjk9OkhcpmDQljw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://open.spotify.com https://docs.google.com; frame-src https://open.spotify.com; form-action 'self'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>アスペクト比・解像度計算機｜ぽちっと</title>
 <meta name="description" content="解像度からアスペクト比を調べる、比率からサイズを計算する、黒帯や見切れを測る。16:9・9:16・4:5・シネスコなどのプリセット付き。動画編集やSNS投稿に使える無料ツールです。">
@@ -776,7 +778,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   }
   function loadHash() {
     var h = location.hash.replace(/^#/, ""); if (!h) return;
-    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = decodeURIComponent(p[1] || ""); });
+    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = (function (s) { try { return decodeURIComponent(s); } catch (e) { return ""; } })(p[1] || ""); });
     if (["ratio", "size", "fit"].indexOf(q.mode) >= 0) S.mode = q.mode;
     if (q.base === "w" || q.base === "h") S.base = q.base;
     if (q.fit === "contain" || q.fit === "cover") S.fit = q.fit;

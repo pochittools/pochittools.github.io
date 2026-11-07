@@ -2,6 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-ypGA1bEGdZt7DLIqRmwCAJ+z2n7/XADOcfEsQ39xdZc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://open.spotify.com https://docs.google.com; frame-src https://open.spotify.com; form-action 'self'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>タイムコード計算機｜尺の足し算・フレーム変換・ドロップフレーム対応｜ぽちっと</title>
 <meta name="description" content="タイムコードの足し算・引き算、IN点・OUT点からの尺、フレーム数・秒との変換、23.976・29.97DF・59.94などのレート変換、CM尺のチェックができる無料ツール。ドロップフレーム対応。現役ビデオエンジニア制作。">
@@ -721,7 +723,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   }
   function loadHash() {
     var h = location.hash.replace(/^#/, ""); if (!h) return;
-    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = decodeURIComponent(p[1] || ""); });
+    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = (function (s) { try { return decodeURIComponent(s); } catch (e) { return ""; } })(p[1] || ""); });
     if (["sum", "conv", "rate", "check"].indexOf(q.m) >= 0) S.mode = q.m;
     if (rateOf(q.r)) S.rate = q.r;
     if (q.s === "list" || q.s === "inout") S.sub = q.s;
