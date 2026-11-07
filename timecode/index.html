@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>タイムコード計算機｜尺の足し算・フレーム変換・ドロップフレーム対応｜ぽちっと</title>
+<meta name="description" content="タイムコードの足し算・引き算、IN点・OUT点からの尺、フレーム数・秒との変換、23.976・29.97DF・59.94などのレート変換、CM尺のチェックができる無料ツール。ドロップフレーム対応。現役ビデオエンジニア制作。">
+<link rel="canonical" href="https://pochittools.github.io/timecode/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ぽちっと">
+<meta property="og:title" content="タイムコード計算機｜尺の足し算・フレーム変換・ドロップフレーム対応｜ぽちっと">
+<meta property="og:description" content="タイムコードの足し算・引き算、IN点・OUT点からの尺、フレーム数・秒との変換、23.976・29.97DF・59.94などのレート変換、CM尺のチェックができる無料ツール。ドロップフレーム対応。現役ビデオエンジニア制作。">
+<meta property="og:url" content="https://pochittools.github.io/timecode/">
+<meta property="og:image" content="https://pochittools.github.io/og/default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pochittools.github.io/og/default.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='9' fill='%23FF5FA2' stroke='%231A1A2E' stroke-width='3'/%3E%3Cpath d='M11 8l12 7-5.5 1.5L15 22z' fill='%231A1A2E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
+<!-- Google AdSense などのスクリプトは、審査に通ったらここに貼り付けます -->
+<style>
+:root {
+  --bg: #CFE6FF;
+  --dot: rgba(26, 26, 46, .10);
+  --panel: #FFFFFF;
+  --ink: #1A1A2E;
+  --sub: #555872;
+  --edge: #1A1A2E;
+  --shadow: #1A1A2E;
+  --soft: #EEF0FA;
+  --chip: #FFFFFF;
+  --chip-on-bg: #3D5AFE;
+  --chip-on-ink: #FFFFFF;
+  --accent: #FF5FA2;
+  --hero: #FFD93D;
+  --hero-ink: #1A1A2E;
+  --tab-on: #4BE1A0;
+  --marker: #FFD93D;
+  --warn: #FF3B3B;
+  --c1: #FF5FA2; --c2: #3D5AFE; --c3: #00C2A8; --c4: #FFB300; --c5: #9B5DE5; --c6: #FF6B35;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1E1638;
+    --dot: rgba(255, 255, 255, .07);
+    --panel: #2B2150;
+    --ink: #F7F4FF;
+    --sub: #BDB5DA;
+    --edge: #F7F4FF;
+    --shadow: #000000;
+    --soft: #3A2F66;
+    --chip: #2B2150;
+    --chip-on-bg: #FFD93D;
+    --chip-on-ink: #1A1A2E;
+    --c2: #6F86FF;
+    --marker: rgba(255, 95, 162, .55);
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+  font-weight: 500; font-size: 16px; line-height: 1.75; letter-spacing: 0.02em; font-feature-settings: "palt";
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-image: radial-gradient(var(--dot) 1.6px, transparent 1.8px); background-size: 22px 22px;
+}
+button, input, select { font: inherit; color: inherit; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* ヘッダー */
+.top { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+.logo { flex: none; width: 64px; height: 64px; border-radius: 20px; background: var(--accent); border: 3px solid var(--edge); box-shadow: 4px 4px 0 var(--shadow); display: grid; place-items: center; transform: rotate(-4deg); }
+.logo svg { width: 34px; height: 34px; }
+.title { position: relative; }
+.sticker { position: absolute; top: -18px; right: -64px; width: 56px; height: 56px; border-radius: 50%; background: var(--hero); color: #1A1A2E; border: 3px solid var(--edge); box-shadow: 3px 3px 0 var(--shadow); display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; transform: rotate(12deg); }
+@media (max-width: 560px) { .sticker { display: none; } }
+.top h1 { word-break: keep-all; overflow-wrap: anywhere; margin: 0; font-size: clamp(1.7rem, 5.2vw, 2.7rem); font-weight: 800; line-height: 1.25; letter-spacing: 0.01em; }
+.top p { margin: 6px 0 0; color: var(--sub); font-size: 0.95rem; }
+
+/* レイアウト */
+.app { display: grid; gap: 32px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 920px) {
+  .app { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); align-items: start; gap: 40px; }
+  .result { position: sticky; top: 24px; }
+}
+.card { background: var(--panel); border: 3px solid var(--edge); border-radius: 20px; box-shadow: 7px 7px 0 var(--shadow); padding: 28px; }
+
+/* モード切替 */
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--soft); border-radius: 14px; padding: 4px; margin-bottom: 24px; }
+.modes button { border: 0; background: transparent; border-radius: 10px; padding: 12px 6px; font-weight: 800; cursor: pointer; color: var(--sub); transition: background-color .15s ease, color .15s ease; }
+.modes button[aria-pressed="true"] { background: var(--accent); color: #1A1A2E; box-shadow: 0 0 0 2.5px var(--edge), 3px 3px 0 2.5px var(--shadow); }
+
+.field { padding: 24px 0; border-top: 2px solid var(--soft); }
+.modes + .field { border-top: 0; padding-top: 0; }
+.field-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.field-head h2, .field-head label { margin: 0; font-size: 1rem; font-weight: 800; }
+.note { font-size: 0.8rem; color: var(--sub); margin: 12px 0 0; line-height: 1.6; }
+
+/* プリセット */
+.tabs { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; }
+.tabs button { border: 0; background: none; padding: 5px 12px; border-radius: 999px; cursor: pointer; color: var(--sub); font-weight: 700; font-size: 0.875rem; }
+.tabs button[aria-selected="true"] { background: var(--tab-on); color: #1A1A2E; box-shadow: 0 0 0 2px var(--edge); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 2px solid var(--edge); background: var(--chip); border-radius: 999px; padding: 7px 14px; cursor: pointer; font-weight: 700; font-size: 0.875rem; line-height: 1.3; text-align: left; transition: transform .12s ease, box-shadow .12s ease; }
+.chip small { font-weight: 500; color: var(--sub); margin-left: 4px; }
+.chip:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--shadow); }
+.chip[aria-pressed="true"] { background: var(--chip-on-bg); color: var(--chip-on-ink); box-shadow: 3px 3px 0 var(--shadow); }
+.chip[aria-pressed="true"] small { color: inherit; opacity: .8; }
+
+/* 数値＋スライダー */
+.big-input { display: flex; align-items: baseline; gap: 10px; }
+.big-input input { width: 6ch; font-size: 2.2rem; font-weight: 800; line-height: 1.2; border: 0; border-bottom: 2.5px solid var(--edge); background: transparent; padding: 0 2px; border-radius: 0; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.big-input span { font-weight: 700; color: var(--sub); }
+.big-input select { font-size: 1rem; font-weight: 800; border: 2px solid var(--edge); border-radius: 10px; background: var(--chip); padding: 5px 10px; }
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 32px; background: transparent; margin: 14px 0 2px; cursor: pointer; --p: 50%; }
+input[type="range"]::-webkit-slider-runnable-track { height: 14px; border-radius: 999px; border: 2.5px solid var(--edge); background: linear-gradient(90deg, var(--accent) var(--p), var(--soft) var(--p)); }
+input[type="range"]::-moz-range-track { height: 8px; border-radius: 999px; border: 2px solid var(--edge); background: linear-gradient(90deg, var(--accent) var(--p), var(--soft) var(--p)); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; background: var(--hero); border: 3px solid var(--edge); margin-top: -9.5px; box-shadow: 2px 2px 0 var(--shadow); }
+input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--hero); border: 3px solid var(--edge); box-shadow: 2px 2px 0 var(--shadow); }
+.ticks { display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 700; color: var(--sub); padding: 0 2px; font-variant-numeric: tabular-nums; }
+.select { width: 100%; border: 2px solid var(--edge); border-radius: 12px; background: var(--chip); padding: 11px 14px; font-weight: 700; font-size: 16px; }
+.time-inputs { display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+.time-inputs input { width: 2.6ch; font-size: 2.2rem; font-weight: 800; line-height: 1.2; border: 0; border-bottom: 2.5px solid var(--edge); background: transparent; text-align: center; border-radius: 0; font-variant-numeric: tabular-nums; padding: 0; }
+.time-inputs label { display: inline-flex; align-items: baseline; gap: 6px; font-weight: 700; font-size: 0.9rem; color: var(--sub); }
+.quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.quick button { border: 1.5px solid var(--edge); background: var(--chip); border-radius: 999px; padding: 3px 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+.quick button:hover { background: var(--soft); }
+input[type="number"] { -moz-appearance: textfield; }
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+:focus-visible { outline: 3px solid var(--c2); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+/* 結果 */
+.hero { background: var(--hero); color: var(--hero-ink); border: 3px solid var(--edge); border-radius: 24px; box-shadow: 8px 8px 0 var(--shadow); overflow: hidden; }
+.hero-bars { display: grid; grid-template-columns: repeat(6, 1fr); height: 14px; border-bottom: 3px solid var(--edge); }
+.hero-bars i:nth-child(1) { background: var(--c1); } .hero-bars i:nth-child(2) { background: var(--c4); } .hero-bars i:nth-child(3) { background: var(--c3); } .hero-bars i:nth-child(4) { background: var(--c2); } .hero-bars i:nth-child(5) { background: var(--c5); } .hero-bars i:nth-child(6) { background: var(--c6); }
+.hero-body { padding: 22px 28px 26px; }
+.hero-label { font-weight: 800; font-size: 0.9rem; opacity: .8; }
+.hero-main { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 2px 0 14px; }
+.hero-value { font-size: clamp(3.4rem, 13vw, 5.6rem); font-weight: 800; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; display: inline-block; }
+.hero-value.tc { font-size: clamp(2.6rem, 11vw, 4rem); }
+.hero-unit { font-size: 1.6rem; font-weight: 800; letter-spacing: 0; }
+.hero-sub { margin: 0; font-weight: 700; font-size: 0.9rem; line-height: 1.7; }
+.hero-formula { margin: 16px 0 0; padding-top: 12px; border-top: 2.5px dashed rgba(26, 26, 46, .35); font-size: 0.75rem; opacity: .85; overflow-x: auto; white-space: nowrap; letter-spacing: 0; }
+.bump { animation: bump .32s ease; }
+@keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .bump { animation: none; } .chip { transition: none; } }
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 28px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; border: 3px solid var(--edge); background: var(--panel); color: var(--ink); border-radius: 14px; padding: 10px 14px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-decoration: none; box-shadow: 4px 4px 0 var(--shadow); transition: transform .1s ease, box-shadow .1s ease; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--shadow); }
+.btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--shadow); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--shadow); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn.primary { background: var(--accent); color: #1A1A2E; grid-column: 1 / -1; font-size: 1rem; }
+
+.media h2, .compare h2 { margin: 0 0 4px; font-size: 1.1rem; font-weight: 800; letter-spacing: 0.02em; }
+.media .note, .compare .lead { margin: 0 0 20px; color: var(--sub); font-size: 0.82rem; }
+.meter { display: grid; grid-template-columns: 3.8em 1fr; gap: 2px 12px; align-items: center; margin-bottom: 12px; }
+.meter b { font-weight: 800; font-size: 0.85rem; text-align: right; font-variant-numeric: tabular-nums; }
+.track { height: 16px; border: 2.5px solid var(--edge); border-radius: 999px; background: var(--soft); overflow: hidden; }
+.fill { height: 100%; border-radius: 999px; background: var(--c2); transition: width .35s ease; }
+.fill.over { background: repeating-linear-gradient(-45deg, var(--warn) 0 6px, #FF9B9B 6px 12px); }
+.meter:nth-child(6n+1) .fill:not(.over):not(.cur) { background: var(--c1); } .meter:nth-child(6n+2) .fill:not(.over):not(.cur) { background: var(--c4); } .meter:nth-child(6n+3) .fill:not(.over):not(.cur) { background: var(--c3); } .meter:nth-child(6n+4) .fill:not(.over):not(.cur) { background: var(--c2); } .meter:nth-child(6n+5) .fill:not(.over):not(.cur) { background: var(--c5); } .meter:nth-child(6n) .fill:not(.over):not(.cur) { background: var(--c6); }
+.fill.cur { background: var(--accent); }
+.fill:not(.over) { border-right: 2.5px solid var(--edge); }
+.meter span { grid-column: 2; font-size: 0.75rem; color: var(--sub); }
+.meter span.over { color: var(--warn); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+
+/* 比較 */
+.compare { margin-top: 40px; }
+.compare-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.cmp-list { list-style: none; margin: 6px 0 0; padding: 0; }
+.cmp-item { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto auto; gap: 6px 14px; align-items: center; padding: 16px 0; border-top: 2px solid var(--soft); }
+.cmp-dot { width: 16px; height: 16px; border-radius: 50%; border: 2.5px solid var(--edge); }
+.cmp-name { font-weight: 800; line-height: 1.35; }
+.cmp-name small { display: block; font-weight: 500; color: var(--sub); font-size: 0.8rem; }
+.cmp-val { font-weight: 800; font-size: 1.25rem; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.cmp-del { border: 0; background: var(--soft); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.05rem; line-height: 1; color: var(--sub); }
+.cmp-del:hover { color: var(--ink); }
+.cmp-bar { grid-column: 2 / 4; }
+.cmp-bar .track { height: 14px; }
+.empty { border: 2px dashed var(--edge); border-radius: 16px; padding: 24px; text-align: center; color: var(--sub); font-size: 0.9rem; margin-top: 4px; }
+
+/* 解説 */
+article { max-width: 680px; margin: 72px auto 0; }
+article h2 { display: inline-block; background: linear-gradient(transparent 58%, var(--marker) 58%); padding: 0 4px; font-size: 1.25rem; font-weight: 800; margin: 48px 0 10px; line-height: 1.45; }
+article p { margin: 0 0 14px; line-height: 1.9; }
+article dt { font-weight: 800; margin-top: 18px; }
+article dd { margin: 4px 0 0; }
+code { background: var(--soft); border-radius: 6px; padding: 1px 6px; font-size: 0.9em; }
+.table-wrap { overflow-x: auto; border: 3px solid var(--edge); border-radius: 16px; background: var(--panel); box-shadow: 4px 4px 0 var(--shadow); }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 2px dashed var(--soft); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+th { font-weight: 800; background: var(--soft); }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3px dashed var(--edge); color: var(--sub); font-size: 0.8rem; }
+
+/* スマホ用の結果バー */
+.mbar { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 20; display: none; align-items: center; justify-content: space-between; gap: 10px; background: var(--hero); color: var(--hero-ink); border: 3px solid var(--edge); border-radius: 16px; box-shadow: 4px 4px 0 var(--shadow); padding: 10px 18px; font-weight: 800; cursor: pointer; text-align: left; transition: transform .2s ease, opacity .2s ease; }
+.mbar .v { font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.mbar.away { transform: translateY(140%); opacity: 0; pointer-events: none; }
+@media (max-width: 919px) { .mbar { display: flex; } body { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); } }
+
+.toast { position: fixed; left: 50%; top: calc(18px + env(safe-area-inset-top, 0px)); transform: translate(-50%, calc(-100% - 60px)); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 800; z-index: 30; transition: transform .25s ease; }
+.toast.show { transform: translate(-50%, 0); }
+@media (max-width: 480px) { .wrap { padding: 32px 18px 72px; } .card { padding: 20px; } .hero-body { padding: 18px 20px 22px; } .top { gap: 16px; margin-bottom: 28px; } .logo { width: 54px; height: 54px; border-radius: 16px; } }
+
+/* ブランドバーとほかのツール */
+.brandbar { margin-bottom: 28px; }
+.brandbar a { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 5px; border: 3px solid var(--edge); border-radius: 999px; background: var(--panel); box-shadow: 3px 3px 0 var(--shadow); color: var(--ink); text-decoration: none; font-weight: 800; font-size: 0.9rem; transition: transform .1s ease, box-shadow .1s ease; }
+.brandbar a:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); }
+.brandbar .mark { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); border: 2.5px solid var(--edge); display: grid; place-items: center; }
+.brandbar .mark svg { width: 15px; height: 15px; }
+.more { max-width: 680px; margin: 72px auto 0; }
+.more h2 { font-size: 1.1rem; font-weight: 800; margin: 0 0 14px; }
+.more-list { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.more-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--panel); border: 3px solid var(--edge); border-radius: 18px; box-shadow: 5px 5px 0 var(--shadow); color: var(--ink); text-decoration: none; transition: transform .1s ease, box-shadow .1s ease; }
+.more-item:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--shadow); }
+.more-item .ic { flex: none; width: 46px; height: 46px; border-radius: 14px; border: 2.5px solid var(--edge); display: grid; place-items: center; }
+.more-item .ic svg { width: 24px; height: 24px; }
+.more-item b { display: block; font-weight: 800; line-height: 1.35; }
+.more-item small { display: block; color: var(--sub); font-size: 0.78rem; line-height: 1.5; }
+
+/* 本文中のリンク（Zenn記事など） */
+article p a, .about p a { color: var(--ink); font-weight: 800; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 3px; }
+article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E; }
+/* タイムコード計算機 */
+.modes.four { grid-template-columns: repeat(4, 1fr); }
+.modes.four button { font-size: 0.86rem; padding: 12px 2px; }
+@media (max-width: 480px) { .modes.four { grid-template-columns: 1fr 1fr; } }
+.tc-in { display: block; width: 100%; max-width: 15ch; font-size: 2rem; font-weight: 800; line-height: 1.25; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; border: 0; border-bottom: 2.5px solid var(--edge); background: transparent; color: var(--ink); padding: 2px 2px; border-radius: 0; font-family: inherit; }
+.tc-in::placeholder { color: var(--sub); opacity: .45; }
+.tc-in:focus { outline: none; border-bottom-color: var(--c2); background: var(--soft); }
+.tc-in.bad { border-bottom-color: var(--warn); color: var(--warn); }
+.tc-in.fixed { border-bottom-style: dashed; }
+.tc-label { display: block; font-weight: 800; font-size: 0.85rem; margin: 18px 0 2px; }
+.tc-label:first-child { margin-top: 0; }
+.tc-rows { display: grid; gap: 10px; }
+.tc-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) 36px; align-items: center; gap: 10px; }
+.tc-row .tc-in { max-width: none; font-size: 1.75rem; }
+.tc-row .sg { width: 44px; height: 44px; border: 2.5px solid var(--edge); border-radius: 12px; background: var(--tab-on); color: #1A1A2E; font-size: 1.3rem; font-weight: 800; cursor: pointer; box-shadow: 2px 2px 0 var(--shadow); }
+.tc-row .sg.minus { background: var(--accent); }
+.tc-row .del { width: 36px; height: 36px; border: 0; background: transparent; color: var(--sub); font-size: 1.2rem; font-weight: 800; cursor: pointer; border-radius: 10px; }
+.tc-row .del:hover { background: var(--soft); }
+.seg { display: inline-grid; grid-auto-flow: column; gap: 4px; background: var(--soft); border-radius: 12px; padding: 4px; margin-bottom: 16px; max-width: 100%; }
+.seg button { border: 0; background: transparent; border-radius: 9px; padding: 7px 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; color: var(--sub); }
+.seg button[aria-pressed="true"] { background: var(--hero); color: #1A1A2E; box-shadow: 0 0 0 2.5px var(--edge); }
+@media (max-width: 400px) { .seg button { padding: 7px 8px; font-size: 0.78rem; } }
+.check { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; }
+.check input { -webkit-appearance: none; appearance: none; flex: none; width: 24px; height: 24px; margin: 0; border: 2.5px solid var(--edge); border-radius: 7px; background: var(--chip); display: grid; place-items: center; cursor: pointer; }
+.check input:checked { background: var(--accent); }
+.check input:checked::after { content: ""; width: 6px; height: 11px; border: solid #1A1A2E; border-width: 0 3px 3px 0; transform: translate(0, -1px) rotate(45deg); }
+.hero.minus { background: var(--accent); }
+.hero.good { background: var(--tab-on); }
+.hero-value.tc { white-space: nowrap; }
+.all-units h2, .fr-table h2 { margin: 0 0 12px; font-size: 1.1rem; font-weight: 800; }
+.units { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 0.88rem; }
+.units dt { font-weight: 800; color: var(--sub); }
+.units dd { margin: 0; font-weight: 800; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.u-empty { grid-column: 1 / -1; color: var(--sub); font-size: 0.85rem; }
+.fr-table { margin-top: 40px; }
+.fr-table .lead { margin: 0 0 16px; color: var(--sub); font-size: 0.82rem; }
+.fr-table td:first-child { white-space: nowrap; font-weight: 800; }
+.hero-formula:empty { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="brandbar"><a href="../"><span class="mark"><svg viewBox="0 0 16 16" fill="#1A1A2E"><path d="M4 2.5 13 8l-4.2 1.1L7 13.2Z"/></svg></span>ぽちっと</a></nav>
+  <header class="top">
+    <div class="logo" aria-hidden="true" style="background: var(--c2)">
+      <svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="18" r="11" stroke="#1A1A2E" stroke-width="3"/><path d="M17 11v7l5 3" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 4h8" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div class="title">
+      <span class="sticker" aria-hidden="true">無料</span>
+      <h1>タイムコード<wbr>計算機</h1>
+      <p>尺の足し算・引き算、フレームと秒の変換、レート変換、放送尺のチェック。ドロップフレームにも対応。</p>
+    </div>
+  </header>
+
+  <div class="app">
+    <section class="card inputs" aria-label="条件の入力">
+      <div class="modes four" role="group" aria-label="計算の種類">
+        <button type="button" data-mode="sum" aria-pressed="true">尺の計算</button>
+        <button type="button" data-mode="conv" aria-pressed="false">変換</button>
+        <button type="button" data-mode="rate" aria-pressed="false">レート変換</button>
+        <button type="button" data-mode="check" aria-pressed="false">尺チェック</button>
+      </div>
+
+      <div class="field">
+        <div class="field-head"><h2 id="rateHead">フレームレート</h2><span class="note" style="margin:0">fps</span></div>
+        <div class="chips" id="rateChips"></div>
+        <p class="note" id="rateNote"></p>
+      </div>
+
+      <!-- 尺の計算 -->
+      <div id="fSum">
+        <div class="field">
+          <div class="seg" role="group" aria-label="計算のしかた">
+            <button type="button" data-sub="list" aria-pressed="true">足し算・引き算</button>
+            <button type="button" data-sub="inout" aria-pressed="false">IN点・OUT点</button>
+          </div>
+          <div id="sumList">
+            <div class="tc-rows" id="rows"></div>
+            <div class="quick"><button type="button" id="addRow">＋ 行を足す</button><button type="button" id="clearRows">すべて消す</button></div>
+          </div>
+          <div id="sumInout" hidden>
+            <label class="tc-label" for="tcIn">IN点</label>
+            <input class="tc-in" id="tcIn" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="00:00:00:00">
+            <label class="tc-label" for="tcOut">OUT点</label>
+            <input class="tc-in" id="tcOut" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="00:00:00:00">
+            <label class="check" style="margin-top:16px"><input type="checkbox" id="incl">OUT点のフレームも尺に含める（＋1フレーム）</label>
+            <p class="note">OUT点を「最後に映るフレーム」で打つ編集ソフトでは、チェックを入れると表示と合います。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 変換 -->
+      <div id="fConv" hidden>
+        <div class="field">
+          <div class="field-head"><h2>入力するもの</h2></div>
+          <div class="seg" role="group" aria-label="入力するもの">
+            <button type="button" data-from="tc" aria-pressed="true">タイムコード</button>
+            <button type="button" data-from="fr" aria-pressed="false">フレーム数</button>
+            <button type="button" data-from="sec" aria-pressed="false">実時間（秒）</button>
+          </div>
+          <input class="tc-in" id="convIn" inputmode="decimal" autocomplete="off" spellcheck="false">
+          <p class="note" id="convHint"></p>
+        </div>
+      </div>
+
+      <!-- レート変換 -->
+      <div id="fRate" hidden>
+        <div class="field">
+          <div class="field-head"><h2>変換元のタイムコード</h2></div>
+          <input class="tc-in" id="rateIn" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="00:00:00:00">
+        </div>
+        <div class="field">
+          <div class="field-head"><h2>変換先のフレームレート</h2></div>
+          <div class="chips" id="toChips"></div>
+        </div>
+        <div class="field">
+          <div class="field-head"><h2>変換のしかた</h2></div>
+          <div class="seg" role="group" aria-label="変換のしかた">
+            <button type="button" data-how="time" aria-pressed="true">同じ長さで表す</button>
+            <button type="button" data-how="frame" aria-pressed="false">同じコマ数で再生</button>
+          </div>
+          <p class="note" id="howNote"></p>
+        </div>
+      </div>
+
+      <!-- 尺チェック -->
+      <div id="fCheck" hidden>
+        <div class="field">
+          <div class="field-head"><h2>指定の尺</h2></div>
+          <div class="chips" id="targetChips"></div>
+          <input class="tc-in" id="target" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="00:00:15:00" style="margin-top:14px">
+        </div>
+        <div class="field">
+          <div class="field-head"><h2>実際の尺</h2></div>
+          <input class="tc-in" id="actual" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="00:00:15:00">
+          <p class="note">数字だけ打てば自動でコロンが入ります（例：1500 → 00:00:15:00）。</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="result" aria-label="計算結果">
+      <div class="hero" id="hero">
+        <div class="hero-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="hero-body" aria-live="polite">
+          <div class="hero-label" id="rLabel">合計の尺</div>
+          <div class="hero-main"><span class="hero-value tc" id="rValue">—</span><span class="hero-unit" id="rUnit"></span></div>
+          <p class="hero-sub" id="rSub1"></p>
+          <p class="hero-sub" id="rSub2"></p>
+          <p class="hero-formula" id="rFormula"></p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn primary" id="copyBtn"><svg viewBox="0 0 20 20" fill="none"><rect x="6" y="6" width="10" height="11" rx="2.5" stroke="currentColor" stroke-width="2.4"/><path d="M4 13V5a2 2 0 0 1 2-2h7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>結果をコピー</button>
+        <button type="button" class="btn" id="tcCopyBtn"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="2.4"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>TCだけコピー</button>
+        <button type="button" class="btn" id="shareBtn"><svg viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 7l4-4 4 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 11v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>共有</button>
+        <a class="btn" id="xBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M11.7 8.6 17.6 2h-1.4l-5.1 5.7L7 2H2.3l6.2 8.6L2.3 18h1.4l5.4-6.1 4.4 6.1h4.7l-6.5-9.4Zm-1.9 2.2-.6-.9-5-7h2.1l4 5.6.6.9 5.3 7.3h-2.1l-4.3-5.9Z"/></svg>Xでポスト</a>
+      </div>
+
+      <section class="card all-units">
+        <h2>まとめて見る</h2>
+        <dl class="units" id="units"></dl>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card fr-table">
+    <h2>フレームレート別 早見表</h2>
+    <p class="lead">1秒・1分・1時間がそれぞれ何フレームになるか。ドロップフレームは「タイムコード上の1時間」のフレーム数です。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>フレームレート</th><th>1秒</th><th>1分</th><th>10分</th><th>1時間</th><th>TC1時間の実時間</th></tr></thead>
+        <tbody id="frTable"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 広告を置く場合はこの位置がおすすめです -->
+  <div class="ad-slot"></div>
+
+  <article>
+    <h2>タイムコードとは</h2>
+    <p>タイムコードは、映像の1コマ1コマに「時:分:秒:フレーム」の住所をつけたものです。00:01:23:15なら、1分23秒と15フレーム目。編集や送出で「どこからどこまで」を正確に伝えるために使います。最後の2桁はフレームなので、29.97fpsなら00〜29、25fpsなら00〜24までしかありません。</p>
+
+    <h2>ドロップフレーム（DF）とノンドロップフレーム（NDF）</h2>
+    <p>NTSC系の29.97fpsは、ちょうど30fpsより0.1%遅く進みます。フレームを1つずつ数えるノンドロップでは、タイムコードの1時間が実際には約1時間3.6秒になり、時計とずれていきます。</p>
+    <p>このずれを埋めるのがドロップフレームです。映像のコマは1枚も捨てず、「番号」だけを飛ばします。10の倍数の分を除く毎分の頭で、フレーム番号の00と01を飛ばし、1時間で108個の番号を減らします。これでタイムコードと実時間がほぼ一致します（59.94fpsでは毎分4つずつ飛ばします）。表記では、秒とフレームの区切りをセミコロン（00:00:59;29）にして見分けるのが一般的です。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>29.97fps</th><th>TCの1時間に入るフレーム数</th><th>実時間</th></tr></thead>
+        <tbody>
+          <tr><td>ノンドロップ（NDF）</td><td class="num">108,000</td><td class="num">約1時間3.6秒</td></tr>
+          <tr><td>ドロップ（DF）</td><td class="num">107,892</td><td class="num">約59分59.996秒</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>IN点・OUT点から尺を出すときの注意</h2>
+    <p>OUT点を「次のカットの頭」で打つか、「最後に映るフレーム」で打つかで、尺が1フレーム変わります。前者なら OUT − IN がそのまま尺、後者なら1フレーム足したものが尺です。このツールでは「OUT点のフレームも尺に含める」で切り替えられます。</p>
+
+    <h2>「同じ長さで表す」と「同じコマ数で再生」の違い</h2>
+    <p>レート変換には2つの考え方があります。「同じ長さで表す」は、実際の再生時間を変えずに、別のフレームレートのタイムコードで言い直すものです。「同じコマ数で再生」は、素材のコマをそのまま別のレートで再生するもので、24fpsの素材を25fpsで流すと約4%速く、尺が短くなります。</p>
+
+    <h2>よくある質問</h2>
+    <dl>
+      <dt>29.97fpsの15秒は何フレーム？</dt>
+      <dd>タイムコード上の00:00:15:00は、ドロップでもノンドロップでも450フレームです（頭の1分以内はフレーム番号が飛ばないため）。実時間では約15.015秒です。</dd>
+      <dt>ドロップフレームで存在しないタイムコードは？</dt>
+      <dd>10の倍数以外の分の頭の;00と;01です。たとえば00:01:00;00と00:01:00;01はなく、00:00:59;29の次は00:01:00;02になります。このツールでは自動で直して表示します。</dd>
+      <dt>23.976fpsにドロップフレームはありますか？</dt>
+      <dd>一般的な規格では定義されていません。23.976fpsはノンドロップで数えるのがふつうです。</dd>
+      <dt>入力した内容はどこかに送られますか？</dt>
+      <dd>送られません。計算はすべてお使いのブラウザの中で行っています。</dd>
+    </dl>
+  </article>
+
+  <section class="more" aria-label="ほかのツール">
+    <h2>ぽちっとのほかのツール</h2>
+    <div class="more-list">
+      <a class="more-item" href="../rec-size/">
+        <span class="ic" style="background: var(--hero)"><svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#1A1A2E" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/></svg></span>
+        <span><b>録画ファイルサイズ計算機</b><small>何GBになる？何時間撮れる？をすぐ計算</small></span>
+      </a>
+      <a class="more-item" href="../aspect/">
+        <span class="ic" style="background: var(--c3)"><svg viewBox="0 0 34 34" fill="none"><rect x="4" y="8" width="26" height="18" rx="4" stroke="#1A1A2E" stroke-width="3"/><path d="M9 13v-1.5h3M25 21v1.5h-3" stroke="#1A1A2E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><b>アスペクト比・解像度計算機</b><small>比率・サイズ・黒帯をすぐ計算</small></span>
+      </a>
+      <a class="more-item" href="../music-gacha/">
+        <span class="ic" style="background: var(--c5)"><svg viewBox="0 0 34 34" fill="none"><path d="M13 24V8l14-3v16" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><circle cx="9.5" cy="24.5" r="4" fill="#1A1A2E"/><circle cx="23.5" cy="21.5" r="4" fill="#1A1A2E"/></svg></span>
+        <span><b>今日の一曲ガチャ</b><small>ランダムに1曲、Spotifyですぐ聴ける</small></span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>現役のビデオエンジニアが制作・運営しています。計算結果は目安としてご利用ください。</p>
+  </footer>
+</div>
+
+<button type="button" class="mbar" id="mbar" aria-label="計算結果へ移動">
+  <span id="mbLabel">合計の尺</span><span class="v" id="mbValue">—</span>
+</button>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+
+  /* nb = タイムコードで数える1秒のコマ数、fps = 実際の速さ、df = ドロップフレーム */
+  var RATES = [
+    { id: "23.976", n: "23.976", nb: 24, fps: 24000 / 1001, df: false },
+    { id: "24", n: "24", nb: 24, fps: 24, df: false },
+    { id: "25", n: "25", nb: 25, fps: 25, df: false },
+    { id: "29.97df", n: "29.97", s: "DF", nb: 30, fps: 30000 / 1001, df: true },
+    { id: "29.97", n: "29.97", s: "NDF", nb: 30, fps: 30000 / 1001, df: false },
+    { id: "30", n: "30", nb: 30, fps: 30, df: false },
+    { id: "50", n: "50", nb: 50, fps: 50, df: false },
+    { id: "59.94df", n: "59.94", s: "DF", nb: 60, fps: 60000 / 1001, df: true },
+    { id: "59.94", n: "59.94", s: "NDF", nb: 60, fps: 60000 / 1001, df: false },
+    { id: "60", n: "60", nb: 60, fps: 60, df: false }
+  ];
+  var TARGETS = [["15秒", 15], ["30秒", 30], ["60秒", 60], ["90秒", 90], ["120秒", 120], ["5分", 300]];
+  var S = { mode: "sum", rate: "29.97df", to: "23.976", sub: "list", how: "time", from: "tc", incl: false,
+            rows: [{ sg: 1, t: "" }, { sg: 1, t: "" }], tin: "", tout: "", conv: "", rin: "", target: "00:00:15:00", actual: "" };
+  try { var saved = localStorage.getItem("pochitto-tc-rate"); if (saved && rateOf(saved)) S.rate = saved; } catch (e) {}
+
+  function rateOf(id) { for (var i = 0; i < RATES.length; i++) if (RATES[i].id === id) return RATES[i]; return null; }
+  function rateName(r) { return r.n + "fps" + (r.s ? " " + r.s : ""); }
+  function p2(n) { return (n < 10 ? "0" : "") + n; }
+  function nf(n, d) { return n.toLocaleString("ja-JP", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); }
+
+  /* ---------- タイムコードの計算 ---------- */
+  function dropN(r) { return r.nb === 60 ? 4 : 2; }
+  function tcToFrames(h, m, s, f, r) {
+    var n = ((h * 60 + m) * 60 + s) * r.nb + f;
+    if (r.df) { var tm = h * 60 + m; n -= dropN(r) * (tm - Math.floor(tm / 10)); }
+    return n;
+  }
+  function framesToTc(n, r) {
+    var neg = n < 0; n = Math.abs(Math.round(n));
+    if (r.df) {
+      var d = dropN(r), per10 = r.nb * 600 - d * 9, perMin = r.nb * 60 - d;
+      var D = Math.floor(n / per10), M = n % per10;
+      n += d * 9 * D + (M > d ? d * Math.floor((M - d) / perMin) : 0);
+    }
+    var f = n % r.nb, ts = Math.floor(n / r.nb), s = ts % 60, m = Math.floor(ts / 60) % 60, h = Math.floor(ts / 3600);
+    return (neg ? "-" : "") + p2(h) + ":" + p2(m) + ":" + p2(s) + (r.df ? ";" : ":") + p2(f);
+  }
+  /* 文字からフレーム数へ。数字だけなら右から2桁ずつ。直したら fixed を立てる */
+  function parseTc(str, r) {
+    str = String(str || "").trim(); if (!str) return { ok: false, empty: true };
+    var neg = /^-/.test(str); str = str.replace(/^[-+]/, "");
+    var p;
+    if (/[:;.,\s]/.test(str)) p = str.split(/[:;.,\s]+/).filter(function (x) { return x !== ""; });
+    else { if (!/^\d+$/.test(str)) return { ok: false }; var z = str; while (z.length % 2) z = "0" + z; p = z.match(/\d\d/g); }
+    if (!p || p.length > 4 || p.some(function (x) { return !/^\d+$/.test(x); })) return { ok: false };
+    while (p.length < 4) p.unshift("0");
+    var h = +p[0], m = +p[1], s = +p[2], f = +p[3];
+    if (m > 59 || s > 59) return { ok: false, msg: "分と秒は59までです" };
+    if (f >= r.nb) return { ok: false, msg: "フレームは" + p2(r.nb - 1) + "までです（" + rateName(r) + "）" };
+    var fixed = false;
+    if (r.df && s === 0 && m % 10 !== 0 && f < dropN(r)) { f = dropN(r); fixed = true; }
+    var n = tcToFrames(h, m, s, f, r);
+    return { ok: true, n: neg ? -n : n, fixed: fixed };
+  }
+  function realSec(n, r) { return n / r.fps; }
+  function clock(sec) {
+    var neg = sec < 0; sec = Math.abs(sec);
+    var h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec - h * 3600 - m * 60;
+    var ss = s.toFixed(3); if (ss.length < 6) ss = "0" + ss;
+    return (neg ? "-" : "") + (h ? h + "時間" : "") + (h || m ? m + "分" : "") + ss.replace(/^0(\d)/, "$1") + "秒";
+  }
+
+  /* ---------- 表示 ---------- */
+  var cur = { n: null, r: null, label: "", tc: "" };
+  function setHero(label, value, unit, sub1, sub2, formula, cls) {
+    $("rLabel").textContent = label; $("rValue").textContent = value; $("rUnit").textContent = unit || "";
+    $("rSub1").textContent = sub1 || ""; $("rSub2").textContent = sub2 || ""; $("rFormula").textContent = formula || "";
+    $("hero").classList.toggle("minus", cls === "bad");
+    $("hero").classList.toggle("good", cls === "good");
+    $("mbLabel").textContent = label; $("mbValue").textContent = value + (unit ? " " + unit : "");
+  }
+  function units(n, r) {
+    var u = $("units");
+    if (n === null) { u.innerHTML = '<div class="u-empty">タイムコードを入れると、ここにフレーム数や実時間がまとめて出ます。</div>'; return; }
+    var rows = [["タイムコード", framesToTc(n, r) + "（" + rateName(r) + "）"], ["フレーム数", nf(n) + " フレーム"], ["実時間", clock(realSec(n, r))], ["秒（小数）", nf(realSec(n, r), 3) + " 秒"]];
+    if (r.fps !== r.nb && !r.df) rows.push(["TC表記と実時間の差", "実時間のほうが " + nf(Math.abs(realSec(n, r) - n / r.nb), 3) + " 秒長い"]);
+    u.innerHTML = rows.map(function (x) { return "<dt>" + x[0] + "</dt><dd>" + x[1] + "</dd>"; }).join("");
+  }
+  function errText(p) { return p.msg || "タイムコードの形が読み取れません"; }
+  function mark(el, p) { el.classList.toggle("bad", !!(p && !p.ok && !p.empty)); el.classList.toggle("fixed", !!(p && p.fixed)); }
+
+  function calcSum(r) {
+    var total = 0, any = false, err = null, fixed = false, parts = [];
+    if (S.sub === "list") {
+      all(".tc-row").forEach(function (row, i) {
+        var inp = row.querySelector("input"), p = parseTc(inp.value, r); mark(inp, p);
+        if (p.ok) { total += S.rows[i].sg * p.n; any = true; fixed = fixed || p.fixed; parts.push((S.rows[i].sg < 0 ? "− " : (parts.length ? "+ " : "")) + framesToTc(p.n, r)); }
+        else if (!p.empty) err = errText(p);
+      });
+    } else {
+      var a = parseTc($("tcIn").value, r), b = parseTc($("tcOut").value, r); mark($("tcIn"), a); mark($("tcOut"), b);
+      if (a.ok && b.ok) { total = b.n - a.n + (S.incl ? 1 : 0); any = true; fixed = a.fixed || b.fixed; parts.push(framesToTc(b.n, r) + " − " + framesToTc(a.n, r) + (S.incl ? " ＋ 1フレーム" : "")); }
+      else if ((!a.ok && !a.empty) || (!b.ok && !b.empty)) err = errText(!a.ok && !a.empty ? a : b);
+    }
+    if (err) { setHero("合計の尺", "—", "", err, ""); cur.n = null; units(null, r); return; }
+    if (!any) { setHero("合計の尺", framesToTc(0, r), "", "タイムコードを入れてください", ""); cur.n = null; units(null, r); return; }
+    var tc = framesToTc(total, r);
+    setHero(S.sub === "list" ? "合計の尺" : "IN点からOUT点までの尺", tc, "", "= " + nf(total) + " フレーム（" + rateName(r) + "）", "実時間 " + clock(realSec(total, r)) + (fixed ? "　※ドロップフレームで存在しない番号は直して計算" : ""), parts.join(" "));
+    cur = { n: total, r: r, label: S.sub === "list" ? "合計の尺" : "IN→OUTの尺", tc: tc };
+    units(total, r);
+  }
+  function calcConv(r) {
+    var v = $("convIn").value.trim(), n = null, el = $("convIn");
+    el.classList.remove("bad", "fixed");
+    if (S.from === "tc") { var p = parseTc(v, r); mark(el, p); if (p.ok) n = p.n; else if (!p.empty) { setHero("フレーム数", "—", "", errText(p)); units(null, r); cur.n = null; return; } }
+    else if (S.from === "fr") { if (v !== "") { if (/^-?\d+$/.test(v.replace(/,/g, ""))) n = parseInt(v.replace(/,/g, ""), 10); else el.classList.add("bad"); } }
+    else if (v !== "") { var sec = parseFloat(v.replace(/,/g, "")); if (isFinite(sec)) n = Math.round(sec * r.fps); else el.classList.add("bad"); }
+    if (n === null) { setHero("変換結果", "—", "", "上の欄に入力してください"); units(null, r); cur.n = null; return; }
+    var tc = framesToTc(n, r);
+    if (S.from === "tc") setHero("フレーム数", nf(n), "フレーム", tc + "（" + rateName(r) + "）", "実時間 " + clock(realSec(n, r)), "");
+    else if (S.from === "fr") setHero("タイムコード", tc, "", nf(n) + " フレーム（" + rateName(r) + "）", "実時間 " + clock(realSec(n, r)), "");
+    else setHero("タイムコード", tc, "", "= " + nf(n) + " フレーム（" + rateName(r) + "）", "実時間 " + v + " 秒にいちばん近いフレーム", "");
+    cur = { n: n, r: r, label: "変換", tc: tc };
+    units(n, r);
+  }
+  function calcRate(r) {
+    var to = rateOf(S.to), p = parseTc($("rateIn").value, r); mark($("rateIn"), p);
+    $("howNote").textContent = S.how === "time" ? "再生時間を変えずに、変換先のタイムコードで表します。端数はいちばん近いフレームに丸めます。" : "コマを1枚ずつそのまま変換先の速さで再生します。速さが変わるぶん、尺も変わります。";
+    if (!p.ok) { setHero("変換後のタイムコード", "—", "", p.empty ? "変換元のタイムコードを入れてください" : errText(p)); units(null, to); cur.n = null; return; }
+    var n2, sub2;
+    if (S.how === "time") { n2 = Math.round(realSec(p.n, r) * to.fps); sub2 = "実時間 " + clock(realSec(p.n, r)) + " → " + clock(realSec(n2, to)); }
+    else { n2 = p.n; var sp = (to.fps / r.fps - 1) * 100; sub2 = "再生速度 " + (sp >= 0 ? "+" : "") + nf(sp, 2) + "%　実時間 " + clock(realSec(p.n, r)) + " → " + clock(realSec(n2, to)); }
+    var tc = framesToTc(n2, to);
+    setHero("変換後のタイムコード（" + rateName(to) + "）", tc, "", nf(p.n) + " フレーム → " + nf(n2) + " フレーム", sub2, framesToTc(p.n, r) + "（" + rateName(r) + "） → " + tc + "（" + rateName(to) + "）");
+    cur = { n: n2, r: to, label: "レート変換", tc: tc };
+    units(n2, to);
+  }
+  function calcCheck(r) {
+    var t = parseTc($("target").value, r), a = parseTc($("actual").value, r); mark($("target"), t); mark($("actual"), a);
+    if (!t.ok) { setHero("尺チェック", "—", "", t.empty ? "指定の尺を入れてください" : errText(t)); units(null, r); cur.n = null; return; }
+    if (!a.ok) { setHero("尺チェック", "—", "", a.empty ? "実際の尺を入れてください" : errText(a), "指定 " + framesToTc(t.n, r) + " = " + nf(t.n) + " フレーム"); units(t.n, r); cur.n = null; return; }
+    var d = a.n - t.n, tc = framesToTc(d, r);
+    var label = d === 0 ? "ピッタリ！" : d > 0 ? "長すぎます" : "短すぎます";
+    var val = d === 0 ? "±0" : (d > 0 ? "+" : "−") + nf(Math.abs(d));
+    setHero(label, val, "フレーム", d === 0 ? "指定の尺と同じです" : "差は " + tc.replace(/^-/, "") + "（" + clock(Math.abs(realSec(d, r))) + "）",
+      "指定 " + framesToTc(t.n, r) + "（" + nf(t.n) + "）／実際 " + framesToTc(a.n, r) + "（" + nf(a.n) + "）", "", d === 0 ? "good" : "bad");
+    cur = { n: d, r: r, label: "尺チェック", tc: (d > 0 ? "+" : d < 0 ? "−" : "±") + tc.replace(/^-/, "") };
+    units(a.n, r);
+  }
+
+  function update() {
+    var r = rateOf(S.rate);
+    all("[data-mode]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === S.mode); });
+    all("[data-sub]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.sub === S.sub); });
+    all("[data-from]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.from === S.from); });
+    all("[data-how]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.how === S.how); });
+    $("fSum").hidden = S.mode !== "sum"; $("fConv").hidden = S.mode !== "conv"; $("fRate").hidden = S.mode !== "rate"; $("fCheck").hidden = S.mode !== "check";
+    $("sumList").hidden = S.sub !== "list"; $("sumInout").hidden = S.sub !== "inout";
+    $("rateHead").textContent = S.mode === "rate" ? "変換元のフレームレート" : "フレームレート";
+    $("rateNote").textContent = r.df ? "ドロップフレーム：10の倍数以外の分の頭で、番号の" + (r.nb === 60 ? "00〜03" : "00と01") + "を飛ばします。区切りは「;」で表示します。" :
+      r.fps !== r.nb ? "ノンドロップ：フレームを1つずつ数えます。タイムコードは実時間より少しずつ遅れます。" : "";
+    $("convIn").placeholder = S.from === "tc" ? "00:00:00:00" : S.from === "fr" ? "例：450" : "例：15.5";
+    $("convIn").setAttribute("inputmode", S.from === "sec" ? "decimal" : "numeric");
+    $("convHint").textContent = S.from === "tc" ? "数字だけ打てば自動で区切ります（例：13015 → 00:01:30:15）。" : S.from === "fr" ? "フレーム数を、タイムコードと実時間に直します。" : "実際の秒数を、いちばん近いフレームに丸めてタイムコードに直します。";
+    markChips();
+    if (S.mode === "sum") calcSum(r); else if (S.mode === "conv") calcConv(r); else if (S.mode === "rate") calcRate(r); else calcCheck(r);
+    $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(summary(false)) + "&url=" + encodeURIComponent(shareUrl());
+  }
+
+  /* ---------- 入力欄 ---------- */
+  function chip(label, small, pressed, fn) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "chip";
+    b.innerHTML = label + (small ? "<small>" + small + "</small>" : ""); b.setAttribute("aria-pressed", pressed);
+    b.addEventListener("click", fn); return b;
+  }
+  function markChips() {
+    var rc = $("rateChips"); rc.innerHTML = "";
+    RATES.forEach(function (r) { rc.appendChild(chip(r.n, r.s, r.id === S.rate, function () { setRate(r.id); })); });
+    var tc = $("toChips"); tc.innerHTML = "";
+    RATES.forEach(function (r) { tc.appendChild(chip(r.n, r.s, r.id === S.to, function () { S.to = r.id; update(); })); });
+    var tg = $("targetChips"); tg.innerHTML = "";
+    var rr = rateOf(S.rate), tn = parseTc($("target").value, rr);
+    TARGETS.forEach(function (t) {
+      var fr = Math.round(t[1] * rr.nb), on = tn.ok && tn.n === tcToFrames(0, Math.floor(t[1] / 60), t[1] % 60, 0, rr);
+      tg.appendChild(chip(t[0], "", on, function () { $("target").value = framesToTc(tcToFrames(0, Math.floor(t[1] / 60), t[1] % 60, 0, rr), rr); update(); }));
+    });
+  }
+  /* レートを変えたら、入力済みのタイムコードは表記をそろえる（数字はそのまま） */
+  function setRate(id) {
+    var old = rateOf(S.rate), nw = rateOf(id); S.rate = id;
+    try { localStorage.setItem("pochitto-tc-rate", id); } catch (e) {}
+    all(".tc-in").forEach(function (el) {
+      if (el.id === "convIn" && S.from !== "tc") return;
+      var p = parseTc(el.value, old); if (!p.ok) return;
+      var q = parseTc(el.value.replace(/;/g, ":"), nw); if (q.ok) el.value = framesToTc(q.n, nw);
+    });
+    update();
+  }
+  /* 入力を確定したら「00:00:00:00」の形に整える */
+  function tidy(el) {
+    if (el.id === "convIn" && S.from !== "tc") return;
+    var p = parseTc(el.value, el.id === "rateIn" ? rateOf(S.rate) : rateOf(S.rate));
+    if (p.ok) el.value = framesToTc(p.n, rateOf(S.rate));
+  }
+  function bindTc(el) {
+    el.addEventListener("input", update);
+    el.addEventListener("change", function () { tidy(el); update(); });
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter") { tidy(el); update(); el.blur(); } });
+  }
+  function renderRows() {
+    var box = $("rows"); box.innerHTML = "";
+    S.rows.forEach(function (row, i) {
+      var d = document.createElement("div"); d.className = "tc-row";
+      d.innerHTML = '<button type="button" class="sg" aria-label="足すか引くかを切り替え">' + (row.sg < 0 ? "−" : "＋") + '</button>' +
+        '<input class="tc-in" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="00:00:00:00" aria-label="' + (i + 1) + '行目のタイムコード">' +
+        '<button type="button" class="del" aria-label="この行を消す">×</button>';
+      var inp = d.querySelector("input"); inp.value = row.t;
+      inp.addEventListener("input", function () { row.t = inp.value; update(); });
+      inp.addEventListener("change", function () { tidy(inp); row.t = inp.value; update(); });
+      inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { tidy(inp); row.t = inp.value; if (i === S.rows.length - 1) { S.rows.push({ sg: 1, t: "" }); renderRows(); var ins = all(".tc-row input"); ins[ins.length - 1].focus(); } else all(".tc-row input")[i + 1].focus(); update(); } });
+      d.querySelector(".sg").addEventListener("click", function () { row.sg = -row.sg; this.textContent = row.sg < 0 ? "−" : "＋"; this.classList.toggle("minus", row.sg < 0); update(); });
+      if (row.sg < 0) d.querySelector(".sg").classList.add("minus");
+      d.querySelector(".del").addEventListener("click", function () { S.rows.splice(i, 1); if (!S.rows.length) S.rows.push({ sg: 1, t: "" }); renderRows(); update(); });
+      box.appendChild(d);
+    });
+  }
+
+  /* ---------- 早見表 ---------- */
+  function table() {
+    $("frTable").innerHTML = RATES.map(function (r) {
+      var h = tcToFrames(1, 0, 0, 0, r), m1 = tcToFrames(0, 1, 0, 0, r), m10 = tcToFrames(0, 10, 0, 0, r);
+      return "<tr><td>" + rateName(r) + "</td><td class='num'>" + nf(r.nb) + "</td><td class='num'>" + nf(m1) + "</td><td class='num'>" + nf(m10) + "</td><td class='num'>" + nf(h) + "</td><td class='num'>" + clock(h / r.fps) + "</td></tr>";
+    }).join("");
+  }
+
+  /* ---------- 共有 ---------- */
+  function shareUrl() {
+    var q = { m: S.mode, r: S.rate };
+    if (S.mode === "sum") { q.s = S.sub; if (S.sub === "list") q.v = S.rows.map(function (x) { return (x.sg < 0 ? "-" : "") + x.t.replace(/[^\d]/g, ""); }).join("_"); else { q.i = $("tcIn").value.replace(/[^\d]/g, ""); q.o = $("tcOut").value.replace(/[^\d]/g, ""); q.c = S.incl ? 1 : 0; } }
+    if (S.mode === "conv") { q.f = S.from; q.v = $("convIn").value; }
+    if (S.mode === "rate") { q.t = S.to; q.h = S.how; q.v = $("rateIn").value.replace(/[^\d]/g, ""); }
+    if (S.mode === "check") { q.g = $("target").value.replace(/[^\d]/g, ""); q.a = $("actual").value.replace(/[^\d]/g, ""); }
+    return location.origin + location.pathname + "#" + Object.keys(q).map(function (k) { return k + "=" + encodeURIComponent(q[k]); }).join("&");
+  }
+  function loadHash() {
+    var h = location.hash.replace(/^#/, ""); if (!h) return;
+    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = decodeURIComponent(p[1] || ""); });
+    if (["sum", "conv", "rate", "check"].indexOf(q.m) >= 0) S.mode = q.m;
+    if (rateOf(q.r)) S.rate = q.r;
+    if (q.s === "list" || q.s === "inout") S.sub = q.s;
+    if (rateOf(q.t)) S.to = q.t;
+    if (q.h === "time" || q.h === "frame") S.how = q.h;
+    if (["tc", "fr", "sec"].indexOf(q.f) >= 0) S.from = q.f;
+    var r = rateOf(S.rate), fmt = function (d) { var p = parseTc(d, r); return p.ok ? framesToTc(p.n, r) : ""; };
+    if (S.mode === "sum" && S.sub === "list" && q.v) S.rows = q.v.split("_").slice(0, 30).map(function (x) { return { sg: /^-/.test(x) ? -1 : 1, t: fmt(x.replace(/^-/, "")) }; });
+    if (q.i) $("tcIn").value = fmt(q.i); if (q.o) $("tcOut").value = fmt(q.o); S.incl = q.c === "1";
+    if (S.mode === "conv" && q.v) $("convIn").value = q.v.slice(0, 20);
+    if (q.m === "rate" && q.v) $("rateIn").value = fmt(q.v);
+    if (q.g) $("target").value = fmt(q.g); if (q.a) $("actual").value = fmt(q.a);
+  }
+  function summary(withUrl) {
+    var r = rateOf(S.rate), s = "【タイムコード計算機】";
+    var v = $("rValue").textContent + ($("rUnit").textContent ? " " + $("rUnit").textContent : "");
+    if (S.mode === "check") s += $("rLabel").textContent + " " + v + "（" + rateName(r) + "）";
+    else s += $("rLabel").textContent + " " + v + (S.mode === "rate" ? "" : "（" + rateName(r) + "）") + ($("rSub1").textContent ? " " + $("rSub1").textContent : "");
+    return withUrl ? s + "\n" + shareUrl() : s;
+  }
+  function toast(msg) { var t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.timer); toast.timer = setTimeout(function () { t.classList.remove("show"); }, 1800); }
+  function copyText(text, msg) {
+    function fallback() {
+      var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); toast(msg); } catch (e) { toast("コピーできませんでした"); }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { toast(msg); }, fallback); else fallback();
+  }
+
+  /* ---------- イベント ---------- */
+  all("[data-mode]").forEach(function (b) { b.addEventListener("click", function () { S.mode = b.dataset.mode; update(); }); });
+  all("[data-sub]").forEach(function (b) { b.addEventListener("click", function () { S.sub = b.dataset.sub; update(); }); });
+  all("[data-how]").forEach(function (b) { b.addEventListener("click", function () { S.how = b.dataset.how; update(); }); });
+  all("[data-from]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (S.from === b.dataset.from) return;
+      // 今の結果を、新しい入力のしかたに書き換えて引き継ぐ
+      var r = rateOf(S.rate), n = cur.n; S.from = b.dataset.from;
+      $("convIn").value = n === null || S.mode !== "conv" ? "" : S.from === "tc" ? framesToTc(n, r) : S.from === "fr" ? String(n) : (n / r.fps).toFixed(3);
+      update();
+    });
+  });
+  ["tcIn", "tcOut", "convIn", "rateIn", "target", "actual"].forEach(function (id) { bindTc($(id)); });
+  $("incl").addEventListener("change", function () { S.incl = this.checked; update(); });
+  $("addRow").addEventListener("click", function () { S.rows.push({ sg: 1, t: "" }); renderRows(); var ins = all(".tc-row input"); ins[ins.length - 1].focus(); update(); });
+  $("clearRows").addEventListener("click", function () { S.rows = [{ sg: 1, t: "" }, { sg: 1, t: "" }]; renderRows(); update(); });
+  $("copyBtn").addEventListener("click", function () { copyText(summary(true), "結果をコピーしました"); });
+  $("tcCopyBtn").addEventListener("click", function () { if (cur.n === null) { toast("まだ結果がありません"); return; } copyText(cur.tc, cur.tc + " をコピーしました"); });
+  $("shareBtn").addEventListener("click", function () {
+    var url = shareUrl();
+    if (navigator.share) navigator.share({ title: "タイムコード計算機", text: summary(false), url: url }).catch(function () {});
+    else copyText(url, "リンクをコピーしました");
+  });
+  $("mbar").addEventListener("click", function () { $("hero").scrollIntoView({ behavior: "smooth", block: "center" }); });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { $("mbar").classList.toggle("away", e.isIntersecting); }); }, { threshold: 0.3 }).observe($("hero"));
+  }
+
+  /* ---------- 初期化 ---------- */
+  loadHash();
+  if (!$("target").value) { var r0 = rateOf(S.rate), p0 = parseTc(S.target, r0); $("target").value = p0.ok ? framesToTc(p0.n, r0) : S.target; }
+  $("incl").checked = S.incl;
+  renderRows(); table(); update();
+})();
+</script>
+</body>
+</html>
