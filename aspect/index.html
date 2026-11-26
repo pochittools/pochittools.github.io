@@ -5,13 +5,13 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-yLAI/CYlnOAy4rjqo2n3BZcBwOp5qjk9OkhcpmDQljw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://open.spotify.com https://docs.google.com; frame-src https://open.spotify.com; form-action 'self'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>アスペクト比・解像度計算機｜ぽちっと</title>
-<meta name="description" content="解像度からアスペクト比を調べる、比率からサイズを計算する、黒帯や見切れを測る。16:9・9:16・4:5・シネスコなどのプリセット付き。動画編集やSNS投稿に使える無料ツールです。">
+<title>アスペクト比・解像度計算機｜計算方法と早見表｜ぽちっと</title>
+<meta name="description" content="アスペクト比の計算方法（最大公約数で割る）も解説。解像度からアスペクト比を調べる、比率からサイズを計算する、黒帯や見切れを測る。16:9・9:16・4:5・シネスコなどのプリセット付き。動画編集やSNS投稿に使える無料ツールです。">
 <link rel="canonical" href="https://pochittools.github.io/aspect/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
-<meta property="og:title" content="アスペクト比・解像度計算機｜ぽちっと">
-<meta property="og:description" content="解像度からアスペクト比を調べる、比率からサイズを計算する、黒帯や見切れを測る。16:9・9:16・4:5・シネスコなどのプリセット付き。動画編集やSNS投稿に使える無料ツールです。">
+<meta property="og:title" content="アスペクト比・解像度計算機｜計算方法と早見表｜ぽちっと">
+<meta property="og:description" content="アスペクト比の計算方法（最大公約数で割る）も解説。解像度からアスペクト比を調べる、比率からサイズを計算する、黒帯や見切れを測る。16:9・9:16・4:5・シネスコなどのプリセット付き。動画編集やSNS投稿に使える無料ツールです。">
 <meta property="og:url" content="https://pochittools.github.io/aspect/">
 <meta property="og:image" content="https://pochittools.github.io/og/default.png">
 <meta property="og:image:width" content="1200">
@@ -236,6 +236,17 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 article p a, .about p a { color: var(--ink); font-weight: 800; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 3px; }
 article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E; }
 
+/* ほかのツールに置く「作業のおともに、今日の一曲」 */
+.gacha-promo { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 12px 16px; margin: 40px 0 0; padding: 16px 20px; background: var(--panel); color: var(--ink); text-decoration: none; border: 3px solid var(--edge); border-radius: 20px; box-shadow: 6px 6px 0 var(--shadow); transition: transform .12s ease, box-shadow .12s ease; }
+.gacha-promo:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--shadow); }
+.gp-ic { flex: none; width: 64px; height: 64px; display: grid; place-items: center; background: var(--c5); border: 3px solid var(--edge); border-radius: 18px; transform: rotate(-4deg); }
+.gp-ic svg { width: 50px; height: 50px; }
+.gp-text { min-width: 0; }
+.gp-text b { display: block; font-size: 1.02rem; font-weight: 800; }
+.gp-text small { display: block; margin-top: 2px; color: var(--sub); font-size: 0.8rem; line-height: 1.6; }
+.gp-go { flex: none; background: var(--accent); color: #1A1A2E; border: 2.5px solid var(--edge); border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 0.85rem; box-shadow: 3px 3px 0 var(--shadow); }
+@media (max-width: 520px) { .gacha-promo { grid-template-columns: 64px minmax(0, 1fr); } .gp-go { grid-column: 2; justify-self: start; } }
+
 /* アスペクト比計算機 */
 .modes.three { grid-template-columns: repeat(3, 1fr); }
 .modes.three button { font-size: 0.88rem; padding: 12px 4px; }
@@ -404,12 +415,40 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
     <div class="size-grid" id="sizeGrid"></div>
   </section>
 
+  <a class="gacha-promo" href="../music-gacha/">
+    <span class="gp-ic" aria-hidden="true"><svg viewBox="-2 -2 124 124"><circle cx="60" cy="62" r="57" fill="#fff" stroke="#1A1A2E" stroke-width="4"/><g stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"><ellipse cx="46" cy="100" rx="8" ry="5" fill="#FFD93D"/><ellipse cx="74" cy="100" rx="8" ry="5" fill="#FFD93D"/><rect x="26" y="76" width="68" height="20" rx="9" fill="#FFD93D"/><path d="M30 78 Q30 32 60 32 Q90 32 90 78 Z" fill="#FF5FA2"/></g><path d="M26 62 Q26 16 60 16 Q94 16 94 62" fill="none" stroke="#1A1A2E" stroke-width="5" stroke-linecap="round"/><rect x="17" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><rect x="90" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><path d="M44 59 q5 3 10 0 M66 59 q5 3 10 0 M57 67 q3 3 6 0" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
+    <span class="gp-text"><b>作業のおともに、今日の一曲</b><small>作者の邦楽プレイリスト322曲から、1日1回だけランダムに1曲。Spotifyですぐ聴けます。</small></span>
+    <span class="gp-go">回してみる</span>
+  </a>
+
   <!-- 広告を置く場合はこの位置がおすすめです -->
   <div class="ad-slot"></div>
 
   <article>
     <h2>アスペクト比とは</h2>
     <p>アスペクト比は、画面や映像の「横と縦の長さの比率」です。1920×1080なら、両方を最大公約数の120で割って16:9になります。解像度が違っても比率が同じなら、拡大・縮小しても形は変わりません。</p>
+
+    <h2>アスペクト比の計算方法</h2>
+    <p>解像度からアスペクト比を出すには、横と縦の画素数を、両方を割り切れるいちばん大きな数（最大公約数）で割ります。</p>
+    <ol>
+      <li>横と縦の最大公約数を求める。1920と1080なら120です。<br>（大きいほうを小さいほうで割った余りで割り続け、割り切れたときの数が最大公約数。1920÷1080＝1余り840 → 1080÷840＝1余り240 → 840÷240＝3余り120 → 240÷120＝2で割り切れる → 120）</li>
+      <li>横と縦をそれぞれ最大公約数で割る。1920÷120＝16、1080÷120＝9 なので 16:9 です。</li>
+      <li>割った結果の数字が大きくてわかりにくいときは、横÷縦の小数で表す。2048×858 なら 2048÷858≒2.39 なので「約2.39:1（シネスコ）」です。</li>
+    </ol>
+    <p>反対に、比率からサイズを出すときは「縦＝横×（比率の縦÷比率の横）」で計算します。16:9で横1280pxなら、1280×9÷16＝720 で 1280×720 です。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>解像度</th><th>最大公約数</th><th>アスペクト比</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1920 × 1080</td><td class="num">120</td><td class="num">16:9</td></tr>
+          <tr><td class="num">1280 × 720</td><td class="num">80</td><td class="num">16:9</td></tr>
+          <tr><td class="num">1080 × 1350</td><td class="num">270</td><td class="num">4:5</td></tr>
+          <tr><td class="num">1024 × 768</td><td class="num">256</td><td class="num">4:3</td></tr>
+          <tr><td class="num">2560 × 1080</td><td class="num">40</td><td class="num">64:27（約2.37:1）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>このページの上の計算機に解像度を入れると、この計算を自動で行い、16:9やシネスコなど名前のついた比率にも照らし合わせて表示します。</p>
 
     <h2>よく使う解像度とアスペクト比</h2>
     <div class="table-wrap">
@@ -448,6 +487,10 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   <section class="more" aria-label="ほかのツール">
     <h2>ぽちっとのほかのツール</h2>
     <div class="more-list">
+      <a class="more-item" href="../stream-speed/">
+        <span class="ic" style="background: var(--c1)"><svg viewBox="0 0 34 34" fill="none"><path d="M17 27V9M10 15l7-7 7 7" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 28h22" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
+        <span><b>配信の回線速度計算機</b><small>配信に必要な上り速度とデータ量</small></span>
+      </a>
       <a class="more-item" href="../rec-size/">
         <span class="ic" style="background: var(--hero)"><svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#1A1A2E" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/></svg></span>
         <span><b>録画ファイルサイズ計算機</b><small>何GBになる？何時間撮れる？をすぐ計算</small></span>

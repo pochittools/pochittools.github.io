@@ -2,17 +2,18 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-yLAI/CYlnOAy4rjqo2n3BZcBwOp5qjk9OkhcpmDQljw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://open.spotify.com https://docs.google.com; frame-src https://open.spotify.com; form-action 'self'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-bW0IKc5+dinZSXY3ljx9vA+dProSdWIBdIN0tmMw3Ag='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://open.spotify.com https://docs.google.com; frame-src https://open.spotify.com; form-action 'self'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="google-site-verification" content="v3eP7UqN9ufmvrcOgsimSzkWakxA752DeSWcVb41O2I" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>アスペクト比・解像度計算機｜計算方法と早見表｜ぽちっと</title>
-<meta name="description" content="アスペクト比の計算方法（最大公約数で割る）も解説。解像度からアスペクト比を調べる、比率からサイズを計算する、黒帯や見切れを測る。16:9・9:16・4:5・シネスコなどのプリセット付き。動画編集やSNS投稿に使える無料ツールです。">
-<link rel="canonical" href="https://pochittools.github.io/aspect/">
+<title>ぽちっと｜押すだけで答えが出る、ちいさな便利ツール集</title>
+<meta name="description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機、タイムコード計算機、配信の回線速度計算機、一人暮らしの生活費シミュレーター、今日の一曲ガチャなど、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
+<link rel="canonical" href="https://pochittools.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
-<meta property="og:title" content="アスペクト比・解像度計算機｜計算方法と早見表｜ぽちっと">
-<meta property="og:description" content="アスペクト比の計算方法（最大公約数で割る）も解説。解像度からアスペクト比を調べる、比率からサイズを計算する、黒帯や見切れを測る。16:9・9:16・4:5・シネスコなどのプリセット付き。動画編集やSNS投稿に使える無料ツールです。">
-<meta property="og:url" content="https://pochittools.github.io/aspect/">
+<meta property="og:title" content="ぽちっと｜押すだけで答えが出る、ちいさな便利ツール集">
+<meta property="og:description" content="録画ファイルサイズ計算機、アスペクト比・解像度計算機、タイムコード計算機、配信の回線速度計算機、一人暮らしの生活費シミュレーター、今日の一曲ガチャなど、押すだけ・スライドするだけで答えが出る無料の便利ツール集。登録不要でスマホでも使えます。">
+<meta property="og:url" content="https://pochittools.github.io/">
 <meta property="og:image" content="https://pochittools.github.io/og/default.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -247,645 +248,174 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
 .gp-go { flex: none; background: var(--accent); color: #1A1A2E; border: 2.5px solid var(--edge); border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 0.85rem; box-shadow: 3px 3px 0 var(--shadow); }
 @media (max-width: 520px) { .gacha-promo { grid-template-columns: 64px minmax(0, 1fr); } .gp-go { grid-column: 2; justify-self: start; } }
 
-/* アスペクト比計算機 */
-.modes.three { grid-template-columns: repeat(3, 1fr); }
-.modes.three button { font-size: 0.88rem; padding: 12px 4px; }
-@media (max-width: 400px) { .modes.three button { font-size: 0.78rem; } }
-.dims { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
-.dims input { width: 4.6ch; font-size: 2.2rem; font-weight: 800; line-height: 1.2; border: 0; border-bottom: 2.5px solid var(--edge); background: transparent; padding: 0 2px; border-radius: 0; text-align: center; font-variant-numeric: tabular-nums; }
-.dims input.short { width: 4.4ch; }
-.dims .x { font-weight: 800; font-size: 1.5rem; color: var(--sub); }
-.dims .u { font-weight: 700; color: var(--sub); }
-.seg { display: inline-grid; grid-auto-flow: column; gap: 4px; background: var(--soft); border-radius: 12px; padding: 4px; margin-bottom: 14px; max-width: 100%; }
-.seg button { border: 0; background: transparent; border-radius: 9px; padding: 7px 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; color: var(--sub); }
-.seg button[aria-pressed="true"] { background: var(--hero); color: #1A1A2E; box-shadow: 0 0 0 2.5px var(--edge); }
-.check { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; }
-.check input { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; margin: 0; border: 2.5px solid var(--edge); border-radius: 7px; background: var(--chip); display: grid; place-items: center; cursor: pointer; flex: none; }
-.check input:checked { background: var(--accent); }
-.check input:checked::after { content: ""; width: 6px; height: 11px; border: solid #1A1A2E; border-width: 0 3px 3px 0; transform: translate(0, -1px) rotate(45deg); }
-.preview svg { width: 100%; height: auto; display: block; }
-.preview .note { margin-bottom: 14px; }
-.sizes { margin-top: 40px; }
-.size-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-.size-btn { text-align: left; border: 2.5px solid var(--edge); background: var(--chip); border-radius: 14px; padding: 10px 14px; cursor: pointer; transition: transform .1s ease, box-shadow .1s ease; }
-.size-btn:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--shadow); }
-.size-btn b { display: block; font-size: 1.05rem; font-weight: 800; font-variant-numeric: tabular-nums; }
-.size-btn small { color: var(--sub); font-size: 0.75rem; font-weight: 700; }
-.size-btn small.ok { color: var(--c3); }
-.preview h2 { margin: 0 0 4px; font-size: 1.1rem; font-weight: 800; letter-spacing: 0.02em; }
-.sizes h2 { margin: 0 0 4px; font-size: 1.1rem; font-weight: 800; }
-.sizes .lead { margin: 0 0 20px; color: var(--sub); font-size: 0.82rem; }
+/* トップページ */
+.brand-hero { display: flex; align-items: center; gap: 28px; margin: 12px 0 18px; flex-wrap: wrap; }
+.big-logo { flex: none; width: 104px; height: 104px; border-radius: 30px; background: var(--accent); border: 3px solid var(--edge); box-shadow: 6px 6px 0 var(--shadow); display: grid; place-items: center; transform: rotate(-6deg); }
+.big-logo svg { width: 58px; height: 58px; }
+.brand-title { position: relative; }
+.brand-title h1 { margin: 0; font-size: clamp(3.2rem, 14vw, 6rem); font-weight: 800; line-height: 1; letter-spacing: 0.02em; }
+.brand-title .sticker { top: -14px; right: -70px; }
+.tagline { margin: 0; font-size: clamp(1.05rem, 2.8vw, 1.3rem); font-weight: 800; line-height: 1.6; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 56px; padding: 0; list-style: none; }
+.pills li { border: 2.5px solid var(--edge); border-radius: 999px; background: var(--panel); padding: 4px 14px; font-size: 0.82rem; font-weight: 800; }
+.pills li:nth-child(1) { background: var(--hero); color: #1A1A2E; } .pills li:nth-child(2) { background: var(--tab-on); color: #1A1A2E; } .pills li:nth-child(3) { background: var(--accent); color: #1A1A2E; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.sec-head h2 { margin: 0; font-size: 1.35rem; font-weight: 800; }
+.sec-head span { color: var(--sub); font-size: 0.85rem; font-weight: 700; }
+.tools { display: grid; gap: 28px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.tool { display: flex; flex-direction: column; padding: 26px; background: var(--panel); border: 3px solid var(--edge); border-radius: 24px; box-shadow: 7px 7px 0 var(--shadow); color: var(--ink); text-decoration: none; transition: transform .12s ease, box-shadow .12s ease; }
+.tool:hover { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--shadow); }
+.tool:active { transform: translate(5px, 5px); box-shadow: 2px 2px 0 var(--shadow); }
+.tool .ic { width: 64px; height: 64px; border-radius: 18px; border: 3px solid var(--edge); box-shadow: 3px 3px 0 var(--shadow); display: grid; place-items: center; transform: rotate(-4deg); }
+.tool .ic svg { width: 34px; height: 34px; }
+.tool h3 { margin: 18px 0 6px; font-size: 1.25rem; font-weight: 800; line-height: 1.4; }
+.tool p { margin: 0 0 18px; color: var(--sub); font-size: 0.9rem; line-height: 1.75; }
+.tool .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.tool .tags span { background: var(--soft); border-radius: 999px; padding: 2px 10px; font-size: 0.75rem; font-weight: 800; }
+.tool .go { margin-top: 18px; align-self: flex-start; background: var(--accent); color: #1A1A2E; border: 2.5px solid var(--edge); border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 0.85rem; box-shadow: 3px 3px 0 var(--shadow); }
+.tool.soon { border-style: dashed; box-shadow: none; background: transparent; pointer-events: none; }
+.tool.soon .ic { background: var(--soft); box-shadow: none; }
+.tool.soon .go { background: var(--soft); box-shadow: none; color: var(--sub); }
+.shelf + .shelf { margin-top: 64px; }
+.shelf-tag { display: inline-block; border: 2.5px solid var(--edge); border-radius: 10px; padding: 1px 12px; margin-right: 8px; color: #1A1A2E; box-shadow: 2px 2px 0 var(--shadow); transform: rotate(-2deg); }
+.sec-head { flex-wrap: wrap; row-gap: 2px; }
+.sec-head h2 { line-height: 1.6; font-size: 1.55rem; white-space: nowrap; }
+.tool h3 { word-break: keep-all; overflow-wrap: anywhere; }
+.pills a { color: inherit; text-decoration: none; }
+.about { max-width: 680px; margin: 72px auto 0; }
+.about h2 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 800; }
+.about p { margin: 0 0 12px; line-height: 1.9; }
+.about p:last-child { margin: 0; }
+@media (max-width: 560px) { .brand-title .sticker { display: none; } .big-logo { width: 84px; height: 84px; border-radius: 24px; } .big-logo svg { width: 46px; height: 46px; } .brand-hero { gap: 20px; } }
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FF6B6B" opacity=".25"/><rect width="4" height="8" fill="#FF3B3B" opacity=".55"/></pattern>
-</defs></svg>
 <div class="wrap">
-  <nav class="brandbar"><a href="../"><span class="mark"><svg viewBox="0 0 16 16" fill="#1A1A2E"><path d="M4 2.5 13 8l-4.2 1.1L7 13.2Z"/></svg></span>ぽちっと</a></nav>
-  <header class="top">
-    <div class="logo" aria-hidden="true">
-      <svg viewBox="0 0 34 34" fill="none"><rect x="4" y="8" width="26" height="18" rx="4" stroke="#1A1A2E" stroke-width="3"/><path d="M9 13v-1.5h3M25 21v1.5h-3" stroke="#1A1A2E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <header>
+    <div class="brand-hero">
+      <div class="big-logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M9 5l17 10-7.5 2L14 25z" fill="#1A1A2E"/></svg></div>
+      <div class="brand-title">
+        <span class="sticker" aria-hidden="true">無料</span>
+        <h1>ぽちっと</h1>
+      </div>
     </div>
-    <div class="title">
-      <span class="sticker" aria-hidden="true">無料</span>
-      <h1>アスペクト比・<wbr>解像度計算機</h1>
-      <p>比率を調べる、サイズを出す、黒帯を測る。動画もSNSも、ぽちっと計算。</p>
-    </div>
+    <p class="tagline">押すだけ、スライドするだけで答えが出る。<br>ちいさな便利ツール集です。</p>
+    <ul class="pills" aria-label="特長">
+      <li>登録いらず</li><li>スマホでもサクサク</li><li>ずっと無料</li>
+    </ul>
   </header>
 
-  <div class="app">
-    <section class="card inputs" aria-label="条件の入力">
-      <div class="modes three" role="group" aria-label="計算の種類">
-        <button type="button" data-mode="ratio" aria-pressed="true">比率を調べる</button>
-        <button type="button" data-mode="size" aria-pressed="false">サイズを計算</button>
-        <button type="button" data-mode="fit" aria-pressed="false">黒帯を計算</button>
-      </div>
-
-      <!-- 比率を調べる -->
-      <div id="fRatio">
-        <div class="field">
-          <div class="field-head"><h2>よく使う解像度</h2></div>
-          <div class="tabs" role="tablist" aria-label="解像度の種類" id="resTabs"></div>
-          <div class="chips" id="resChips"></div>
-        </div>
-        <div class="field">
-          <div class="field-head"><h2>解像度</h2></div>
-          <div class="dims">
-            <input type="number" id="aw" min="1" step="1" inputmode="numeric" aria-label="横の画素数">
-            <span class="x">×</span>
-            <input type="number" id="ah" min="1" step="1" inputmode="numeric" aria-label="縦の画素数">
-            <span class="u">px</span>
-          </div>
-          <div class="quick"><button type="button" id="swapA">縦横を入れ替える</button></div>
-        </div>
-      </div>
-
-      <!-- サイズを計算 -->
-      <div id="fSize" hidden>
-        <div class="field">
-          <div class="field-head"><h2>アスペクト比</h2></div>
-          <div class="chips" id="ratioChipsB"></div>
-          <div class="dims" style="margin-top:14px">
-            <input type="number" class="short" id="ra" min="0" step="any" inputmode="decimal" aria-label="比率の横">
-            <span class="x">:</span>
-            <input type="number" class="short" id="rb" min="0" step="any" inputmode="decimal" aria-label="比率の縦">
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-head"><h2>基準にする辺</h2></div>
-          <div class="seg" role="group" aria-label="基準にする辺">
-            <button type="button" data-base="w" aria-pressed="true">横幅から</button>
-            <button type="button" data-base="h" aria-pressed="false">高さから</button>
-          </div>
-          <div class="big-input"><input type="number" id="bval" min="1" step="1" inputmode="numeric" aria-label="基準の画素数"><span>px</span></div>
-          <input type="range" id="bRange" min="0" max="1000" step="1" aria-label="基準の画素数のスライダー">
-          <div class="ticks" aria-hidden="true"><span>240</span><span>720</span><span>1080</span><span>2160</span><span>4320</span></div>
-        </div>
-        <div class="field">
-          <label class="check"><input type="checkbox" id="even" checked>偶数に丸める（動画の書き出し向け）</label>
-          <p class="note">多くの動画コーデックは縦横が偶数でないと書き出せません。</p>
-        </div>
-      </div>
-
-      <!-- 黒帯を計算 -->
-      <div id="fFit" hidden>
-        <div class="field">
-          <div class="field-head"><h2>映像のアスペクト比</h2></div>
-          <div class="chips" id="ratioChipsC"></div>
-          <div class="dims" style="margin-top:14px">
-            <input type="number" class="short" id="fa" min="0" step="any" inputmode="decimal" aria-label="映像の比率の横">
-            <span class="x">:</span>
-            <input type="number" class="short" id="fb" min="0" step="any" inputmode="decimal" aria-label="映像の比率の縦">
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-head"><h2>表示する画面</h2></div>
-          <div class="chips" id="frameChips"></div>
-          <div class="dims" style="margin-top:14px">
-            <input type="number" id="fw" min="1" step="1" inputmode="numeric" aria-label="画面の横の画素数">
-            <span class="x">×</span>
-            <input type="number" id="fh" min="1" step="1" inputmode="numeric" aria-label="画面の縦の画素数">
-            <span class="u">px</span>
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-head"><h2>収め方</h2></div>
-          <div class="seg" role="group" aria-label="収め方">
-            <button type="button" data-fit="contain" aria-pressed="true">全体を収める（黒帯）</button>
-            <button type="button" data-fit="cover" aria-pressed="false">画面を埋める（切り抜き）</button>
-          </div>
-        </div>
+  <main>
+    <section class="shelf" id="video" aria-labelledby="h-video">
+      <div class="sec-head"><h2 id="h-video"><span class="shelf-tag" style="background: var(--c2); color: #fff">映像・配信</span>のツール</h2><span>撮影・編集・配信の計算に</span></div>
+      <div class="tools">
+        <a class="tool" href="rec-size/">
+          <span class="ic" style="background: var(--hero)"><svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#1A1A2E" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><circle cx="10" cy="13" r="2.5" fill="#FF5FA2"/></svg></span>
+          <h3>録画ファイル<wbr>サイズ計算機</h3>
+          <p>ビットレートと時間から「何GBになる？」、容量から「何時間撮れる？」をすぐ計算。形式どうしの比較もできます。</p>
+          <div class="tags"><span>撮影</span><span>配信</span><span>スマホ撮影</span></div>
+          <span class="go">使ってみる</span>
+        </a>
+        <a class="tool" href="aspect/">
+          <span class="ic" style="background: var(--c3)"><svg viewBox="0 0 34 34" fill="none"><rect x="4" y="8" width="26" height="18" rx="4" stroke="#1A1A2E" stroke-width="3"/><path d="M9 13v-1.5h3M25 21v1.5h-3" stroke="#1A1A2E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3>アスペクト比・<wbr>解像度計算機</h3>
+          <p>解像度から比率を調べたり、比率からサイズを出したり。シネスコの黒帯や縦動画の見切れもわかります。</p>
+          <div class="tags"><span>編集</span><span>SNS</span><span>デザイン</span></div>
+          <span class="go">使ってみる</span>
+        </a>
+        <a class="tool" href="timecode/">
+          <span class="ic" style="background: var(--c2)"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="18" r="11" stroke="#1A1A2E" stroke-width="3"/><path d="M17 11v7l5 3" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 4h8" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>タイムコード計算機</h3>
+          <p>尺の足し算・引き算、フレームと秒の変換、23.976や29.97DFのレート変換、CM尺のチェックまで。ドロップフレーム対応です。</p>
+          <div class="tags"><span>編集</span><span>放送</span><span>尺計算</span></div>
+          <span class="go">使ってみる</span>
+        </a>
+        <a class="tool" href="stream-speed/">
+          <span class="ic" style="background: var(--c1)"><svg viewBox="0 0 34 34" fill="none"><path d="M17 27V9M10 15l7-7 7 7" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 28h22" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>配信の回線<wbr>速度計算機</h3>
+          <p>画質を選ぶだけで、ライブ配信に必要な上り速度と1時間あたりのデータ量がわかります。今の回線で足りるかも判定。</p>
+          <div class="tags"><span>配信</span><span>回線</span><span>YouTube Live</span></div>
+          <span class="go">使ってみる</span>
+        </a>
       </div>
     </section>
 
-    <aside class="result" aria-label="計算結果">
-      <div class="hero" id="hero">
-        <div class="hero-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="hero-body" aria-live="polite">
-          <div class="hero-label" id="rLabel">アスペクト比</div>
-          <div class="hero-main"><span class="hero-value" id="rValue">—</span><span class="hero-unit" id="rUnit"></span></div>
-          <p class="hero-sub" id="rSub1"></p>
-          <p class="hero-sub" id="rSub2"></p>
-          <p class="hero-formula" id="rFormula"></p>
+    <section class="shelf" id="life" aria-labelledby="h-life">
+      <div class="sec-head"><h2 id="h-life"><span class="shelf-tag" style="background: var(--c6)">くらし</span>のツール</h2><span>一人暮らしのお金と毎日に</span></div>
+      <div class="tools">
+        <a class="tool" href="living-cost/">
+          <span class="ic" style="background: var(--c6)"><svg viewBox="0 0 34 34" fill="none"><path d="M5 16 17 6l12 10" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14v13h18V14" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><path d="M14 27v-7h6v7" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/></svg></span>
+          <h3>一人暮らしの<wbr>生活費シミュレーター</h3>
+          <p>手取りと支出をスライドするだけで、毎月いくら残るかがわかります。家賃の目安チェックや貯金目標までの期間も。</p>
+          <div class="tags"><span>家計</span><span>一人暮らし</span><span>貯金</span></div>
+          <span class="go">使ってみる</span>
+        </a>
+        <div class="tool soon" aria-label="準備中のツール">
+          <span class="ic"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="var(--sub)" stroke-width="3"/><path d="M17 10v7l5 3" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>次のツールを準備中</h3>
+          <p>電気代や割り勘など、毎日の「ちょっと計算したい」に役立つツールを増やしていきます。</p>
+          <span class="go">もうすぐ</span>
         </div>
       </div>
-
-      <div class="actions">
-        <button type="button" class="btn primary" id="copyBtn"><svg viewBox="0 0 20 20" fill="none"><rect x="6" y="6" width="10" height="11" rx="2.5" stroke="currentColor" stroke-width="2.4"/><path d="M4 13V5a2 2 0 0 1 2-2h7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>結果をコピー</button>
-        <button type="button" class="btn" id="shareBtn"><svg viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 7l4-4 4 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 11v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>リンクを共有</button>
-        <a class="btn" id="xBtn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M11.7 8.6 17.6 2h-1.4l-5.1 5.7L7 2H2.3l6.2 8.6L2.3 18h1.4l5.4-6.1 4.4 6.1h4.7l-6.5-9.4Zm-1.9 2.2-.6-.9-5-7h2.1l4 5.6.6.9 5.3 7.3h-2.1l-4.3-5.9Z"/></svg>Xでポスト</a>
+    </section>
+    <section class="shelf" id="hobby" aria-labelledby="h-hobby">
+      <div class="sec-head"><h2 id="h-hobby"><span class="shelf-tag" style="background: var(--c5); color: #fff">趣味</span>の棚</h2><span>作者の好きなものを、ぽちっとおすそわけ</span></div>
+      <div class="tools">
+        <a class="tool" href="music-gacha/">
+          <span class="ic" style="background: var(--c5)"><svg viewBox="0 0 34 34" fill="none"><path d="M13 24V8l14-3v16" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><circle cx="9.5" cy="24.5" r="4" fill="#1A1A2E"/><circle cx="23.5" cy="21.5" r="4" fill="#1A1A2E"/></svg></span>
+          <h3>今日の一曲ガチャ</h3>
+          <p>作者のプレイリスト322曲から、1日1回ランダムに1曲。集めるほど称号やステッカーがもらえ、30曲ごとに推薦もできます。</p>
+          <div class="tags"><span>音楽</span><span>邦楽</span><span>Spotify</span></div>
+          <span class="go">回してみる</span>
+        </a>
+        <div class="tool soon" aria-label="準備中">
+          <span class="ic"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="var(--sub)" stroke-width="3"/><path d="M17 10v7l5 3" stroke="var(--sub)" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>次の棚を準備中</h3>
+          <p>好きなものを、少しずつ並べていきます。</p>
+          <span class="go">もうすぐ</span>
+        </div>
       </div>
-
-      <section class="card preview">
-        <h2 id="pvTitle">プレビュー</h2>
-        <p class="note" id="pvNote"></p>
-        <div id="pv"></div>
-      </section>
-    </aside>
-  </div>
-
-  <section class="card sizes">
-    <div class="compare-head">
-      <div>
-        <h2>この比率のサイズ早見表</h2>
-        <p class="lead" id="sizesLead"></p>
+    </section>
+    <section class="shelf" id="story" aria-labelledby="h-story">
+      <div class="sec-head"><h2 id="h-story"><span class="shelf-tag" style="background: var(--c3); color: #1A1A2E">ぽちっと</span>の裏話</h2><span>作り方や選曲の話を、記事にまとめました</span></div>
+      <div class="tools">
+        <a class="tool" href="https://zenn.dev/pochittools/articles/ba4b8c95ec0b5b" target="_blank" rel="noopener">
+          <span class="ic" style="background: var(--c3)"><svg viewBox="0 0 34 34" fill="none"><path d="M8 5h13l6 6v18H8z" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><path d="M13 16h9M13 21h9" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <h3>1日1曲しか引けない<wbr>音楽ガチャを作った話</h3>
+          <p>なぜ1日1回にしたのか、ごほうびをどう決めたのか。今日の一曲ガチャの設計を、心理学の話もまじえて書きました。</p>
+          <div class="tags"><span>Zenn</span><span>個人開発</span><span>UX</span></div>
+          <span class="go">読んでみる</span>
+        </a>
+        <a class="tool" href="https://note.com/pochittools/n/ne7fd4dd5f834" target="_blank" rel="noopener">
+          <span class="ic" style="background: var(--c4)"><svg viewBox="0 0 34 34" fill="none"><path d="M7 27l3-8L23 6l5 5-13 13z" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><path d="M20 9l5 5" stroke="#1A1A2E" stroke-width="3"/></svg></span>
+          <h3>思い出の曲を322曲集めたら、<wbr>1日1曲しか聴けないガチャになった</h3>
+          <p>ガチャに入っている322曲の選び方と、よく出てくるアーティストの話。予告編プレイリストもあります。</p>
+          <div class="tags"><span>note</span><span>音楽</span><span>プレイリスト</span></div>
+          <span class="go">読んでみる</span>
+        </a>
       </div>
-    </div>
-    <div class="size-grid" id="sizeGrid"></div>
-  </section>
-
-  <a class="gacha-promo" href="../music-gacha/">
-    <span class="gp-ic" aria-hidden="true"><svg viewBox="-2 -2 124 124"><circle cx="60" cy="62" r="57" fill="#fff" stroke="#1A1A2E" stroke-width="4"/><g stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"><ellipse cx="46" cy="100" rx="8" ry="5" fill="#FFD93D"/><ellipse cx="74" cy="100" rx="8" ry="5" fill="#FFD93D"/><rect x="26" y="76" width="68" height="20" rx="9" fill="#FFD93D"/><path d="M30 78 Q30 32 60 32 Q90 32 90 78 Z" fill="#FF5FA2"/></g><path d="M26 62 Q26 16 60 16 Q94 16 94 62" fill="none" stroke="#1A1A2E" stroke-width="5" stroke-linecap="round"/><rect x="17" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><rect x="90" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><path d="M44 59 q5 3 10 0 M66 59 q5 3 10 0 M57 67 q3 3 6 0" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
-    <span class="gp-text"><b>作業のおともに、今日の一曲</b><small>作者の邦楽プレイリスト322曲から、1日1回だけランダムに1曲。Spotifyですぐ聴けます。</small></span>
-    <span class="gp-go">回してみる</span>
-  </a>
+    </section>
+  </main>
 
   <!-- 広告を置く場合はこの位置がおすすめです -->
   <div class="ad-slot"></div>
 
-  <article>
-    <h2>アスペクト比とは</h2>
-    <p>アスペクト比は、画面や映像の「横と縦の長さの比率」です。1920×1080なら、両方を最大公約数の120で割って16:9になります。解像度が違っても比率が同じなら、拡大・縮小しても形は変わりません。</p>
-
-    <h2>アスペクト比の計算方法</h2>
-    <p>解像度からアスペクト比を出すには、横と縦の画素数を、両方を割り切れるいちばん大きな数（最大公約数）で割ります。</p>
-    <ol>
-      <li>横と縦の最大公約数を求める。1920と1080なら120です。<br>（大きいほうを小さいほうで割った余りで割り続け、割り切れたときの数が最大公約数。1920÷1080＝1余り840 → 1080÷840＝1余り240 → 840÷240＝3余り120 → 240÷120＝2で割り切れる → 120）</li>
-      <li>横と縦をそれぞれ最大公約数で割る。1920÷120＝16、1080÷120＝9 なので 16:9 です。</li>
-      <li>割った結果の数字が大きくてわかりにくいときは、横÷縦の小数で表す。2048×858 なら 2048÷858≒2.39 なので「約2.39:1（シネスコ）」です。</li>
-    </ol>
-    <p>反対に、比率からサイズを出すときは「縦＝横×（比率の縦÷比率の横）」で計算します。16:9で横1280pxなら、1280×9÷16＝720 で 1280×720 です。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>解像度</th><th>最大公約数</th><th>アスペクト比</th></tr></thead>
-        <tbody>
-          <tr><td class="num">1920 × 1080</td><td class="num">120</td><td class="num">16:9</td></tr>
-          <tr><td class="num">1280 × 720</td><td class="num">80</td><td class="num">16:9</td></tr>
-          <tr><td class="num">1080 × 1350</td><td class="num">270</td><td class="num">4:5</td></tr>
-          <tr><td class="num">1024 × 768</td><td class="num">256</td><td class="num">4:3</td></tr>
-          <tr><td class="num">2560 × 1080</td><td class="num">40</td><td class="num">64:27（約2.37:1）</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p>このページの上の計算機に解像度を入れると、この計算を自動で行い、16:9やシネスコなど名前のついた比率にも照らし合わせて表示します。</p>
-
-    <h2>よく使う解像度とアスペクト比</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>名称</th><th>解像度</th><th>比率</th></tr></thead>
-        <tbody>
-          <tr><td>フルHD</td><td class="num">1920 × 1080</td><td class="num">16:9</td></tr>
-          <tr><td>4K UHD</td><td class="num">3840 × 2160</td><td class="num">16:9</td></tr>
-          <tr><td>DCI 4K</td><td class="num">4096 × 2160</td><td class="num">約1.90:1</td></tr>
-          <tr><td>縦動画（ショート・リール）</td><td class="num">1080 × 1920</td><td class="num">9:16</td></tr>
-          <tr><td>縦長投稿</td><td class="num">1080 × 1350</td><td class="num">4:5</td></tr>
-          <tr><td>DCI フラット 2K</td><td class="num">1998 × 1080</td><td class="num">1.85:1</td></tr>
-          <tr><td>DCI スコープ 2K</td><td class="num">2048 × 858</td><td class="num">約2.39:1</td></tr>
-          <tr><td>ウルトラワイド</td><td class="num">2560 × 1080</td><td class="num">64:27（いわゆる21:9）</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h2>動画のサイズを偶数にする理由</h2>
-    <p>H.264やH.265などのコーデックは、色の情報を縦横2画素ずつまとめて記録する方式（4:2:0）が一般的なため、縦横が奇数だと書き出せなかったり、1画素ずれたりすることがあります。リサイズするときは偶数に、できれば16の倍数にしておくと安心です。</p>
-
-    <h2>黒帯（レターボックス）と切り抜きの違い</h2>
-    <p>比率の違う映像を画面に表示するとき、映像全体を見せると余った部分に黒帯が入ります。上下に入るものをレターボックス、左右に入るものをピラーボックスと呼びます。反対に画面いっぱいに拡大すると、はみ出した部分が見切れます。横動画を縦動画に作り直すときは、どれくらい見切れるかを先に確認しておくと構図を決めやすくなります。</p>
-
-    <h2>よくある質問</h2>
-    <dl>
-      <dt>21:9は正確な比率ですか？</dt>
-      <dd>ウルトラワイドモニターの「21:9」は呼び名で、2560×1080の実際の比率は64:27（約2.37:1）です。映画のシネスコ（約2.39:1）とも少し違います。</dd>
-      <dt>シネスコ映画を16:9の画面で見ると黒帯は何px？</dt>
-      <dd>2.39:1の映像を1920×1080に収めると、映像部分は約1920×804で、上下に約138pxずつの黒帯が入ります。</dd>
-      <dt>横動画を縦動画にするとどれくらい見切れる？</dt>
-      <dd>16:9の映像で9:16の画面を埋めると、横幅の約68%が見切れ、使えるのは中央の約32%だけです。</dd>
-    </dl>
-  </article>
-
-  <section class="more" aria-label="ほかのツール">
-    <h2>ぽちっとのほかのツール</h2>
-    <div class="more-list">
-      <a class="more-item" href="../stream-speed/">
-        <span class="ic" style="background: var(--c1)"><svg viewBox="0 0 34 34" fill="none"><path d="M17 27V9M10 15l7-7 7 7" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 28h22" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
-        <span><b>配信の回線速度計算機</b><small>配信に必要な上り速度とデータ量</small></span>
-      </a>
-      <a class="more-item" href="../rec-size/">
-        <span class="ic" style="background: var(--hero)"><svg viewBox="0 0 34 34" fill="none"><rect x="3" y="7" width="20" height="20" rx="5" stroke="#1A1A2E" stroke-width="3"/><path d="M23 14l8-4v14l-8-4" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/></svg></span>
-        <span><b>録画ファイルサイズ計算機</b><small>何GBになる？何時間撮れる？をすぐ計算</small></span>
-      </a>
-      <a class="more-item" href="../timecode/">
-        <span class="ic" style="background: var(--c2)"><svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="18" r="11" stroke="#1A1A2E" stroke-width="3"/><path d="M17 11v7l5 3" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 4h8" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
-        <span><b>タイムコード計算機</b><small>尺の計算・フレーム変換・DF対応</small></span>
-      </a>
-      <a class="more-item" href="../living-cost/">
-        <span class="ic" style="background: var(--c6)"><svg viewBox="0 0 34 34" fill="none"><path d="M5 16 17 6l12 10" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14v13h18V14" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><path d="M14 27v-7h6v7" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/></svg></span>
-        <span><b>一人暮らしの生活費シミュレーター</b><small>毎月いくら残る？をスライドで確認</small></span>
-      </a>
-      <a class="more-item" href="../music-gacha/">
-        <span class="ic" style="background: var(--c5)"><svg viewBox="0 0 34 34" fill="none"><path d="M13 24V8l14-3v16" stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"/><circle cx="9.5" cy="24.5" r="4" fill="#1A1A2E"/><circle cx="23.5" cy="21.5" r="4" fill="#1A1A2E"/></svg></span>
-        <span><b>今日の一曲ガチャ</b><small>ランダムに1曲、Spotifyですぐ聴ける</small></span>
-      </a>
-    </div>
+  <section class="about">
+    <h2>ぽちっとについて</h2>
+    <p>放送の現場で働くビデオエンジニアが、仕事や一人暮らしの中で「これ、毎回計算するの面倒だな」と思ったことをツールにしています。</p>
+    <p>どのツールもブラウザだけで動き、入力した内容がどこかに送られることはありません。</p>
   </section>
 
   <footer>
-    <p>現役のビデオエンジニアが制作・運営しています。計算結果は目安としてご利用ください。</p>
+    <p>© ぽちっと　計算結果は目安としてご利用ください。</p>
   </footer>
 </div>
-
-<button type="button" class="mbar" id="mbar" aria-label="計算結果へ移動">
-  <span id="mbLabel">アスペクト比</span><span class="v" id="mbValue">—</span>
-</button>
 <div class="toast" id="toast" role="status"></div>
 <script>
-(function () {
-  "use strict";
-  var $ = function (id) { return document.getElementById(id); };
-  var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
-
-  var RES_GROUPS = [{ id: "video", name: "動画" }, { id: "sns", name: "SNS" }, { id: "cinema", name: "映画" }, { id: "pc", name: "PC・モニター" }];
-  var RES = [
-    { g: "video", n: "HD 720p", w: 1280, h: 720 },
-    { g: "video", n: "フルHD", w: 1920, h: 1080 },
-    { g: "video", n: "WQHD", w: 2560, h: 1440 },
-    { g: "video", n: "4K UHD", w: 3840, h: 2160 },
-    { g: "video", n: "DCI 4K", w: 4096, h: 2160 },
-    { g: "video", n: "8K UHD", w: 7680, h: 4320 },
-    { g: "sns", n: "縦動画", w: 1080, h: 1920 },
-    { g: "sns", n: "正方形", w: 1080, h: 1080 },
-    { g: "sns", n: "縦長投稿", w: 1080, h: 1350 },
-    { g: "sns", n: "YouTubeサムネイル", w: 1280, h: 720 },
-    { g: "cinema", n: "DCI フラット 2K", w: 1998, h: 1080 },
-    { g: "cinema", n: "DCI スコープ 2K", w: 2048, h: 858 },
-    { g: "cinema", n: "DCI フラット 4K", w: 3996, h: 2160 },
-    { g: "cinema", n: "DCI スコープ 4K", w: 4096, h: 1716 },
-    { g: "pc", n: "ウルトラワイド", w: 2560, h: 1080 },
-    { g: "pc", n: "WUXGA", w: 1920, h: 1200 },
-    { g: "pc", n: "XGA", w: 1024, h: 768 }
-  ];
-  var RATIOS = [[16, 9], [9, 16], [4, 3], [1, 1], [4, 5], [3, 2], [21, 9], [1.85, 1], [2.39, 1]];
-  var FRAMES = [
-    { n: "フルHD", w: 1920, h: 1080 }, { n: "4K UHD", w: 3840, h: 2160 },
-    { n: "縦動画", w: 1080, h: 1920 }, { n: "正方形", w: 1080, h: 1080 }, { n: "縦長投稿", w: 1080, h: 1350 }
-  ];
-  var NAMED = [
-    [1, "1:1（正方形）"], [5 / 4, "5:4"], [4 / 3, "4:3（スタンダード）"], [3 / 2, "3:2（写真）"], [16 / 10, "16:10"],
-    [16 / 9, "16:9（ワイド）"], [1.85, "1.85:1（ビスタ）"], [2, "2:1"], [64 / 27, "21:9（ウルトラワイド）"], [2.39, "2.39:1（シネスコ）"],
-    [9 / 16, "9:16（縦動画）"], [4 / 5, "4:5（縦長）"], [3 / 4, "3:4"], [2 / 3, "2:3"]
-  ];
-
-  var S = { mode: "ratio", group: "video", w: 1920, h: 1080, ra: 16, rb: 9, base: "w", val: 1920, even: true,
-            fa: 2.39, fb: 1, fw: 1920, fh: 1080, fit: "contain" };
-
-  /* ---------- 計算の道具 ---------- */
-  function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a; }
-  function nf(n, d) { return n.toLocaleString("ja-JP", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); }
-  function num(v) { return (+v).toString(); }
-  function roundPx(x, even) { return even ? Math.max(2, Math.round(x / 2) * 2) : Math.max(1, Math.round(x)); }
-  function evenRound(x) { return Math.max(2, Math.round(x / 2) * 2); }
-  function ratioText(a, b) { return num(a) + ":" + num(b); }
-  function named(r, tol) {
-    var best = null, bd = Infinity;
-    NAMED.forEach(function (n) { var d = Math.abs(r - n[0]) / n[0]; if (d < bd) { bd = d; best = n; } });
-    return bd <= tol ? best[1] : null;
-  }
-  function orient(r) { return r > 1.001 ? "横長" : r < 0.999 ? "縦長" : "正方形"; }
-  function mp(w, h) { var p = w * h; return p >= 1e6 ? "約" + nf(p / 1e4, 0) + "万画素" : nf(p, 0) + "画素"; }
-  function mult(w, h) { return (w % 16 === 0 && h % 16 === 0) ? "16の倍数" : (w % 8 === 0 && h % 8 === 0) ? "8の倍数" : (w % 2 === 0 && h % 2 === 0) ? "偶数" : "奇数を含む"; }
-  function dec(r) { return (r >= 1 ? r.toFixed(2) + ":1" : "1:" + (1 / r).toFixed(2)); }
-  function currentRatio() {
-    if (S.mode === "ratio") return S.w > 0 && S.h > 0 ? S.w / S.h : 0;
-    if (S.mode === "size") return S.ra > 0 && S.rb > 0 ? S.ra / S.rb : 0;
-    return S.fa > 0 && S.fb > 0 ? S.fa / S.fb : 0;
-  }
-
-  /* ---------- 結果の表示 ---------- */
-  var lastValue = "";
-  function setHero(label, value, unit, s1, s2, formula) {
-    $("rLabel").textContent = label; $("rUnit").textContent = unit;
-    $("rSub1").textContent = s1; $("rSub2").textContent = s2; $("rFormula").textContent = formula;
-    var el = $("rValue");
-    el.classList.toggle("tc", value.length > 6);
-    if (el.textContent !== value) {
-      el.textContent = value;
-      if (lastValue) { el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); }
-    }
-    lastValue = value;
-    $("mbLabel").textContent = label;
-    $("mbValue").textContent = value + (unit ? " " + unit : "");
-  }
-
-  /* ---------- プレビュー（SVG） ---------- */
-  var VW = 400, VH = 260, PAD = 24;
-  function rectSvg(x, y, w, h, attrs) { return '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + Math.max(0, w).toFixed(1) + '" height="' + Math.max(0, h).toFixed(1) + '" ' + attrs + "/>"; }
-  function textSvg(x, y, t, attrs) { return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" ' + attrs + ">" + t + "</text>"; }
-  var INK = "#1A1A2E";
-
-  function previewShape(r, label) {
-    var ref = 16 / 9, showRef = Math.abs(r - ref) > 0.01;
-    var maxW = VW - PAD * 2, maxH = VH - PAD * 2;
-    var widest = showRef ? Math.max(r, ref) : r;
-    var h = Math.min(maxH, maxW / widest), w = h * r;
-    var x = (VW - w) / 2, y = (VH - h) / 2;
-    var out = "";
-    if (showRef) {
-      var rw = h * ref, rx = (VW - rw) / 2;
-      out += rectSvg(rx, y, rw, h, 'fill="none" stroke="var(--sub)" stroke-width="2" stroke-dasharray="6 5" rx="6"');
-      out += textSvg(rx + 8, y - 8, "16:9", 'font-size="12" font-weight="800" fill="var(--sub)"');
-    }
-    out += rectSvg(x, y, w, h, 'fill="var(--c2)" stroke="var(--edge)" stroke-width="3" rx="8"');
-    for (var i = 1; i < 3; i++) {
-      out += '<line x1="' + (x + w * i / 3).toFixed(1) + '" y1="' + y.toFixed(1) + '" x2="' + (x + w * i / 3).toFixed(1) + '" y2="' + (y + h).toFixed(1) + '" stroke="#fff" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="4 4"/>';
-      out += '<line x1="' + x.toFixed(1) + '" y1="' + (y + h * i / 3).toFixed(1) + '" x2="' + (x + w).toFixed(1) + '" y2="' + (y + h * i / 3).toFixed(1) + '" stroke="#fff" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="4 4"/>';
-    }
-    if (w > 70 && h > 30) out += textSvg(VW / 2, VH / 2 + 6, label, 'text-anchor="middle" font-size="' + (w > 160 ? 18 : 13) + '" font-weight="800" fill="#fff"');
-    return out;
-  }
-
-  function previewFit(r, W, H, mode, res) {
-    var maxW = VW - PAD * 2, maxH = VH - PAD * 2, out = "";
-    if (mode === "contain") {
-      var sc = Math.min(maxW / W, maxH / H), fw = W * sc, fh = H * sc, fx = (VW - fw) / 2, fy = (VH - fh) / 2;
-      out += rectSvg(fx, fy, fw, fh, 'fill="' + INK + '" rx="6"');
-      var aw = res.aw * sc, ah = res.ah * sc, ax = (VW - aw) / 2, ay = (VH - ah) / 2;
-      out += rectSvg(ax, ay, aw, ah, 'fill="var(--c1)"');
-      if (aw > 60 && ah > 24) out += textSvg(VW / 2, VH / 2 + 6, "映像", 'text-anchor="middle" font-size="16" font-weight="800" fill="' + INK + '"');
-      if (res.bars > 0) {
-        if (res.dir === "v" && (fh - ah) / 2 > 14) {
-          out += textSvg(VW / 2, fy + (fh - ah) / 4 + 4, "黒帯 " + nf(res.bars, res.bars % 1 ? 1 : 0) + "px", 'text-anchor="middle" font-size="11" font-weight="800" fill="#fff"');
-        } else if (res.dir === "h" && (fw - aw) / 2 > 34) {
-          out += textSvg(fx + (fw - aw) / 4, VH / 2 + 4, "黒帯", 'text-anchor="middle" font-size="11" font-weight="800" fill="#fff"');
-        }
-      }
-      out += rectSvg(fx, fy, fw, fh, 'fill="none" stroke="var(--edge)" stroke-width="3" rx="6"');
-    } else {
-      var sc2 = Math.min(maxW / res.sw, maxH / res.sh), iw = res.sw * sc2, ih = res.sh * sc2, ix = (VW - iw) / 2, iy = (VH - ih) / 2;
-      var fw2 = W * sc2, fh2 = H * sc2, fx2 = (VW - fw2) / 2, fy2 = (VH - fh2) / 2;
-      out += rectSvg(ix, iy, iw, ih, 'fill="url(#hatch)" stroke="var(--warn)" stroke-width="2" stroke-dasharray="5 4"');
-      out += rectSvg(fx2, fy2, fw2, fh2, 'fill="var(--c1)" stroke="var(--edge)" stroke-width="3" rx="4"');
-      if (fw2 > 60 && fh2 > 24) out += textSvg(VW / 2, VH / 2 + 6, "画面", 'text-anchor="middle" font-size="16" font-weight="800" fill="' + INK + '"');
-      if (res.dir === "h" && (iw - fw2) / 2 > 40) out += textSvg(ix + (iw - fw2) / 4, VH / 2 + 4, "見切れ", 'text-anchor="middle" font-size="11" font-weight="800" fill="var(--warn)"');
-      if (res.dir === "v" && (ih - fh2) / 2 > 16) out += textSvg(VW / 2, iy + (ih - fh2) / 4 + 4, "見切れ", 'text-anchor="middle" font-size="11" font-weight="800" fill="var(--warn)"');
-    }
-    return out;
-  }
-  function drawPreview(inner) {
-    $("pv").innerHTML = '<svg viewBox="0 0 ' + VW + " " + VH + '" role="img" aria-label="比率のプレビュー" font-family="inherit">' + inner + "</svg>";
-  }
-
-  /* ---------- 各モードの計算 ---------- */
-  function calcRatio() {
-    var w = Math.round(S.w), h = Math.round(S.h);
-    if (!(w > 0 && h > 0)) { setHero("アスペクト比", "—", "", "解像度を入力してください。", "", ""); $("pv").innerHTML = ""; return; }
-    var g = gcd(w, h), a = w / g, b = h / g, r = w / h;
-    var exact = named(r, 0.006), near = named(r, 0.015);
-    var big = a > 99 || b > 99;
-    setHero("アスペクト比", big ? dec(r) : a + ":" + b, "",
-      exact ? exact + "と同じ比率です" : near ? near + "に近い比率です（" + a + ":" + b + "）" : "整数の比で表すと " + a + ":" + b,
-      dec(r) + "・" + mp(w, h) + "・" + orient(r),
-      w + " ÷ " + h + " = " + r.toFixed(3) + "　最大公約数 " + g + " で割ると " + a + ":" + b);
-    $("pvTitle").textContent = "プレビュー";
-    $("pvNote").textContent = "点線は16:9の枠。高さをそろえて比べています。";
-    drawPreview(previewShape(r, w + " × " + h));
-  }
-
-  function calcSize() {
-    if (!(S.ra > 0 && S.rb > 0) || !(S.val > 0)) { setHero("サイズ", "—", "", "比率と画素数を入力してください。", "", ""); $("pv").innerHTML = ""; return; }
-    var r = S.ra / S.rb, W, H, f;
-    if (S.base === "w") { W = roundPx(S.val, S.even); H = roundPx(W / r, S.even); f = W + " ÷ " + num(S.ra) + " × " + num(S.rb) + " = " + nf(W / r, 2) + " → " + H; }
-    else { H = roundPx(S.val, S.even); W = roundPx(H * r, S.even); f = H + " ÷ " + num(S.rb) + " × " + num(S.ra) + " = " + nf(H * r, 2) + " → " + W; }
-    var real = W / H, drift = Math.abs(real - r) / r;
-    setHero("サイズ", W + " × " + H, "px",
-      mult(W, H) + "・" + mp(W, H),
-      drift > 0.0005 ? "丸めにより比率がわずかにずれます（実際は " + real.toFixed(3) + ":1）" : ratioText(S.ra, S.rb) + " ぴったりです",
-      f);
-    $("pvTitle").textContent = "プレビュー";
-    $("pvNote").textContent = "点線は16:9の枠。高さをそろえて比べています。";
-    drawPreview(previewShape(r, W + " × " + H));
-  }
-
-  function calcFit() {
-    var W = Math.round(S.fw), H = Math.round(S.fh);
-    if (!(S.fa > 0 && S.fb > 0 && W > 0 && H > 0)) { setHero("黒帯", "—", "", "比率と画面サイズを入力してください。", "", ""); $("pv").innerHTML = ""; return; }
-    var r = S.fa / S.fb, fr = W / H, res = {};
-    $("pvTitle").textContent = S.fit === "contain" ? "画面での見え方" : "見切れる範囲";
-    if (Math.abs(r - fr) / fr < 0.002) {
-      setHero(S.fit === "contain" ? "黒帯" : "切り抜き", "0", "px", "画面にぴったり収まります", "", ratioText(S.fa, S.fb) + " と " + W + "×" + H + " は同じ比率です");
-      $("pvNote").textContent = "";
-      drawPreview(previewFit(r, W, H, "contain", { aw: W, ah: H, bars: 0 }));
-      return;
-    }
-    if (S.fit === "contain") {
-      if (r > fr) { res.aw = W; res.ah = evenRound(W / r); res.bars = (H - res.ah) / 2; res.dir = "v"; }
-      else { res.ah = H; res.aw = evenRound(H * r); res.bars = (W - res.aw) / 2; res.dir = "h"; }
-      var pct = (1 - (res.aw * res.ah) / (W * H)) * 100;
-      setHero(res.dir === "v" ? "上下の黒帯（片側）" : "左右の黒帯（片側）", nf(res.bars, res.bars % 1 ? 1 : 0), "px",
-        "映像部分 " + res.aw + " × " + res.ah + " px",
-        "画面の " + nf(pct, 1) + "% が黒帯になります",
-        res.dir === "v" ? "(" + H + " − " + W + " ÷ " + r.toFixed(3) + ") ÷ 2" : "(" + W + " − " + H + " × " + r.toFixed(3) + ") ÷ 2");
-      $("pvNote").textContent = res.dir === "v" ? "上下に黒帯が入るレターボックスです。" : "左右に黒帯が入るピラーボックスです。";
-    } else {
-      if (r > fr) { res.sh = H; res.sw = evenRound(H * r); res.crop = (res.sw - W) / 2; res.dir = "h"; res.lost = (1 - W / res.sw) * 100; }
-      else { res.sw = W; res.sh = evenRound(W / r); res.crop = (res.sh - H) / 2; res.dir = "v"; res.lost = (1 - H / res.sh) * 100; }
-      setHero(res.dir === "h" ? "左右の切り抜き（片側）" : "上下の切り抜き（片側）", nf(res.crop, res.crop % 1 ? 1 : 0), "px",
-        "拡大後の映像 " + res.sw + " × " + res.sh + " px",
-        "映像の " + nf(res.lost, 1) + "% が画面からはみ出します",
-        res.dir === "h" ? "(" + H + " × " + r.toFixed(3) + " − " + W + ") ÷ 2" : "(" + W + " ÷ " + r.toFixed(3) + " − " + H + ") ÷ 2");
-      $("pvNote").textContent = "ストライプの部分が画面に映らない範囲です。";
-    }
-    drawPreview(previewFit(r, W, H, S.fit, res));
-  }
-
-  /* ---------- 早見表 ---------- */
-  function renderSizes() {
-    var r = currentRatio(), grid = $("sizeGrid"); grid.innerHTML = "";
-    if (!(r > 0)) { $("sizesLead").textContent = "比率を入力すると表示されます。"; return; }
-    var label = S.mode === "ratio" ? (function () { var g = gcd(Math.round(S.w), Math.round(S.h)); var a = Math.round(S.w) / g, b = Math.round(S.h) / g; return a > 99 || b > 99 ? dec(r) : a + ":" + b; })()
-              : S.mode === "size" ? ratioText(S.ra, S.rb) : ratioText(S.fa, S.fb);
-    $("sizesLead").textContent = label + " で書き出すときの、偶数に丸めたサイズです。押すと「サイズを計算」に読み込みます。";
-    var list = r >= 1 ? [360, 480, 720, 1080, 1440, 2160, 4320].map(function (h) { return [evenRound(h * r), h]; })
-                      : [360, 480, 720, 1080, 1440, 2160].map(function (w) { return [w, evenRound(w / r)]; });
-    list.forEach(function (p) {
-      var b = document.createElement("button"); b.type = "button"; b.className = "size-btn";
-      var bb = document.createElement("b"); bb.textContent = p[0] + " × " + p[1];
-      var sm = document.createElement("small"); var m = mult(p[0], p[1]); sm.textContent = m; if (m === "16の倍数") sm.className = "ok";
-      b.appendChild(bb); b.appendChild(sm);
-      b.addEventListener("click", function () {
-        if (S.mode === "ratio") { var g = gcd(Math.round(S.w), Math.round(S.h)); S.ra = Math.round(S.w) / g; S.rb = Math.round(S.h) / g; if (S.ra > 99 || S.rb > 99) { S.ra = +r.toFixed(3); S.rb = 1; } }
-        else if (S.mode === "fit") { S.ra = S.fa; S.rb = S.fb; }
-        S.base = "w"; S.val = p[0]; S.mode = "size"; syncAll(); update();
-        $("hero").scrollIntoView({ behavior: "smooth", block: "center" });
-      });
-      grid.appendChild(b);
-    });
-  }
-
-  /* ---------- 入力の同期 ---------- */
-  function renderResTabs() {
-    $("resTabs").innerHTML = "";
-    RES_GROUPS.forEach(function (g) {
-      var b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab");
-      b.setAttribute("aria-selected", S.group === g.id); b.textContent = g.name;
-      b.addEventListener("click", function () { S.group = g.id; renderResTabs(); renderResChips(); });
-      $("resTabs").appendChild(b);
-    });
-  }
-  function renderResChips() {
-    $("resChips").innerHTML = "";
-    RES.filter(function (p) { return p.g === S.group; }).forEach(function (p) {
-      var b = document.createElement("button"); b.type = "button"; b.className = "chip";
-      b.dataset.w = p.w; b.dataset.h = p.h;
-      b.appendChild(document.createTextNode(p.n));
-      var sm = document.createElement("small"); sm.textContent = p.w + "×" + p.h; b.appendChild(sm);
-      b.addEventListener("click", function () { S.w = p.w; S.h = p.h; syncAll(); update(); });
-      $("resChips").appendChild(b);
-    });
-    markChips();
-  }
-  function ratioChips(container, key) {
-    RATIOS.forEach(function (r) {
-      var b = document.createElement("button"); b.type = "button"; b.className = "chip";
-      b.dataset.a = r[0]; b.dataset.b = r[1]; b.textContent = ratioText(r[0], r[1]);
-      b.addEventListener("click", function () {
-        if (key === "B") { S.ra = r[0]; S.rb = r[1]; } else { S.fa = r[0]; S.fb = r[1]; }
-        syncAll(); update();
-      });
-      $(container).appendChild(b);
-    });
-  }
-  function frameChips() {
-    FRAMES.forEach(function (f) {
-      var b = document.createElement("button"); b.type = "button"; b.className = "chip";
-      b.dataset.w = f.w; b.dataset.h = f.h;
-      b.appendChild(document.createTextNode(f.n));
-      var sm = document.createElement("small"); sm.textContent = f.w + "×" + f.h; b.appendChild(sm);
-      b.addEventListener("click", function () { S.fw = f.w; S.fh = f.h; syncAll(); update(); });
-      $("frameChips").appendChild(b);
-    });
-  }
-  function markChips() {
-    all("#resChips .chip").forEach(function (b) { b.setAttribute("aria-pressed", +b.dataset.w === Math.round(S.w) && +b.dataset.h === Math.round(S.h)); });
-    all("#ratioChipsB .chip").forEach(function (b) { b.setAttribute("aria-pressed", +b.dataset.a === S.ra && +b.dataset.b === S.rb); });
-    all("#ratioChipsC .chip").forEach(function (b) { b.setAttribute("aria-pressed", +b.dataset.a === S.fa && +b.dataset.b === S.fb); });
-    all("#frameChips .chip").forEach(function (b) { b.setAttribute("aria-pressed", +b.dataset.w === Math.round(S.fw) && +b.dataset.h === Math.round(S.fh)); });
-    all("[data-base]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.base === S.base); });
-    all("[data-fit]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.fit === S.fit); });
-    all("[data-mode]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === S.mode); });
-  }
-  function bToRange(v) { v = Math.min(7680, Math.max(160, v || 160)); return Math.round(Math.log(v / 160) / Math.log(48) * 1000); }
-  function rangeToB(x) { var v = 160 * Math.pow(48, x / 1000); return v < 1000 ? Math.round(v / 2) * 2 : Math.round(v / 8) * 8; }
-  function fillRange(el) { el.style.setProperty("--p", ((el.value - el.min) / (el.max - el.min) * 100) + "%"); }
-  function setVal(id, v, skip) { if (skip !== id) $(id).value = v > 0 ? v : ""; }
-  function syncAll(skip) {
-    setVal("aw", S.w, skip); setVal("ah", S.h, skip);
-    setVal("ra", S.ra, skip); setVal("rb", S.rb, skip); setVal("bval", S.val, skip);
-    setVal("fa", S.fa, skip); setVal("fb", S.fb, skip); setVal("fw", S.fw, skip); setVal("fh", S.fh, skip);
-    $("even").checked = S.even;
-    $("bRange").value = bToRange(S.val); fillRange($("bRange"));
-  }
-
-  function update() {
-    $("fRatio").hidden = S.mode !== "ratio"; $("fSize").hidden = S.mode !== "size"; $("fFit").hidden = S.mode !== "fit";
-    markChips();
-    if (S.mode === "ratio") calcRatio(); else if (S.mode === "size") calcSize(); else calcFit();
-    renderSizes();
-    $("xBtn").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(summary(false)) + "&url=" + encodeURIComponent(shareUrl());
-  }
-
-  /* ---------- 共有 ---------- */
-  var KEYS = ["mode", "w", "h", "ra", "rb", "base", "val", "even", "fa", "fb", "fw", "fh", "fit"];
-  function shareUrl() {
-    return location.href.split("#")[0] + "#" + KEYS.map(function (k) { return k + "=" + encodeURIComponent(S[k] === true ? 1 : S[k] === false ? 0 : S[k]); }).join("&");
-  }
-  function loadHash() {
-    var h = location.hash.replace(/^#/, ""); if (!h) return;
-    var q = {}; h.split("&").forEach(function (kv) { var p = kv.split("="); q[p[0]] = (function (s) { try { return decodeURIComponent(s); } catch (e) { return ""; } })(p[1] || ""); });
-    if (["ratio", "size", "fit"].indexOf(q.mode) >= 0) S.mode = q.mode;
-    if (q.base === "w" || q.base === "h") S.base = q.base;
-    if (q.fit === "contain" || q.fit === "cover") S.fit = q.fit;
-    if (q.even === "0" || q.even === "1") S.even = q.even === "1";
-    ["w", "h", "ra", "rb", "val", "fa", "fb", "fw", "fh"].forEach(function (k) { var v = parseFloat(q[k]); if (v > 0 && v < 100000) S[k] = v; });
-  }
-  function summary(withUrl) {
-    var s = "【アスペクト比・解像度計算機】";
-    var t = $("rValue").textContent + ($("rUnit").textContent ? " " + $("rUnit").textContent : "");
-    if (S.mode === "ratio") s += Math.round(S.w) + "×" + Math.round(S.h) + " のアスペクト比は " + t;
-    else if (S.mode === "size") s += ratioText(S.ra, S.rb) + " で" + (S.base === "w" ? "横" : "縦") + Math.round(S.val) + "pxにすると " + t;
-    else s += ratioText(S.fa, S.fb) + " の映像を " + Math.round(S.fw) + "×" + Math.round(S.fh) + " に" + (S.fit === "contain" ? "収めると" : "合わせると") + "、" + $("rLabel").textContent + " " + t;
-    return withUrl ? s + "\n" + shareUrl() : s;
-  }
-  function toast(msg) {
-    var t = $("toast"); t.textContent = msg; t.classList.add("show");
-    clearTimeout(toast.timer); toast.timer = setTimeout(function () { t.classList.remove("show"); }, 1800);
-  }
-  function copyText(text, msg) {
-    function fallback() {
-      var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
-      document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); toast(msg); } catch (e) { toast("コピーできませんでした"); }
-      document.body.removeChild(ta);
-    }
-    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { toast(msg); }, fallback);
-    else fallback();
-  }
-
-  /* ---------- イベント ---------- */
-  all("[data-mode]").forEach(function (b) { b.addEventListener("click", function () { S.mode = b.dataset.mode; update(); }); });
-  all("[data-base]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      if (S.base === b.dataset.base) return;
-      // 今の結果のもう一方の辺を基準値として引き継ぐ
-      var r = S.ra / S.rb;
-      if (r > 0) S.val = b.dataset.base === "h" ? roundPx(S.val / r, S.even) : roundPx(S.val * r, S.even);
-      S.base = b.dataset.base; syncAll(); update();
-    });
-  });
-  all("[data-fit]").forEach(function (b) { b.addEventListener("click", function () { S.fit = b.dataset.fit; update(); }); });
-  ["aw", "ah", "ra", "rb", "bval", "fa", "fb", "fw", "fh"].forEach(function (id) {
-    var key = { aw: "w", ah: "h", bval: "val" }[id] || id;
-    $(id).addEventListener("input", function () { var v = parseFloat(this.value); S[key] = v > 0 ? v : 0; syncAll(id); update(); });
-  });
-  $("bRange").addEventListener("input", function () { S.val = rangeToB(+this.value); syncAll("bRange"); $("bval").value = S.val; update(); });
-  $("even").addEventListener("change", function () { S.even = this.checked; update(); });
-  $("swapA").addEventListener("click", function () { var t = S.w; S.w = S.h; S.h = t; syncAll(); update(); });
-  $("copyBtn").addEventListener("click", function () { copyText(summary(true), "結果をコピーしました"); });
-  $("shareBtn").addEventListener("click", function () {
-    var url = shareUrl();
-    if (navigator.share) navigator.share({ title: "アスペクト比・解像度計算機", text: summary(false), url: url }).catch(function () {});
-    else copyText(url, "リンクをコピーしました");
-  });
-  $("mbar").addEventListener("click", function () { $("hero").scrollIntoView({ behavior: "smooth", block: "center" }); });
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (es) { es.forEach(function (e) { $("mbar").classList.toggle("away", e.isIntersecting); }); }, { threshold: 0.3 }).observe($("hero"));
-  }
-
-  /* ---------- 初期化 ---------- */
-  loadHash();
-  renderResTabs(); renderResChips(); ratioChips("ratioChipsB", "B"); ratioChips("ratioChipsC", "C"); frameChips();
-  syncAll(); update();
-})();
+  // 以前のURL（トップ）で共有された計算結果のリンクを、録画ファイルサイズ計算機へ転送
+  (function () {
+    if (/(^#|&)m=(size|time)/.test(location.hash)) location.replace("rec-size/" + location.hash);
+  })();
 </script>
 </body>
 </html>

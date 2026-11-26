@@ -236,6 +236,17 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 article p a, .about p a { color: var(--ink); font-weight: 800; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 3px; }
 article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E; }
 
+/* ほかのツールに置く「作業のおともに、今日の一曲」 */
+.gacha-promo { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 12px 16px; margin: 40px 0 0; padding: 16px 20px; background: var(--panel); color: var(--ink); text-decoration: none; border: 3px solid var(--edge); border-radius: 20px; box-shadow: 6px 6px 0 var(--shadow); transition: transform .12s ease, box-shadow .12s ease; }
+.gacha-promo:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--shadow); }
+.gp-ic { flex: none; width: 64px; height: 64px; display: grid; place-items: center; background: var(--c5); border: 3px solid var(--edge); border-radius: 18px; transform: rotate(-4deg); }
+.gp-ic svg { width: 50px; height: 50px; }
+.gp-text { min-width: 0; }
+.gp-text b { display: block; font-size: 1.02rem; font-weight: 800; }
+.gp-text small { display: block; margin-top: 2px; color: var(--sub); font-size: 0.8rem; line-height: 1.6; }
+.gp-go { flex: none; background: var(--accent); color: #1A1A2E; border: 2.5px solid var(--edge); border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 0.85rem; box-shadow: 3px 3px 0 var(--shadow); }
+@media (max-width: 520px) { .gacha-promo { grid-template-columns: 64px minmax(0, 1fr); } .gp-go { grid-column: 2; justify-self: start; } }
+
 /* 生活費シミュレーター */
 .rows { display: grid; gap: 4px; }
 .crow { padding: 10px 0 6px; border-top: 2px solid var(--soft); }
@@ -360,6 +371,12 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
     <p class="lead">押すと、その手取りと家賃でシミュレーションします。</p>
     <div class="size-grid" id="rentGrid"></div>
   </section>
+
+  <a class="gacha-promo" href="../music-gacha/">
+    <span class="gp-ic" aria-hidden="true"><svg viewBox="-2 -2 124 124"><circle cx="60" cy="62" r="57" fill="#fff" stroke="#1A1A2E" stroke-width="4"/><g stroke="#1A1A2E" stroke-width="3" stroke-linejoin="round"><ellipse cx="46" cy="100" rx="8" ry="5" fill="#FFD93D"/><ellipse cx="74" cy="100" rx="8" ry="5" fill="#FFD93D"/><rect x="26" y="76" width="68" height="20" rx="9" fill="#FFD93D"/><path d="M30 78 Q30 32 60 32 Q90 32 90 78 Z" fill="#FF5FA2"/></g><path d="M26 62 Q26 16 60 16 Q94 16 94 62" fill="none" stroke="#1A1A2E" stroke-width="5" stroke-linecap="round"/><rect x="17" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><rect x="90" y="52" width="13" height="22" rx="5" fill="#3D5AFE" stroke="#1A1A2E" stroke-width="3"/><path d="M44 59 q5 3 10 0 M66 59 q5 3 10 0 M57 67 q3 3 6 0" fill="none" stroke="#1A1A2E" stroke-width="3" stroke-linecap="round"/></svg></span>
+    <span class="gp-text"><b>作業のおともに、今日の一曲</b><small>作者の邦楽プレイリスト322曲から、1日1回だけランダムに1曲。Spotifyですぐ聴けます。</small></span>
+    <span class="gp-go">回してみる</span>
+  </a>
 
   <!-- 広告を置く場合はこの位置がおすすめです -->
   <div class="ad-slot"></div>

@@ -5,13 +5,13 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-Vh0yhpnDQN2riDnozIPy4dqkfi2DUnDXUg/Vi7pMwQY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://open.spotify.com https://docs.google.com; frame-src https://open.spotify.com; form-action 'self'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>今日の一曲ガチャ｜ぽちっと</title>
-<meta name="description" content="作者のプレイリスト322曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<title>今日の一曲ガチャ｜邦楽のおすすめを1日1曲ランダムで｜ぽちっと</title>
+<meta name="description" content="J-POP・邦ロックを中心に、作者のプレイリスト322曲から1日1回ランダムに1曲。星野源、藤井風、TOMOO、チャットモンチーなど。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <link rel="canonical" href="https://pochittools.github.io/music-gacha/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ぽちっと">
-<meta property="og:title" content="今日の一曲ガチャ｜ぽちっと">
-<meta property="og:description" content="作者のプレイリスト322曲から、1日1回ランダムに1曲。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
+<meta property="og:title" content="今日の一曲ガチャ｜邦楽のおすすめを1日1曲ランダムで｜ぽちっと">
+<meta property="og:description" content="J-POP・邦ロックを中心に、作者のプレイリスト322曲から1日1回ランダムに1曲。星野源、藤井風、TOMOO、チャットモンチーなど。ガチャを回すとSpotifyで今日の一曲が聴けます。集めるほど称号やステッカーがもらえ、30曲ごとにおすすめの曲を推薦できます。">
 <meta property="og:url" content="https://pochittools.github.io/music-gacha/">
 <meta property="og:image" content="https://pochittools.github.io/og/gacha.png">
 <meta property="og:image:width" content="1200">
@@ -235,6 +235,17 @@ footer { max-width: 680px; margin: 64px auto 0; padding-top: 20px; border-top: 3
 /* 本文中のリンク（Zenn記事など） */
 article p a, .about p a { color: var(--ink); font-weight: 800; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 3px; }
 article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E; }
+
+/* ほかのツールに置く「作業のおともに、今日の一曲」 */
+.gacha-promo { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 12px 16px; margin: 40px 0 0; padding: 16px 20px; background: var(--panel); color: var(--ink); text-decoration: none; border: 3px solid var(--edge); border-radius: 20px; box-shadow: 6px 6px 0 var(--shadow); transition: transform .12s ease, box-shadow .12s ease; }
+.gacha-promo:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--shadow); }
+.gp-ic { flex: none; width: 64px; height: 64px; display: grid; place-items: center; background: var(--c5); border: 3px solid var(--edge); border-radius: 18px; transform: rotate(-4deg); }
+.gp-ic svg { width: 50px; height: 50px; }
+.gp-text { min-width: 0; }
+.gp-text b { display: block; font-size: 1.02rem; font-weight: 800; }
+.gp-text small { display: block; margin-top: 2px; color: var(--sub); font-size: 0.8rem; line-height: 1.6; }
+.gp-go { flex: none; background: var(--accent); color: #1A1A2E; border: 2.5px solid var(--edge); border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 0.85rem; box-shadow: 3px 3px 0 var(--shadow); }
+@media (max-width: 520px) { .gacha-promo { grid-template-columns: 64px minmax(0, 1fr); } .gp-go { grid-column: 2; justify-self: start; } }
 
 /* 今日の一曲ガチャ */
 .machine-card { display: flex; flex-direction: column; align-items: center; }
@@ -540,6 +551,7 @@ article p a:hover, .about p a:hover { background: var(--marker); color: #1A1A2E;
   <article>
     <h2>このガチャについて</h2>
     <p>放送の現場で働く作者が、ふだん聴いている邦楽のプレイリストから1曲をランダムに選びます。ガチャは1日1回、深夜0時にまた回せるようになります。全曲を引き終わるまで、同じ曲は出てきません。引いた曲はコンプリートカードに色がつき、押せばもう一度聴けます。</p>
+    <p>入っているのはJ-POPと邦ロックが中心で、よく出てくるのは星野源、藤井風、TOMOO、チャットモンチー、礼賛など。学生のころによく聴いた曲から最近リピートしている曲まで、作者の「そのころの思い出の曲」を集めています。名曲ランキングではないので、知らない曲に出会える日も多いはずです。</p>
     <p>5曲ごとにスタンプ、10曲ごとにマスコット「ぼたん」のステッカー、30曲ごとに称号がもらえます。ステッカーはまれにキラキラの「キラ」になり、条件がヒミツのシークレットステッカーもあります。30曲ごとに「おかわりチケット」（好きな日にもう1回引ける）と、おすすめの曲を1曲推薦できる権利もつきます。</p>
     <p>曲の再生にはSpotifyの埋め込みプレーヤーを使っています。Spotifyにログインしていると曲を最後まで、ログインしていない場合は試聴版が再生されます。コンプリートカードやごほうびの記録は、お使いのブラウザの中にだけ保存されます。推薦された曲とニックネームは作者に届き、採用された場合はこのページに掲載されます。</p>
   </article>
